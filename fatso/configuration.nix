@@ -197,7 +197,7 @@ _________________________
       {
         name = "origin";
         url = "git@github.com:fmbearmf/oci-nixos-config.git";
-        poller.period = 600;
+        poller.period = 60;
         branches.main.name = "main";
       }
     ];
