@@ -169,6 +169,19 @@ _________________________
 
   programs.mosh.enable = true;
 
+  services.comin = {
+    enable = true;
+    configurationName = "fatso";
+    remotes = [
+      {
+        name = "origin";
+        url = "git@github.com:fmbearmf/oci-nixos-config.git";
+        pollingPeriodSec = 600;
+        branch = "main";
+      }
+    ];
+  };
+
   # Copy the NixOS configuration file and link it from the resulting system
   # (/run/current-system/configuration.nix). This is useful in case you
   # accidentally delete configuration.nix.
