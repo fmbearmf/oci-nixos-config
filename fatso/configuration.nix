@@ -177,7 +177,7 @@ _________________________
         name = "origin";
         url = "git@github.com:fmbearmf/oci-nixos-config.git";
         pollingPeriodSec = 600;
-        branch.main.name = "main";
+        branches.main.name = "main";
       }
     ];
   };
