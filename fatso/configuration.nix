@@ -24,6 +24,8 @@
         enable = true;
   };
 
+  systemd.services.NetworkManager-wait-online.enable = false;
+
   nixpkgs.overlays = [
         (self: super: {
                 networkmanager = pkgs-unstable.networkmanager;
