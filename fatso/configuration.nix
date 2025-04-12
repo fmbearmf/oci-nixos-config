@@ -171,7 +171,7 @@ _________________________
 
   services.comin = {
     enable = true;
-    configurationName = "fatso";
+    hostname = "fatso";
     remotes = [
       {
         name = "origin";
