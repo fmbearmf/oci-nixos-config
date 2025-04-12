@@ -2,7 +2,7 @@
 # your system. Help is available in the configuration.nix(5) man page, on
 # https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
 
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, pkgs-unstable, ... }:
 
 {
   imports =
@@ -19,7 +19,16 @@
   networking.hostName = "fatso"; # Define your hostname.
   # Pick only one of the below networking options.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-  networking.networkmanager.enable = true;  # Easiest to use and most distros use this by default.
+  # NM in 24.11 is bugged
+  networking.networkmanager = {
+        enable = true;
+  };
+
+  nixpkgs.overlays = [
+        (self: super: {
+                networkmanager = pkgs-unstable.networkmanager;
+        })
+  ];
 
   # Set your time zone.
   time.timeZone = "America/Los_Angeles";
