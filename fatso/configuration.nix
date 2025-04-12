@@ -27,6 +27,16 @@
   nixpkgs.overlays = [
         (self: super: {
                 networkmanager = pkgs-unstable.networkmanager;
+                networkmanager-openvpn = pkgs-unstable.networkmanager-openvpn;
+                networkmanager-vpnc = pkgs-unstable.networkmanager-vpnc;
+                networkmanager-openconnect = pkgs-unstable.networkmanager-openconnect;
+                networkmanager-l2tp = pkgs-unstable.networkmanager-l2tp;
+                networkmanager-pptp = pkgs-unstable.networkmanager-pptp;
+                networkmanager-sstp = pkgs-unstable.networkmanager-sstp;
+                networkmanager-fortisslvpn = pkgs-unstable.networkmanager-fortisslvpn;
+                networkmanager-iodine = pkgs-unstable.networkmanager-iodine;
+                networkmanager-strongswan = pkgs-unstable.networkmanager-strongswan;
+                networkmanager-wireguard = pkgs-unstable.networkmanager-wireguard;
         })
   ];
 
