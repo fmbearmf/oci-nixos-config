@@ -16,7 +16,7 @@
   fileSystems."/" =
     { device = "/dev/disk/by-uuid/ebec7f46-1aff-4e35-b544-88d99ad912dc";
       fsType = "btrfs";
-      options = [ "subvol=@root" ];
+      options = [ "subvol=@root" "compress-force=zstd:2" ];
     };
 
   fileSystems."/boot" =
@@ -34,7 +34,13 @@
   fileSystems."/nix" =
     { device = "/dev/disk/by-uuid/ebec7f46-1aff-4e35-b544-88d99ad912dc";
       fsType = "btrfs";
-      options = [ "subvol=@nix" ];
+      options = [ "subvol=@nix" "compress-force=zstd:2" ];
+    };
+
+  fileSystems."/mnt/containers" =
+    { device = "/dev/disk/by-uuid/812143ff-5c07-4141-b443-168c1ac1b65b";
+      fsType = "btrfs";
+      options = [ "subvol=@containers" "compress-force=lzo" ];
     };
 
   swapDevices = [ ];

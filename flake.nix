@@ -5,6 +5,7 @@
         nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
         colmena.url = "github:zhaofengli/colmena";
         flake-utils.url = "github:numtide/flake-utils";
+        nix-minecraft.url = "github:Infinidoge/nix-minecraft";
   };
 
   nixConfig = {
@@ -12,7 +13,7 @@
     extra-trusted-public-keys = [ "colmena.cachix.org-1:7BzpDnjjH8ki2CT3f6GdOk7QAzPOl+1t3LvTLXqYcSg=" ];
   };
 
-  outputs = { self, nixpkgs, colmena, flake-utils, ... }:
+  outputs = { self, nixpkgs, colmena, flake-utils, ... }@inputs:
   {
         colmenaHive = colmena.lib.makeHive self.outputs.colmena;
         colmena = {
@@ -20,6 +21,7 @@
                         nixpkgs = import nixpkgs {
                                 system = "aarch64-linux";
                         };
+                        specialArgs = { inherit inputs; };
                 };
 
 
@@ -36,6 +38,7 @@
 
                         imports = [ 
                                 ( ./fatso/configuration.nix )
+                                { nixpkgs.overlays = [ inputs.nix-minecraft.overlay ]; }
                         ];
                 };
         };

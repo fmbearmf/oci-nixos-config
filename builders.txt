@@ -1,1 +1,0 @@
-ssh-ng://bear@fatso.tailc57f75.ts.net aarch64-linux 4 1.0 big-parallel
