@@ -1,0 +1,5 @@
+Host nix-builder
+        HostName fatso.tailc57f75.ts.net
+        User root
+        IdentityFile ~/.ssh/nix-remote-builder
+        IdentitiesOnly yes
