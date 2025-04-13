@@ -2,7 +2,7 @@
 # your system. Help is available in the configuration.nix(5) man page, on
 # https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
 
-{ config, lib, pkgs, pkgs-unstable, ... }:
+{ config, lib, pkgs, ... }:
 
 {
   imports =
@@ -19,28 +19,11 @@
   networking.hostName = "fatso"; # Define your hostname.
   # Pick only one of the below networking options.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-  # NM in 24.11 is bugged
   networking.networkmanager = {
         enable = true;
   };
 
   systemd.services.NetworkManager-wait-online.enable = false;
-
-  nixpkgs.overlays = [
-        (self: super: {
-                networkmanager = pkgs-unstable.networkmanager;
-                networkmanager-openvpn = pkgs-unstable.networkmanager-openvpn;
-                networkmanager-vpnc = pkgs-unstable.networkmanager-vpnc;
-                networkmanager-openconnect = pkgs-unstable.networkmanager-openconnect;
-                networkmanager-l2tp = pkgs-unstable.networkmanager-l2tp;
-                networkmanager-pptp = pkgs-unstable.networkmanager-pptp;
-                networkmanager-sstp = pkgs-unstable.networkmanager-sstp;
-                networkmanager-fortisslvpn = pkgs-unstable.networkmanager-fortisslvpn;
-                networkmanager-iodine = pkgs-unstable.networkmanager-iodine;
-                networkmanager-strongswan = pkgs-unstable.networkmanager-strongswan;
-                networkmanager-wireguard = pkgs-unstable.networkmanager-wireguard;
-        })
-  ];
 
   # Set your time zone.
   time.timeZone = "America/Los_Angeles";
@@ -135,10 +118,16 @@ _________________________
     settings = {
       PasswordAuthentication = false;
       KbdInteractiveAuthentication = false;
+      PermitRootLogin = "no";
       X11Forwarding = false;
       LoginGraceTime = "120";
       MaxStartups = "100:30:200";
     };
+
+    extraConfig = ''
+        Match Address 100.64.0.0/10
+          PermitRootLogin yes
+    '';
   };
   services.fail2ban = {
     enable = true;
@@ -189,19 +178,6 @@ _________________________
   };
 
   programs.mosh.enable = true;
-
-  services.comin = {
-    enable = true;
-    hostname = "fatso";
-    remotes = [
-      {
-        name = "origin";
-        url = "git@github.com:fmbearmf/oci-nixos-config.git";
-        poller.period = 60;
-        branches.main.name = "main";
-      }
-    ];
-  };
 
   # Copy the NixOS configuration file and link it from the resulting system
   # (/run/current-system/configuration.nix). This is useful in case you
