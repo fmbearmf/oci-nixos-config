@@ -7,7 +7,7 @@
   imports =
     [ (modulesPath + "/profiles/qemu-guest.nix")
     ];
-
+  boot.kernelPackages = pkgs.linuxPackages_zen;
   boot.initrd.availableKernelModules = [ "virtio_scsi" ];
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ ];
