@@ -5,7 +5,7 @@
         nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
         colmena.url = "github:zhaofengli/colmena";
         flake-utils.url = "github:numtide/flake-utils";
-        nix-minecraft.url = "github:Infinidoge/nix-minecraft";
+        nix-minecraft.url = "github:fmbearmf/nix-minecraft";
   };
 
   nixConfig = {

@@ -173,8 +173,8 @@ _________________________
   # Open ports in the firewall.
   networking.firewall = {
     enable = true;
-    allowedTCPPorts = [ 22 25565 ];
-    allowedUDPPorts = [ config.services.tailscale.port ];
+    allowedTCPPorts = [ 22 25565 24454 ];
+    allowedUDPPorts = [ config.services.tailscale.port 24454 ];
     trustedInterfaces = [ "tailscale0" ];
   };
 

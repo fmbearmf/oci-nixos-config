@@ -16,6 +16,8 @@ let
         ecbookplus = pkgs.fetchurl { url = "https://cdn.modrinth.com/data/dMOPYb3s/versions/hjk5x2Ju/EnchantBookPlus-1.0.4.jar"; hash = "sha256-1jO/12IggdRkgxpkZzz1Y6P8NKCbvWRy/PBkq150i4c="; };
         craftbook = pkgs.fetchurl { url = "https://cdn.modrinth.com/data/jrO7z7l7/versions/KiMQgPhT/craftbook-bukkit-5.0.0-beta-04.jar"; hash = "sha256-8rZFdCuHyxq1GX+sYoOaD5dtr0ZSsiY8BU9hWC9psmk="; };
         worldedit = pkgs.fetchurl { url = "https://cdn.modrinth.com/data/1u6JkXh5/versions/aqvVpeHP/worldedit-bukkit-7.3.12-beta-02.jar"; hash = "sha256-BcltZwsOYXwV2CRoQeEOj+6s+ZF1uSM70xDQJL10dIw="; };
+        svc = pkgs.fetchurl { url = "https://hangarcdn.papermc.io/plugins/henkelmax/SimpleVoiceChat/versions/bukkit-2.5.30/PAPER/voicechat-bukkit-2.5.30.jar"; hash = "sha256-kQqyNfJ20O4NBMn31vCQGzUeGhW0VSae40YkGlITsxI="; };
+        freedom = ../blob/FreedomChat.jar;
         elytrabind = ../blob/elytrabind.jar;
 in
 {
@@ -44,7 +46,7 @@ in
                         cool-server1 = {
                                 enable = true;
                                 autoStart = true;
-                                package = pkgs.paperServers.paper-1_21_5;
+                                package = pkgs.purpurServers.purpur-1_21_5;
                                 serverProperties = {
                                         motd = "Xerpos Extreme Survival";
                                         difficulty = "hard";
@@ -53,6 +55,7 @@ in
                                         initial-enabled-packs = "vanilla,minecart_improvements";
                                         server-ip = "0.0.0.0";
                                         spawn-protection = 0;
+                                        enforce-secure-profile = "false";
                                 };
 
                                 symlinks = {
@@ -70,6 +73,8 @@ in
                                         "plugins/craftbook.jar" = craftbook;
                                         "plugins/we.jar" = worldedit;
                                         "plugins/elytrabind.jar" = elytrabind;
+                                        "plugins/svc.jar" = svc;
+                                        "plugins/freedom.jar" = freedom;
                                 };
 
                                 files = {
@@ -84,6 +89,8 @@ in
         networking = {
                 firewall = {
                         enable = true;
+                        allowedTCPPorts = [ 24454 ];
+                        allowedUDPPorts = [ 24454 ];
                 };
         };
 
