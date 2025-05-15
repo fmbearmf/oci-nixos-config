@@ -12,6 +12,11 @@ let
 
         armorenchants = pkgs.fetchurl { url = "https://cdn.modrinth.com/data/ldjV6Y1m/versions/coeCQtAp/Compatible%20Protection%20Enchantments%20v2.1%201.21%20-%201.21.3.zip"; hash = "sha256-Uxi3P8N/67NDwc4X0P4XgaFIR0f3zEj1WC8EIxwDBzE="; };
         lpc = pkgs.fetchurl { url = "https://cdn.modrinth.com/data/LOlAU5yB/versions/qppjVMZp/LPC-Minimessage.jar"; hash = "sha256-F/ba0wgUJaHO+/D7Teak6h2HHF0am2mlcih1awynxq0="; };
+        anvilunlocker = pkgs.fetchurl { url = "https://cdn.modrinth.com/data/N4CZEMrg/versions/OWnYS8Lk/AnvilUnlocker-1.1.0.jar"; hash = "sha256-w6wQb7tXTL/y2xfYVdRrUIh4qJO0Ex1fioPxcvIn6j8="; };
+        ecbookplus = pkgs.fetchurl { url = "https://cdn.modrinth.com/data/dMOPYb3s/versions/hjk5x2Ju/EnchantBookPlus-1.0.4.jar"; hash = "sha256-1jO/12IggdRkgxpkZzz1Y6P8NKCbvWRy/PBkq150i4c="; };
+        craftbook = pkgs.fetchurl { url = "https://cdn.modrinth.com/data/jrO7z7l7/versions/KiMQgPhT/craftbook-bukkit-5.0.0-beta-04.jar"; hash = "sha256-8rZFdCuHyxq1GX+sYoOaD5dtr0ZSsiY8BU9hWC9psmk="; };
+        worldedit = pkgs.fetchurl { url = "https://cdn.modrinth.com/data/1u6JkXh5/versions/aqvVpeHP/worldedit-bukkit-7.3.12-beta-02.jar"; hash = "sha256-BcltZwsOYXwV2CRoQeEOj+6s+ZF1uSM70xDQJL10dIw="; };
+        elytrabind = ../blob/elytrabind.jar;
 in
 {
         imports = [ 
@@ -60,13 +65,18 @@ in
                                         "plugins/teakstweaks.jar" = teakstweaks;
                                         "plugins/spark.jar" = spark;
                                         "plugins/lpc.jar" = lpc;
+                                        "plugins/anvilunlocker.jar" = anvilunlocker;
+                                        "plugins/ecbookplus.jar" = ecbookplus;
+                                        "plugins/craftbook.jar" = craftbook;
+                                        "plugins/we.jar" = worldedit;
+                                        "plugins/elytrabind.jar" = elytrabind;
                                 };
 
                                 files = {
                                         "world/datapacks/armorenchants.zip" = armorenchants;
                                 };
 
-                                jvmOpts = "-XX:+UseZGC -XX:+UnlockExperimentalVMOptions -XX:+DisableExplicitGC -Xms6144M -Xmx6144M";
+                                jvmOpts = "-XX:+UseZGC -XX:+ZGenerational -XX:+UnlockExperimentalVMOptions -XX:+DisableExplicitGC -Xms14336M -Xmx14336M";
                         };
                 };
         };

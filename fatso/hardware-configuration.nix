@@ -7,11 +7,14 @@
   imports =
     [ (modulesPath + "/profiles/qemu-guest.nix")
     ];
-  boot.kernelPackages = pkgs.linuxPackages_zen;
+  boot.kernelPackages = pkgs.linuxPackages_latest;
   boot.initrd.availableKernelModules = [ "virtio_scsi" ];
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ ];
   boot.extraModulePackages = [ ];
+
+  services.scx.enable = true;
+  services.scx.scheduler = "scx_lavd";
 
   fileSystems."/" =
     { device = "/dev/disk/by-uuid/ebec7f46-1aff-4e35-b544-88d99ad912dc";

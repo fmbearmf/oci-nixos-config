@@ -63,7 +63,8 @@
                                 mkdir -p $out/bin
                                 cat > $out/bin/build <<EOF
                                 #!/bin/sh
-                                ${colmena.defaultPackage.${system}}/bin/colmena build --experimental-flake-eval
+                                nix flake update
+                                ${colmena.defaultPackage.${system}}/bin/colmena build
                                 EOF
                                 chmod +x $out/bin/build
                         '';
@@ -83,7 +84,8 @@
                                 mkdir -p $out/bin
                                 cat > $out/bin/apply <<EOF
                                 #!/bin/sh
-                                ${colmena.defaultPackage.${system}}/bin/colmena apply --experimental-flake-eval
+                                nix flake update
+                                ${colmena.defaultPackage.${system}}/bin/colmena apply
                                 EOF
                                 chmod +x $out/bin/apply
                         '';
