@@ -12,13 +12,17 @@ let
 
         armorenchants = pkgs.fetchurl { url = "https://cdn.modrinth.com/data/ldjV6Y1m/versions/coeCQtAp/Compatible%20Protection%20Enchantments%20v2.1%201.21%20-%201.21.3.zip"; hash = "sha256-Uxi3P8N/67NDwc4X0P4XgaFIR0f3zEj1WC8EIxwDBzE="; };
         lpc = pkgs.fetchurl { url = "https://cdn.modrinth.com/data/LOlAU5yB/versions/qppjVMZp/LPC-Minimessage.jar"; hash = "sha256-F/ba0wgUJaHO+/D7Teak6h2HHF0am2mlcih1awynxq0="; };
-        anvilunlocker = pkgs.fetchurl { url = "https://cdn.modrinth.com/data/N4CZEMrg/versions/OWnYS8Lk/AnvilUnlocker-1.1.0.jar"; hash = "sha256-w6wQb7tXTL/y2xfYVdRrUIh4qJO0Ex1fioPxcvIn6j8="; };
+        boundless = pkgs.fetchurl { url = "https://cdn.modrinth.com/data/jnw9A185/versions/BZ47T5h9/BoundlessForging-1.0-SNAPSHOT.jar"; hash = "sha256-XeBuA2mktgapxe41k4+cUGj/bvDWyBWRBedv2PyHsck="; };
         ecbookplus = pkgs.fetchurl { url = "https://cdn.modrinth.com/data/dMOPYb3s/versions/hjk5x2Ju/EnchantBookPlus-1.0.4.jar"; hash = "sha256-1jO/12IggdRkgxpkZzz1Y6P8NKCbvWRy/PBkq150i4c="; };
         craftbook = pkgs.fetchurl { url = "https://cdn.modrinth.com/data/jrO7z7l7/versions/KiMQgPhT/craftbook-bukkit-5.0.0-beta-04.jar"; hash = "sha256-8rZFdCuHyxq1GX+sYoOaD5dtr0ZSsiY8BU9hWC9psmk="; };
         worldedit = pkgs.fetchurl { url = "https://cdn.modrinth.com/data/1u6JkXh5/versions/aqvVpeHP/worldedit-bukkit-7.3.12-beta-02.jar"; hash = "sha256-BcltZwsOYXwV2CRoQeEOj+6s+ZF1uSM70xDQJL10dIw="; };
         svc = pkgs.fetchurl { url = "https://hangarcdn.papermc.io/plugins/henkelmax/SimpleVoiceChat/versions/bukkit-2.5.30/PAPER/voicechat-bukkit-2.5.30.jar"; hash = "sha256-kQqyNfJ20O4NBMn31vCQGzUeGhW0VSae40YkGlITsxI="; };
+        dynrp = pkgs.fetchurl { url = "https://cdn.modrinth.com/data/bRSDqfN3/versions/3cznseEI/DynamicRP-1.3.jar"; hash = "sha256-uoPlPocbWSdi7TQ3CaJod014UdV2q28y72oZJA15fbI="; };
+        ltab = pkgs.fetchurl { url = "https://cdn.modrinth.com/data/f8ApknSd/versions/4J2cPvEu/LightTab-1.1.0.jar"; hash = "sha256-b4t/Y6GVMPCkqPjVtHTLqlIPf0KvMpyatMDTEU8OJaM="; };
+        ench = pkgs.fetchurl { url = "https://cdn.modrinth.com/data/gKr7sA4W/versions/5EplLhMw/Enchantio-1.12.0.jar"; hash = "sha256-+G0teX1OI1lZ3QLKn1umKLEMcZCeanmvYoZfO30u85A="; };
+        grief = ../blob/worldguard.jar;
         freedom = ../blob/FreedomChat.jar;
-        elytrabind = ../blob/elytrabind.jar;
+        elytrabind = ../blob/paper-monorepo-1984-dev.jar;
 in
 {
         imports = [ 
@@ -48,7 +52,7 @@ in
                                 autoStart = true;
                                 package = pkgs.purpurServers.purpur-1_21_5;
                                 serverProperties = {
-                                        motd = "Xerpos Extreme Survival";
+                                        motd = "Xerposcraft";
                                         difficulty = "hard";
                                         simulation-distance = 5;
                                         view-distance = 12;
@@ -59,7 +63,7 @@ in
                                 };
 
                                 symlinks = {
-                                        "plugins/prism.jar" = prism;
+                                        #"plugins/prism.jar" = prism;
                                         "plugins/nbt-api.jar" = nbt-api;
                                         "plugins/luckperms.jar" = luckperms;
                                         "plugins/chunky.jar" = chunky;
@@ -68,13 +72,17 @@ in
                                         "plugins/teakstweaks.jar" = teakstweaks;
                                         "plugins/spark.jar" = spark;
                                         "plugins/lpc.jar" = lpc;
-                                        "plugins/anvilunlocker.jar" = anvilunlocker;
+                                        "plugins/boundless.jar" = boundless;
                                         "plugins/ecbookplus.jar" = ecbookplus;
                                         "plugins/craftbook.jar" = craftbook;
                                         "plugins/we.jar" = worldedit;
                                         "plugins/elytrabind.jar" = elytrabind;
                                         "plugins/svc.jar" = svc;
                                         "plugins/freedom.jar" = freedom;
+                                        "plugins/dynamicrp.jar" = dynrp;
+                                        "plugins/ltab.jar" = ltab;
+                                        "plugins/enchantio.jar" = ench;
+                                        "plugins/grief.jar" = grief;
                                 };
 
                                 files = {
@@ -89,8 +97,8 @@ in
         networking = {
                 firewall = {
                         enable = true;
-                        allowedTCPPorts = [ 24454 ];
-                        allowedUDPPorts = [ 24454 ];
+                        allowedTCPPorts = [ 24454 34456 ];
+                        allowedUDPPorts = [ 24454 34456 ];
                 };
         };
 
