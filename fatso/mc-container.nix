@@ -19,7 +19,7 @@ let
         svc = pkgs.fetchurl { url = "https://hangarcdn.papermc.io/plugins/henkelmax/SimpleVoiceChat/versions/bukkit-2.5.30/PAPER/voicechat-bukkit-2.5.30.jar"; hash = "sha256-kQqyNfJ20O4NBMn31vCQGzUeGhW0VSae40YkGlITsxI="; };
         dynrp = pkgs.fetchurl { url = "https://cdn.modrinth.com/data/bRSDqfN3/versions/3cznseEI/DynamicRP-1.3.jar"; hash = "sha256-uoPlPocbWSdi7TQ3CaJod014UdV2q28y72oZJA15fbI="; };
         ltab = pkgs.fetchurl { url = "https://cdn.modrinth.com/data/f8ApknSd/versions/4J2cPvEu/LightTab-1.1.0.jar"; hash = "sha256-b4t/Y6GVMPCkqPjVtHTLqlIPf0KvMpyatMDTEU8OJaM="; };
-        ench = pkgs.fetchurl { url = "https://cdn.modrinth.com/data/gKr7sA4W/versions/5EplLhMw/Enchantio-1.12.0.jar"; hash = "sha256-+G0teX1OI1lZ3QLKn1umKLEMcZCeanmvYoZfO30u85A="; };
+        ench = ../blob/Enchantio.jar;
         grief = ../blob/worldguard.jar;
         freedom = ../blob/FreedomChat.jar;
         elytrabind = ../blob/paper-monorepo-1984-dev.jar;
