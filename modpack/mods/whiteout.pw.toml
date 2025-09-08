@@ -1,0 +1,13 @@
+name = "Whiteout"
+filename = "whiteout-0.14.5.jar"
+side = "server"
+
+[download]
+url = "https://cdn.modrinth.com/data/5piZC07n/versions/59BZmWBg/whiteout-0.14.5.jar"
+hash-format = "sha512"
+hash = "c0787c29c62ce48d667c68011b99af88c9d607e70bcb4349f1718b8a8897cab7e280f32625db8f4d5df091cff4de7efea272dfc6393ff7d7251ce6638107a3ee"
+
+[update]
+[update.modrinth]
+mod-id = "5piZC07n"
+version = "59BZmWBg"

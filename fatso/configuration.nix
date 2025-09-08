@@ -2,13 +2,21 @@
 # your system. Help is available in the configuration.nix(5) man page, on
 # https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
 
-{ config, lib, pkgs, ... }:
-
+{ config, lib, pkgs, inputs, ... }:
+let
+  wikiHost = "wiki.bear.oops.wtf";
+  modpack = pkgs.fetchPackwizModpack {
+    src = ../modpack;
+  };
+  mcVersion = modpack.manifest.versions.minecraft;
+  fabricVersion = modpack.manifest.versions.fabric;
+  serverVersion = lib.replaceStrings [ "." ] [ "_" ] "fabric-${mcVersion}";
+in
 {
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
-      ./container.nix
+      inputs.nix-minecraft.nixosModules.minecraft-servers
     ];
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
@@ -44,7 +52,32 @@
   # Enable the X11 windowing system.
   # services.xserver.enable = true;
 
-
+  services.minecraft-servers = {
+    enable = true;
+    eula = true;
+    servers.bearcraft = {
+      enable = true;
+      restart = "always";
+      package = pkgs.fabricServers.${serverVersion}.override { loaderVersion = fabricVersion; };
+      symlinks = {
+        "mods" = "${modpack}/mods";
+        "config" = "${modpack}/config";
+      };
+      serverProperties = {
+        difficulty = 3;
+        motd = "§l§aXarnt Craft dot com";
+        max-players = 15;
+        enforce-secure-profile = false;
+        spawn-protection = 1;
+        sync-chunk-writes = false;
+        view-distance = 14;
+        simulation-distance = 10;
+      };
+      operators = {
+        mincaraft = "bd0381fd-a21c-4289-bdb7-24892bda8e47";
+      };
+    };
+  };
   
 
   # Configure keymap in X11
@@ -147,6 +180,106 @@ _________________________
     enable = true;
   };
 
+  security.acme.acceptTerms = true;
+  security.acme.defaults.email = "melchi@garfias.org";
+
+  services.mediawiki = {
+    enable = true;
+    name = "Rugiverse Cinematic Universe";
+    nginx = {
+      hostName = wikiHost;
+    };
+    webserver = "nginx";
+    passwordFile = pkgs.writeText "password" "swagmapassword332";
+    extraConfig = ''
+      $wgEnableEmail = true;
+      $wgEmailConfirmToEdit = true;
+      $wgAllowHTMLEmail = true;
+      $wgSMTP = [
+        "host" => "smtp.email.us-phoenix-1.oci.oraclecloud.com",
+        "IDHost" => "wiki.bear.oops.wtf",
+        "localhost" => "wiki.bear.oops.wtf",
+        "port" => 587,
+        "auth" => true,
+        "username" => "ocid1.user.oc1..aaaaaaaa4b2pofjvlxqht3kgnsp2hylvfr3lpghxvlrlwcp6qudvhc4wyyua@ocid1.tenancy.oc1..aaaaaaaa6roop4fnvqoko5xlh24i5dtxa7wq6zie5ezh35su2c772gk63swq.41.com",
+        "password" => "y]F.38+sW9{]O.<VFz-&"
+      ];
+      $wgPasswordSender = "rugiverse@wiki.bear.oops.wtf";
+      $wgUserEmailConfirmationTokenExpiry = 240;
+      $wgNewPasswordExpiry = 240;
+    '';
+    url = "https://${wikiHost}";
+    extensions = {
+      VisualEditor = null;
+    };
+  };
+
+  services.nginx = {
+    enable = true;
+
+    virtualHosts."${wikiHost}" = {
+      enableACME = true;
+      forceSSL = true;
+    };
+
+    virtualHosts."backend.bear.oops.wtf" = {
+      enableACME = true;
+      forceSSL = true;
+    };
+  };
+
+  mailserver = {
+    enable = true;
+    fqdn = "backend.bear.oops.wtf";
+    domains = [ "bear.oops.wtf" ];
+
+    loginAccounts = {
+      "bear@bear.oops.wtf" = {
+        hashedPassword = "$2b$05$.Fl7sF4Ab6nXlqC/mxhqbOYPvA233NBrFQB2XRpEionfmEczfQo2e";
+        aliases = [ "admin@bear.oops.wtf" ];
+      };
+    };
+
+    certificateScheme = "acme";
+  };
+
+  services.postfix = {
+    enable = true;
+    #domain = "bear.oops.wtf";
+    #origin = "bear.oops.wtf";
+    #hostname = "backend.bear.oops.wtf";
+    #relayHost = "[smtp.email.us-phoenix-1.oci.oraclecloud.com]:587";
+    #relayPort = 587;
+    config = {
+      #relay_domains = [ "hash:/var/lib/mailman/data/postfix_domains" ];
+      #transport_maps = [ "hash:/var/lib/mailman/data/postfix_lmtp" ];
+      #local_recipient_maps = [ "hash:/var/lib/mailman/data/postfix_lmtp" ];
+      relayhost = "[smtp.email.us-phoenix-1.oci.oraclecloud.com]:587";
+      smtp_sasl_password_maps = "static:ocid1.user.oc1..aaaaaaaa4b2pofjvlxqht3kgnsp2hylvfr3lpghxvlrlwcp6qudvhc4wyyua@ocid1.tenancy.oc1..aaaaaaaa6roop4fnvqoko5xlh24i5dtxa7wq6zie5ezh35su2c772gk63swq.41.com:y]F.38+sW9{]O.<VFz-&";
+      smtp_sasl_auth_enable = "yes";
+      smtp_sasl_security_options = "noanonymous";
+      smtp_tls_security_level = "may";
+      local_header_rewrite_clients = "static:all";
+      append_dot_mydomain = "yes";
+    };
+    #extraConfig = ''
+    #  smtp_sasl_auth_enable = yes
+    #  local_header_rewrite_clients = static:all
+    #  append_dot_mydomain = yes
+    #'';
+  };
+
+  services.roundcube = {
+    enable = true;
+    hostName = "backend.bear.oops.wtf";
+    extraConfig = ''
+      $config['smtp_host'] = "tls://${config.mailserver.fqdn}";
+      $config['smtp_user'] = "%u";
+      $config['smtp_pass'] = "%p";
+    '';
+
+  };
+
   systemd.services.tailscale-autoconnect = {
     description = "idk";
 
@@ -166,15 +299,15 @@ _________________________
 	fi
 
 	#otherwise auth
-	${tailscale}/bin/tailscale up --auth-key tskey-auth-kSiVd2iTgy11CNTRL-nJ5FQ72KDF7xMwhtFWvTF7QfXhcvQyirV --advertise-routes=192.168.0.0/16,169.254.169.254/32 --accept-dns=false
+	${tailscale}/bin/tailscale up --auth-key tskey-auth-kmM9hkx83e11CNTRL-ix27fm8w9dAeNChkfDZucAN8mJU8KeKnG --advertise-routes=192.168.0.0/16,169.254.169.254/32 --accept-dns=false
     '';
   };
 
   # Open ports in the firewall.
   networking.firewall = {
     enable = true;
-    allowedTCPPorts = [ 22 25565 24454 34456 ];
-    allowedUDPPorts = [ config.services.tailscale.port 24454 34456 ];
+    allowedTCPPorts = [ 22 25565 24454 34456 80 443 25 587 465 ];
+    allowedUDPPorts = [ config.services.tailscale.port 24454 34456 80 443 ];
     trustedInterfaces = [ "tailscale0" ];
   };
 

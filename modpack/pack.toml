@@ -1,0 +1,16 @@
+name = "Bearcraft"
+author = "bearfm"
+version = "1.0.0"
+pack-format = "packwiz:1.1.0"
+
+[index]
+file = "index.toml"
+hash-format = "sha256"
+hash = "71c18e6d3846aab97846b0e1258e05b5d40a7c633c10671e4b8160d265a0eadf"
+
+[versions]
+fabric = "0.17.2"
+minecraft = "1.21.7"
+
+[options]
+acceptable-game-versions = []

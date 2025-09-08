@@ -1,0 +1,13 @@
+name = "Safe(ish) Respawn"
+filename = "saferespawn-1.0.3.jar"
+side = "server"
+
+[download]
+url = "https://cdn.modrinth.com/data/izAOI0WZ/versions/dXKNT4zd/saferespawn-1.0.3.jar"
+hash-format = "sha512"
+hash = "51a6e1f1b69b4a4574edd11c52a0ddaa8641b81a69ff04280ba2efe0724895dc7d29e30fae540e1ef9dda3b1237c28a75365a5d174c1d78eba0b63b92c54f644"
+
+[update]
+[update.modrinth]
+mod-id = "izAOI0WZ"
+version = "dXKNT4zd"

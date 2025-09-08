@@ -1,0 +1,13 @@
+name = "Modern Netty"
+filename = "mnet-1.2.0-release.jar"
+side = "both"
+
+[download]
+url = "https://cdn.modrinth.com/data/GLBlQAGi/versions/u1a7N6GH/mnet-1.2.0-release.jar"
+hash-format = "sha512"
+hash = "4b63190085eec1a6c93a68452889aad1bc800c415df16dbdd643a855fe37ad23672584a691d539a2f7f82982abde039fa5c54ff8c4e2a3e58cd3ddb42bf2c515"
+
+[update]
+[update.modrinth]
+mod-id = "GLBlQAGi"
+version = "u1a7N6GH"

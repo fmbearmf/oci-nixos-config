@@ -1,0 +1,13 @@
+name = "Tectonic"
+filename = "tectonic-3.0.3-fabric-1.21.6.jar"
+side = "both"
+
+[download]
+url = "https://cdn.modrinth.com/data/lWDHr9jE/versions/GraxbWKG/tectonic-3.0.3-fabric-1.21.6.jar"
+hash-format = "sha512"
+hash = "dac4f2d9835a293f1bb6643491226412bf541bb5d7d864a4749726e61acc57ee9b73b7fcadacb073ba8de8bcf3c5fce6e46081f7980796a7140188811b95457c"
+
+[update]
+[update.modrinth]
+mod-id = "lWDHr9jE"
+version = "GraxbWKG"

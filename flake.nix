@@ -5,7 +5,9 @@
         nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
         colmena.url = "github:zhaofengli/colmena";
         flake-utils.url = "github:numtide/flake-utils";
-        nix-minecraft.url = "github:fmbearmf/nix-minecraft";
+        nix-minecraft.url = "github:Infinidoge/nix-minecraft";
+        nix-minecraft.inputs.nixpkgs.follows = "nixpkgs";
+        simple-nixos-mailserver.url = "gitlab:simple-nixos-mailserver/nixos-mailserver/nixos-24.11";
   };
 
   nixConfig = {
@@ -13,7 +15,7 @@
     extra-trusted-public-keys = [ "colmena.cachix.org-1:7BzpDnjjH8ki2CT3f6GdOk7QAzPOl+1t3LvTLXqYcSg=" ];
   };
 
-  outputs = { self, nixpkgs, colmena, flake-utils, ... }@inputs:
+  outputs = { self, nixpkgs, colmena, flake-utils, simple-nixos-mailserver, ... }@inputs:
   {
         colmenaHive = colmena.lib.makeHive self.outputs.colmena;
         colmena = {
@@ -38,6 +40,7 @@
 
                         imports = [ 
                                 ( ./fatso/configuration.nix )
+                                ( simple-nixos-mailserver.nixosModule )
                                 { nixpkgs.overlays = [ inputs.nix-minecraft.overlay ]; }
                         ];
                 };
@@ -72,7 +75,6 @@
                 apply = pkgs.stdenv.mkDerivation {
                         pname = "apply";
                         version = "0.0.1";
-
                         src = null;
                         dontUnpack = true;
 
@@ -90,6 +92,16 @@
                                 chmod +x $out/bin/apply
                         '';
                 };
+        };
+
+        nixosConfigurations.fatso = nixpkgs.lib.nixosSystem {
+                system = "aarch64-linux";
+                modules = [
+                        ( ./fatso/configuration.nix )
+                        ( simple-nixos-mailserver.nixosModule )
+                        { nixpkgs.overlays = [ inputs.nix-minecraft.overlay ]; }
+                ];
+                specialArgs = { inherit inputs; };
         };
 
         devShells.default = pkgs.mkShell {
