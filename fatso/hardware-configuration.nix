@@ -13,8 +13,8 @@
   boot.kernelModules = [ ];
   boot.extraModulePackages = [ ];
 
-  services.scx.enable = true;
-  services.scx.scheduler = "scx_lavd";
+  #services.scx.enable = true;
+  #services.scx.scheduler = "scx_lavd";
 
   fileSystems."/" =
     { device = "/dev/disk/by-uuid/ebec7f46-1aff-4e35-b544-88d99ad912dc";

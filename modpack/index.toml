@@ -1,6 +1,30 @@
 hash-format = "sha256"
 
 [[files]]
+file = "config/polymer/auto-host.json"
+hash = "41045b37214e0cb0c50b2d9f3319166c65ff0696d08f3aeb9d4024b67cbb13d4"
+
+[[files]]
+file = "config/servercore/config.yml"
+hash = "b278167cb668cc8bcbd3f678d50e70497e23996703580b8452cc7e3e8c1a5e0e"
+
+[[files]]
+file = "config/servercore/optimizations.yml"
+hash = "a9ab99076203386370a76a29fa4d3e341be73b15742912617e2b5b9dc8087bcb"
+
+[[files]]
+file = "config/tectonic.json"
+hash = "b22d9194cef557d9e44f8a6b854f0a53ba15db487d46f5002ccbf92d644401d6"
+
+[[files]]
+file = "config/tt20/config.json"
+hash = "20131dc5f9ca4852a628a971b9b0d670907da111af03569fb1dbc77fb5fb35cb"
+
+[[files]]
+file = "config/universal-graves/config.json"
+hash = "8b5afc2351b10369d87b2b1c6955d010adacb150e4469ea5f08d767b6c643978"
+
+[[files]]
 file = "mods/almanac.pw.toml"
 hash = "73030bd60be4d6f1c58ef7f5ae3a3955537111192bad864b53f65eb387b48eaf"
 metafile = true
@@ -56,13 +80,18 @@ hash = "86280b5ea045ad198494bfc49641dd803010e35069c957a4d4390fd276cbe0c7"
 metafile = true
 
 [[files]]
+file = "mods/combit.pw.toml"
+hash = "3d98933d7bdcfec63a9d7ae8c737575ba1a2ebe0eff75eeb681be1fb3ca113db"
+metafile = true
+
+[[files]]
 file = "mods/crashexploitfixer.pw.toml"
 hash = "eb8524b5da62bd4fcc546bd85d99375172eaa2c7613dabae5df578d573840645"
 metafile = true
 
 [[files]]
 file = "mods/crops-love-rain.pw.toml"
-hash = "ded1ece34ec290bca44e3986be3717a3c2e20464f3d9e7624a4fa197b545a038"
+hash = "17134ebd3d73bd6577aa28961ea7ffa826b7916ed7d247b630b95018a3295bfa"
 metafile = true
 
 [[files]]
@@ -93,16 +122,6 @@ metafile = true
 [[files]]
 file = "mods/fabric-api.pw.toml"
 hash = "6a2b381b6a18c0b74dbc04a25cc8266964c3a5535885caa0dc5fa6c213fc8855"
-metafile = true
-
-[[files]]
-file = "mods/farmers-delight-polymer.pw.toml"
-hash = "4337fec4a7c4993fd3e77be0d594314a796dc986541f043fd55db385a7dbe4a6"
-metafile = true
-
-[[files]]
-file = "mods/farmers-delight-refabricated.pw.toml"
-hash = "470e91911a37bdc3f8c329c07aec8e3028e0a0df95a997fb092696ec95c20275"
 metafile = true
 
 [[files]]
@@ -141,6 +160,11 @@ hash = "90f8fd0ab4afd6b323cc4dd945b4c6d162b9e7cd9a2694afcc170c52213e303d"
 metafile = true
 
 [[files]]
+file = "mods/libjf.pw.toml"
+hash = "c05f68f22cab90b304edd5c87b613127a80bc594157e89c4a17963a0c28ef5aa"
+metafile = true
+
+[[files]]
 file = "mods/lithium.pw.toml"
 hash = "78d3414d086eeffc1e271cc189ea7a33d1dc2ed6f570f39e4abe4b33fc0acc58"
 metafile = true
@@ -158,11 +182,6 @@ metafile = true
 [[files]]
 file = "mods/luckperms.pw.toml"
 hash = "5e7d7f0551f95f2f496098b0eb9f3ed4d5942ce981f4eb9e1f80c1a83ef19058"
-metafile = true
-
-[[files]]
-file = "mods/modern-netty.pw.toml"
-hash = "e0031e1ea116ae1a2a50fe6028722685decfba6cb3c0600bd945e593c2f586b0"
 metafile = true
 
 [[files]]
@@ -191,8 +210,8 @@ hash = "67771637cee86a6c27d15c6c3006b9c2df8574be2b0023bfc827225079899ee2"
 metafile = true
 
 [[files]]
-file = "mods/oceans-delight-polymer-port.pw.toml"
-hash = "e2a8b2a141e5ffed1c85f9fadacc4639f60c98a1afe45f00eeafb3bf08967912"
+file = "mods/noweatherskip.pw.toml"
+hash = "c43d115c12844718de6382b01b2f54707996a95d84c5f5968ee4e8088e929771"
 metafile = true
 
 [[files]]
@@ -227,7 +246,7 @@ metafile = true
 
 [[files]]
 file = "mods/polymer.pw.toml"
-hash = "9a273ce18ab281a372f583597e0d5b2ac134e53e6aad705ec265716e0d95e3e2"
+hash = "c8cc1d7e91aa70a842dad55a649bab3b0f899aa5a2fd191a3a4a44fc6e4e3005"
 metafile = true
 
 [[files]]
@@ -241,6 +260,11 @@ hash = "a04338ef93757875028cc1f2f7287199b3e7024c906af6ee53437d8c8a7f9f06"
 metafile = true
 
 [[files]]
+file = "mods/rain-delay.pw.toml"
+hash = "4f1e4a3ed60295bbd71c0ad6de31fb1f59b086ebfb44582544ca425c09e2904a"
+metafile = true
+
+[[files]]
 file = "mods/remove-terralith-intro-message.pw.toml"
 hash = "fe85eb7e13d32999eb376d154be220d82134c534a3f066fa263fb4af11535232"
 metafile = true
@@ -248,6 +272,11 @@ metafile = true
 [[files]]
 file = "mods/safe-respawn.pw.toml"
 hash = "855d4af5d64305f54ed4d068447925a7481eb3ac241132208e13a47ec840c30c"
+metafile = true
+
+[[files]]
+file = "mods/scalablelux.pw.toml"
+hash = "0bdb14d12c298ab3a115ba719c6a6ee294bcfb97ed12efe53dd1ef753efc82d4"
 metafile = true
 
 [[files]]
@@ -261,6 +290,11 @@ hash = "1590859a8c09f8c5a518415e6304dd493f1eb019ce13a317e805d79c08d9e4a2"
 metafile = true
 
 [[files]]
+file = "mods/simple-voice-chat.pw.toml"
+hash = "40630d6f1fdd0011a3aa9270af99b331103a9eaed6e7832650e85b325a50bc85"
+metafile = true
+
+[[files]]
 file = "mods/skeleton-ai-fix.pw.toml"
 hash = "77b439b1e8b12a41b273f8b5a03eaf96445b70acb212a62046d131b798d54345"
 metafile = true
@@ -268,6 +302,11 @@ metafile = true
 [[files]]
 file = "mods/slumber.pw.toml"
 hash = "8e62d437a7d5a4852254ff210928992e08377148e047455f67a6e1f959e1732f"
+metafile = true
+
+[[files]]
+file = "mods/spark.pw.toml"
+hash = "a6948eb25808d55a8dc3b9a64999181ebae738c3679ced2981c7c1ec34b9b0b6"
 metafile = true
 
 [[files]]
@@ -333,11 +372,6 @@ metafile = true
 [[files]]
 file = "mods/viaversion.pw.toml"
 hash = "80df41dba099c78027e0d3c3f65bf18d015419fc56255a96cc0daa7a74a3b13f"
-metafile = true
-
-[[files]]
-file = "mods/vmp-fabric.pw.toml"
-hash = "1b2dee1ebac6f5ca706650c43284503273fdde8056683d6734308542ff272e6e"
 metafile = true
 
 [[files]]

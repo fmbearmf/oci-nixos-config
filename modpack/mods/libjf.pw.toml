@@ -1,0 +1,13 @@
+name = "LibJF"
+filename = "libjf-3.19.0.jar"
+side = "both"
+
+[download]
+url = "https://cdn.modrinth.com/data/WKwQAwke/versions/DAyEx90Q/libjf-3.19.0.jar"
+hash-format = "sha1"
+hash = "cbf349603c488468516c4a9ca7ee915cc123c5f2"
+
+[update]
+[update.modrinth]
+mod-id = "WKwQAwke"
+version = "DAyEx90Q"

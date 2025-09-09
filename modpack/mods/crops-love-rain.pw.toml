@@ -4,8 +4,8 @@ side = "server"
 
 [download]
 url = "https://cdn.modrinth.com/data/cRci7UZp/versions/Tqg8vgEZ/cropsloverain-3.1.1.jar"
-hash-format = "sha512"
-hash = "35d1ee946973aa435ef94a148cff81b3bc0cf1b5900806960e8b24c3e115d4506d1e887a198479802ce1d80e496bd2d2f0933afe6edd4fc59763a67ceece9b90"
+hash-format = "sha1"
+hash = "7f00a00384627329841be39d032a899758976036"
 
 [update]
 [update.modrinth]

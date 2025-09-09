@@ -5,8 +5,10 @@
 { config, lib, pkgs, inputs, ... }:
 let
   wikiHost = "wiki.bear.oops.wtf";
+  inherit (inputs.nix-minecraft.lib) collectFilesAt;
   modpack = pkgs.fetchPackwizModpack {
     src = ../modpack;
+    packHash = "sha256-VAv3BqPw5GogcEbDTq6A1BtjWgYALh1bg8Jq06y5JBU=";
   };
   mcVersion = modpack.manifest.versions.minecraft;
   fabricVersion = modpack.manifest.versions.fabric;
@@ -20,6 +22,7 @@ in
     ];
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nixpkgs.config.allowUnfree = true;
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
@@ -55,14 +58,13 @@ in
   services.minecraft-servers = {
     enable = true;
     eula = true;
+    managementSystem.systemd-socket.enable = true;
     servers.bearcraft = {
       enable = true;
       restart = "always";
-      package = pkgs.fabricServers.${serverVersion}.override { loaderVersion = fabricVersion; };
-      symlinks = {
-        "mods" = "${modpack}/mods";
-        "config" = "${modpack}/config";
-      };
+      package = pkgs.fabricServers.${serverVersion}.override { loaderVersion = fabricVersion; jre_headless = pkgs.graalvmPackages.graalvm-ce; };
+      symlinks = collectFilesAt modpack "mods";
+      files = collectFilesAt modpack "config";
       serverProperties = {
         difficulty = 3;
         motd = "§l§aXarnt Craft dot com";
@@ -73,6 +75,7 @@ in
         view-distance = 14;
         simulation-distance = 10;
       };
+      jvmOpts = "--enable-preview --enable-native-access=ALL-UNNAMED -Xms6144M -Xmx14336M";
       operators = {
         mincaraft = "bd0381fd-a21c-4289-bdb7-24892bda8e47";
       };
@@ -258,7 +261,7 @@ _________________________
       smtp_sasl_password_maps = "static:ocid1.user.oc1..aaaaaaaa4b2pofjvlxqht3kgnsp2hylvfr3lpghxvlrlwcp6qudvhc4wyyua@ocid1.tenancy.oc1..aaaaaaaa6roop4fnvqoko5xlh24i5dtxa7wq6zie5ezh35su2c772gk63swq.41.com:y]F.38+sW9{]O.<VFz-&";
       smtp_sasl_auth_enable = "yes";
       smtp_sasl_security_options = "noanonymous";
-      smtp_tls_security_level = "may";
+      #smtp_tls_security_level = "may";
       local_header_rewrite_clients = "static:all";
       append_dot_mydomain = "yes";
     };
