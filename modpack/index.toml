@@ -60,11 +60,6 @@ hash = "4385a242de62d01f91894aa2b011bb53cfdcfbdd4d950def81ec78aba7be66a3"
 metafile = true
 
 [[files]]
-file = "mods/fixmcstats.pw.toml"
-hash = "ea1859c60df28b88fef4d7324675f63b09fa05fb68cc5fc378739a694aad626e"
-metafile = true
-
-[[files]]
 file = "mods/floodgate.pw.toml"
 hash = "7a50c606177a8d4269f69df87f74e7caf1f8ff28bc523f015503ed3fb3d8c274"
 metafile = true
