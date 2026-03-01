@@ -2,7 +2,13 @@
 # your system. Help is available in the configuration.nix(5) man page, on
 # https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
 
-{ config, lib, pkgs, inputs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  inputs,
+  ...
+}:
 let
   wikiHost = "wiki.bear.oops.wtf";
   inherit (inputs.nix-minecraft.lib) collectFilesAt;
@@ -15,13 +21,16 @@ let
   serverVersion = lib.replaceStrings [ "." ] [ "_" ] "fabric-${mcVersion}";
 in
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-      inputs.nix-minecraft.nixosModules.minecraft-servers
-    ];
+  imports = [
+    # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+    inputs.nix-minecraft.nixosModules.minecraft-servers
+  ];
 
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
   nixpkgs.config.allowUnfree = true;
 
   # Use the systemd-boot EFI boot loader.
@@ -32,7 +41,7 @@ in
   # Pick only one of the below networking options.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
   networking.networkmanager = {
-        enable = true;
+    enable = true;
   };
 
   systemd.services.NetworkManager-wait-online.enable = false;
@@ -78,7 +87,10 @@ in
     servers.bearcraft = {
       enable = true;
       restart = "always";
-      package = pkgs.fabricServers.${serverVersion}.override { loaderVersion = fabricVersion; jre_headless = pkgs.graalvmPackages.graalvm-ce; };
+      package = pkgs.fabricServers.${serverVersion}.override {
+        loaderVersion = fabricVersion;
+        jre_headless = pkgs.graalvmPackages.graalvm-ce;
+      };
       symlinks = collectFilesAt modpack "mods";
       files = collectFilesAt modpack "config";
       serverProperties = {
@@ -97,7 +109,6 @@ in
       };
     };
   };
-  
 
   # Configure keymap in X11
   # services.xserver.xkb.layout = "us";
@@ -133,19 +144,19 @@ in
   users.enforceIdUniqueness = true;
   users.mutableUsers = lib.mkForce false;
   users.motd = ''
-_________________________
-|                       |
-|        _       _      |
-|       | |     | |     |
-|  _ __ | |_   _| |__   |
-| | '_ \| | | | | '_ \  |
-| | |_) | | |_| | | | | |
-| | .__/|_|\__,_|_| |_| |
-| | |                   |
-| |_|  x                |
-| 		        |
-|_______________________|
-'';
+    _________________________
+    |                       |
+    |        _       _      |
+    |       | |     | |     |
+    |  _ __ | |_   _| |__   |
+    | | '_ \| | | | | '_ \  |
+    | | |_) | | |_| | | | | |
+    | | .__/|_|\__,_|_| |_| |
+    | | |                   |
+    | |_|  x                |
+    | 		        |
+    |_______________________|
+  '';
 
   # programs.firefox.enable = true;
 
@@ -178,8 +189,8 @@ _________________________
     };
 
     extraConfig = ''
-        Match Address 100.64.0.0/10
-          PermitRootLogin yes
+      Match Address 100.64.0.0/10
+        PermitRootLogin yes
     '';
   };
   services.fail2ban = {
@@ -274,7 +285,7 @@ _________________________
       #relay_domains = [ "hash:/var/lib/mailman/data/postfix_domains" ];
       #transport_maps = [ "hash:/var/lib/mailman/data/postfix_lmtp" ];
       #local_recipient_maps = [ "hash:/var/lib/mailman/data/postfix_lmtp" ];
-      relayhost = [ "[smtp.email.us-phoenix-1.oci.oraclecloud.com]:587 ]";
+      relayhost = [ "[smtp.email.us-phoenix-1.oci.oraclecloud.com]:587" ];
       smtp_sasl_password_maps = "static:ocid1.user.oc1..aaaaaaaa4b2pofjvlxqht3kgnsp2hylvfr3lpghxvlrlwcp6qudvhc4wyyua@ocid1.tenancy.oc1..aaaaaaaa6roop4fnvqoko5xlh24i5dtxa7wq6zie5ezh35su2c772gk63swq.41.com:y]F.38+sW9{]O.<VFz-&";
       smtp_sasl_auth_enable = "yes";
       smtp_sasl_security_options = "noanonymous";
@@ -303,31 +314,55 @@ _________________________
   systemd.services.tailscale-autoconnect = {
     description = "idk";
 
-    after = [ "network-pre.target" "tailscale.service" ];
-    wants = [ "network-pre.target" "tailscale.service" ];
+    after = [
+      "network-pre.target"
+      "tailscale.service"
+    ];
+    wants = [
+      "network-pre.target"
+      "tailscale.service"
+    ];
     wantedBy = [ "multi-user.target" ];
 
     serviceConfig.Type = "oneshot";
 
     script = with pkgs; ''
-	#wait
-        sleep 2
+      	#wait
+              sleep 2
 
-        status="$(${tailscale}/bin/tailscale status -json | ${jq}/bin/jq -r .BackendState)"
-	if [ $status = "Running" ]; then #nothing
-	  exit 0
-	fi
+              status="$(${tailscale}/bin/tailscale status -json | ${jq}/bin/jq -r .BackendState)"
+      	if [ $status = "Running" ]; then #nothing
+      	  exit 0
+      	fi
 
-	#otherwise auth
-	${tailscale}/bin/tailscale up --auth-key tskey-auth-kbKqVNEMJf11CNTRL-XcqaNcxBaDMzvoTGPqhTCMbjK6HdK9tL --advertise-routes=192.168.0.0/16,169.254.169.254/32 --accept-dns=false
+      	#otherwise auth
+      	${tailscale}/bin/tailscale up --auth-key tskey-auth-kbKqVNEMJf11CNTRL-XcqaNcxBaDMzvoTGPqhTCMbjK6HdK9tL --advertise-routes=192.168.0.0/16,169.254.169.254/32 --accept-dns=false
     '';
   };
 
   # Open ports in the firewall.
   networking.firewall = {
     enable = true;
-    allowedTCPPorts = [ 22 25565 24454 19132 34456 80 443 25 587 465 ];
-    allowedUDPPorts = [ config.services.tailscale.port 24454 19132 34456 80 443 ];
+    allowedTCPPorts = [
+      22
+      25565
+      24454
+      19132
+      34456
+      80
+      443
+      25
+      587
+      465
+    ];
+    allowedUDPPorts = [
+      config.services.tailscale.port
+      24454
+      19132
+      34456
+      80
+      443
+    ];
     trustedInterfaces = [ "tailscale0" ];
   };
 
@@ -358,4 +393,3 @@ _________________________
   system.stateVersion = "25.05"; # Did you read the comment?
 
 }
-
