@@ -135,8 +135,18 @@ hash = "8dec9941365ce2e5defc0fb8eac5b36a4bb1e590ddfb58910a1140c385af5e7d"
 metafile = true
 
 [[files]]
+file = "mods/floodgate.pw.toml"
+hash = "bce1254a5ba3ab371ca4ca24f717f6f03c80c9e1f98194441942af6732639a48"
+metafile = true
+
+[[files]]
 file = "mods/forge-config-api-port.pw.toml"
 hash = "36d3f5054974aa0abfd8edb01d7b99d41497c90559e52485dbc0d1e420f4bba0"
+metafile = true
+
+[[files]]
+file = "mods/geyser.pw.toml"
+hash = "b6ae95bc0e4ecae3a4f69de24d28ab11a01bb7eb75dcf483eb76141d279e7ee2"
 metafile = true
 
 [[files]]

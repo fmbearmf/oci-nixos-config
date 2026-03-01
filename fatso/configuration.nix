@@ -8,7 +8,7 @@ let
   inherit (inputs.nix-minecraft.lib) collectFilesAt;
   modpack = pkgs.fetchPackwizModpack {
     src = ../modpack;
-    packHash = "sha256-VAv3BqPw5GogcEbDTq6A1BtjWgYALh1bg8Jq06y5JBU=";
+    packHash = "sha256-eSZA/l8zTb0zytNPgQSJyeGTRYn3KhNanJ2a6EQFr38=";
   };
   mcVersion = modpack.manifest.versions.minecraft;
   fabricVersion = modpack.manifest.versions.fabric;
@@ -36,6 +36,22 @@ in
   };
 
   systemd.services.NetworkManager-wait-online.enable = false;
+
+  systemd.services.gamblepert = {
+    description = "election bot";
+    wantedBy = [ "multi-user.target" ];
+    confinement.enable = true;
+    enable = true;
+    serviceConfig = {
+      Type = "simple";
+      User = "bear";
+      Group = "users";
+      ProtectSystem = "full";
+      ProtectHome = true;
+      NoNewPrivileges = true;
+      ExecStart = "${inputs.gamblepert.defaultPackage.aarch64-linux}/bin/gamblepert";
+    };
+  };
 
   # Set your time zone.
   time.timeZone = "America/Los_Angeles";
@@ -309,8 +325,8 @@ _________________________
   # Open ports in the firewall.
   networking.firewall = {
     enable = true;
-    allowedTCPPorts = [ 22 25565 24454 34456 80 443 25 587 465 ];
-    allowedUDPPorts = [ config.services.tailscale.port 24454 34456 80 443 ];
+    allowedTCPPorts = [ 22 25565 24454 19132 34456 80 443 25 587 465 ];
+    allowedUDPPorts = [ config.services.tailscale.port 24454 19132 34456 80 443 ];
     trustedInterfaces = [ "tailscale0" ];
   };
 
