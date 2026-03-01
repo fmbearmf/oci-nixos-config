@@ -1,0 +1,13 @@
+name = "Withering Enchantment"
+filename = "withering-enchantment-v1.0.4.jar"
+side = "both"
+
+[download]
+url = "https://cdn.modrinth.com/data/xfnHnmrO/versions/gSv9w86J/withering-enchantment-v1.0.4.jar"
+hash-format = "sha1"
+hash = "9daa8418157db804de512fc1bc32aa95fd39a78c"
+
+[update]
+[update.modrinth]
+mod-id = "xfnHnmrO"
+version = "gSv9w86J"

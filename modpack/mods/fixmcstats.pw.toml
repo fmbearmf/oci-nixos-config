@@ -1,0 +1,13 @@
+name = "FixMCStats"
+filename = "fix-mc-stats-fabric-1.21.11-2.3.0-SNAPSHOT.jar"
+side = "both"
+
+[download]
+url = "https://cdn.modrinth.com/data/SQKipbkd/versions/8KdJvm6I/fix-mc-stats-fabric-1.21.11-2.3.0-SNAPSHOT.jar"
+hash-format = "sha1"
+hash = "1ba8ccf11fd1cd65a40506e7c764d6726b422e37"
+
+[update]
+[update.modrinth]
+mod-id = "SQKipbkd"
+version = "8KdJvm6I"

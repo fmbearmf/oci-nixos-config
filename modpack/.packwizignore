@@ -1,0 +1,6 @@
+.envrc
+.direnv/
+
+*.nix
+*.lock
+devshell.toml

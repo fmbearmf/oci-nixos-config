@@ -1,13 +1,13 @@
 name = "Sepals"
-filename = "Sepals-fabric-1.0.23-compatible.jar"
+filename = "Sepals-fabric-1.0.30-fix2.jar"
 side = "server"
 
 [download]
-url = "https://cdn.modrinth.com/data/hH1OHXZD/versions/YIBUqBcr/Sepals-fabric-1.0.23-compatible.jar"
-hash-format = "sha512"
-hash = "c4592ada87197c4a78a515a079f0942b949118e8111718d77858c343e48f5bfa24d8578e5d479b4afa95ff27ee91ce91b4b76c2cd2114615e29e27af2a73190a"
+url = "https://cdn.modrinth.com/data/hH1OHXZD/versions/ZLVq4Qm2/Sepals-fabric-1.0.30-fix2.jar"
+hash-format = "sha1"
+hash = "7afe117945da0eb3875fd9d03cb2b012916f72eb"
 
 [update]
 [update.modrinth]
 mod-id = "hH1OHXZD"
-version = "YIBUqBcr"
+version = "ZLVq4Qm2"

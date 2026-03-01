@@ -1,0 +1,13 @@
+name = "Anti Knockback Enchantment"
+filename = "anti-knockback-enchantment-v1.0.0.jar"
+side = "both"
+
+[download]
+url = "https://cdn.modrinth.com/data/jEBwcptt/versions/la4Hgyl0/anti-knockback-enchantment-v1.0.0.jar"
+hash-format = "sha1"
+hash = "45adb6e21c845f84c0f7313a5da2081b12014b0c"
+
+[update]
+[update.modrinth]
+mod-id = "jEBwcptt"
+version = "la4Hgyl0"

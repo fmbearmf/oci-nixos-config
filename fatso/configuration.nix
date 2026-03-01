@@ -14,7 +14,7 @@ let
   inherit (inputs.nix-minecraft.lib) collectFilesAt;
   modpack = pkgs.fetchPackwizModpack {
     src = ../modpack;
-    packHash = "sha256-eSZA/l8zTb0zytNPgQSJyeGTRYn3KhNanJ2a6EQFr38=";
+    packHash = "sha256-E7X6fxaxHQkFiK9pMfZcuUQH6xvwsK7bigHDVS+/2AU=";
   };
   mcVersion = modpack.manifest.versions.minecraft;
   fabricVersion = modpack.manifest.versions.fabric;
@@ -95,13 +95,14 @@ in
       files = collectFilesAt modpack "config";
       serverProperties = {
         difficulty = 3;
-        motd = "§l§aXarnt Craft dot com";
+        motd = "§l§aXerncraft Online";
+        level-seed = -5682820163323304945;
         max-players = 15;
         enforce-secure-profile = false;
         spawn-protection = 1;
         sync-chunk-writes = false;
         view-distance = 14;
-        simulation-distance = 10;
+        simulation-distance = 8;
       };
       jvmOpts = "--enable-preview --enable-native-access=ALL-UNNAMED -Xms6144M -Xmx14336M";
       operators = {

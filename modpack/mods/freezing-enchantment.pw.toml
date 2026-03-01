@@ -1,0 +1,13 @@
+name = "Freezing Enchantment"
+filename = "freezing-enchantment-v1.0.0.jar"
+side = "both"
+
+[download]
+url = "https://cdn.modrinth.com/data/zEpFl4Bj/versions/ZJIIWsaX/freezing-enchantment-v1.0.0.jar"
+hash-format = "sha1"
+hash = "1dbbbfd145029ec64b32c57e0a32b659ea1c57d0"
+
+[update]
+[update.modrinth]
+mod-id = "zEpFl4Bj"
+version = "ZJIIWsaX"

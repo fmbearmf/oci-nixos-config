@@ -1,0 +1,13 @@
+name = "Poisoning Enchantment"
+filename = "poisoning-enchantment-v1.0.4.jar"
+side = "both"
+
+[download]
+url = "https://cdn.modrinth.com/data/eJZKQKzM/versions/laKKztqK/poisoning-enchantment-v1.0.4.jar"
+hash-format = "sha1"
+hash = "f84c8d09cc9361e8c5d54450622ab3f5ac2b9e24"
+
+[update]
+[update.modrinth]
+mod-id = "eJZKQKzM"
+version = "laKKztqK"
