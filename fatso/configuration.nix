@@ -37,21 +37,21 @@ in
 
   systemd.services.NetworkManager-wait-online.enable = false;
 
-  systemd.services.gamblepert = {
-    description = "election bot";
-    wantedBy = [ "multi-user.target" ];
-    confinement.enable = true;
-    enable = true;
-    serviceConfig = {
-      Type = "simple";
-      User = "bear";
-      Group = "users";
-      ProtectSystem = "full";
-      ProtectHome = true;
-      NoNewPrivileges = true;
-      ExecStart = "${inputs.gamblepert.defaultPackage.aarch64-linux}/bin/gamblepert";
-    };
-  };
+  #systemd.services.gamblepert = {
+  #  description = "election bot";
+  #  wantedBy = [ "multi-user.target" ];
+  #  confinement.enable = true;
+  #  enable = true;
+  #  serviceConfig = {
+  #    Type = "simple";
+  #    User = "bear";
+  #    Group = "users";
+  #    ProtectSystem = "full";
+  #    ProtectHome = true;
+  #    NoNewPrivileges = true;
+  #    ExecStart = "${inputs.gamblepert.defaultPackage.aarch64-linux}/bin/gamblepert";
+  #  };
+  #};
 
   # Set your time zone.
   time.timeZone = "America/Los_Angeles";
@@ -260,6 +260,7 @@ _________________________
     };
 
     certificateScheme = "acme";
+    stateVersion = 3;
   };
 
   services.postfix = {
@@ -273,7 +274,7 @@ _________________________
       #relay_domains = [ "hash:/var/lib/mailman/data/postfix_domains" ];
       #transport_maps = [ "hash:/var/lib/mailman/data/postfix_lmtp" ];
       #local_recipient_maps = [ "hash:/var/lib/mailman/data/postfix_lmtp" ];
-      relayhost = "[smtp.email.us-phoenix-1.oci.oraclecloud.com]:587";
+      relayhost = [ "[smtp.email.us-phoenix-1.oci.oraclecloud.com]:587 ]";
       smtp_sasl_password_maps = "static:ocid1.user.oc1..aaaaaaaa4b2pofjvlxqht3kgnsp2hylvfr3lpghxvlrlwcp6qudvhc4wyyua@ocid1.tenancy.oc1..aaaaaaaa6roop4fnvqoko5xlh24i5dtxa7wq6zie5ezh35su2c772gk63swq.41.com:y]F.38+sW9{]O.<VFz-&";
       smtp_sasl_auth_enable = "yes";
       smtp_sasl_security_options = "noanonymous";
@@ -318,7 +319,7 @@ _________________________
 	fi
 
 	#otherwise auth
-	${tailscale}/bin/tailscale up --auth-key tskey-auth-kmM9hkx83e11CNTRL-ix27fm8w9dAeNChkfDZucAN8mJU8KeKnG --advertise-routes=192.168.0.0/16,169.254.169.254/32 --accept-dns=false
+	${tailscale}/bin/tailscale up --auth-key tskey-auth-kbKqVNEMJf11CNTRL-XcqaNcxBaDMzvoTGPqhTCMbjK6HdK9tL --advertise-routes=192.168.0.0/16,169.254.169.254/32 --accept-dns=false
     '';
   };
 
