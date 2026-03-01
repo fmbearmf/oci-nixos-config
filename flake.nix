@@ -2,12 +2,12 @@
   description = "A very cool flake";
 
   inputs = {
-        nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
+        nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
         flake-utils.url = "github:numtide/flake-utils";
         nix-minecraft.url = "github:Infinidoge/nix-minecraft";
         gamblepert.url = "github:fmbearmf/gamblepert";
         nix-minecraft.inputs.nixpkgs.follows = "nixpkgs";
-        simple-nixos-mailserver.url = "gitlab:simple-nixos-mailserver/nixos-mailserver/nixos-25.05";
+        simple-nixos-mailserver.url = "gitlab:simple-nixos-mailserver/nixos-mailserver/nixos-25.11";
   };
 
   #nixConfig = {
