@@ -1,0 +1,13 @@
+name = "Pipe Guns"
+filename = "pipe-guns-V1.2.6-data.jar"
+side = "both"
+
+[download]
+url = "https://cdn.modrinth.com/data/8p9YkSsK/versions/aPRUrzog/pipe-guns-V1.2.6-data.jar"
+hash-format = "sha1"
+hash = "fc6e939b29c6f82a4651b9f7250e11e506b44ebd"
+
+[update]
+[update.modrinth]
+mod-id = "8p9YkSsK"
+version = "aPRUrzog"

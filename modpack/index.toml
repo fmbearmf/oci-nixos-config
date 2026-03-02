@@ -90,6 +90,11 @@ hash = "d94b889b77c31da75f474d6e48ab3f8814b50335238d3f6c28d2881ff281cfe7"
 metafile = true
 
 [[files]]
+file = "mods/gun-core.pw.toml"
+hash = "da80089c7663f326e435a9f7f27721df0913f94312577e1cd207e3d54147222b"
+metafile = true
+
+[[files]]
 file = "mods/highspeed-rail.pw.toml"
 hash = "17f1d79dc41b93c7ca6f0c78b4a0cc2e44caef99a68434b8776f6b555332b0f9"
 metafile = true
@@ -152,6 +157,11 @@ metafile = true
 [[files]]
 file = "mods/noisiumforked.pw.toml"
 hash = "6191b4436a910fa2f956343689f7c29567eea2742af0810a029333b47ec29942"
+metafile = true
+
+[[files]]
+file = "mods/pipe-guns.pw.toml"
+hash = "e33ce2b8f87e7de8a96f3a2f14bdc418e5f9ea1a416b744f3f9f2cb0b736ca0f"
 metafile = true
 
 [[files]]
