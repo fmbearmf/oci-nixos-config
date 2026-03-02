@@ -25,11 +25,6 @@ hash = "6b408e7b83e9b769fcafe9216c6f6a528d8930c6d34f7984a9e42119b5ac7d44"
 metafile = true
 
 [[files]]
-file = "mods/continents.pw.toml"
-hash = "61f830bd8c146fe875c59d2963a72ebbf2ec7afde54c41b6c1bcde2c97161df9"
-metafile = true
-
-[[files]]
 file = "mods/daisy.pw.toml"
 hash = "0c9cc0a6ce084da8c987dd9dadf1f73eb58ed1b30955346d9017959aa9c48922"
 metafile = true
@@ -97,11 +92,6 @@ metafile = true
 [[files]]
 file = "mods/highspeed-rail.pw.toml"
 hash = "17f1d79dc41b93c7ca6f0c78b4a0cc2e44caef99a68434b8776f6b555332b0f9"
-metafile = true
-
-[[files]]
-file = "mods/immersive-optimization.pw.toml"
-hash = "7476159daa7b3ef270df98b44b340a347e4dad6daac4dc7b835f6ed0ad84fee7"
 metafile = true
 
 [[files]]
@@ -217,6 +207,11 @@ metafile = true
 [[files]]
 file = "mods/structure-layout-optimizer.pw.toml"
 hash = "3efa81c312f080274dcc5e0befdb885b336ecc41bc7df0dc617746e6fec8c615"
+metafile = true
+
+[[files]]
+file = "mods/tectonic.pw.toml"
+hash = "22965c72c3eaa83c4c2c1bfb886c1f58daf3eb43943c81383542c6a3f9b67b6c"
 metafile = true
 
 [[files]]
