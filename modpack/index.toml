@@ -155,6 +155,11 @@ hash = "d95f5ea9283f4364cb733cdc4829c5a9a020744b07083f2d892452c2b899238a"
 metafile = true
 
 [[files]]
+file = "mods/leash-villager.pw.toml"
+hash = "7dd4a6652157afaf77f011125f08ea5da551e3592449e532eb4568567ad250ba"
+metafile = true
+
+[[files]]
 file = "mods/leaves-be-gone.pw.toml"
 hash = "82df2450a08174c45dd90cffc155192710bda3e7e4b9edd5f2357eaa5ae65a83"
 metafile = true
