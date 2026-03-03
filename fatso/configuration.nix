@@ -92,7 +92,9 @@ in
         jre_headless = pkgs.graalvmPackages.graalvm-ce;
       };
       symlinks = collectFilesAt modpack "mods";
-      files = collectFilesAt modpack "config";
+      files = collectFilesAt modpack "config" // {
+        "server-icon.png" = ../modpack/icon.png;
+      };
       serverProperties = {
         difficulty = 3;
         motd = "§l§aXerncraft Online";
