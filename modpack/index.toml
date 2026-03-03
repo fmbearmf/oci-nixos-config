@@ -30,6 +30,11 @@ hash = "0c9cc0a6ce084da8c987dd9dadf1f73eb58ed1b30955346d9017959aa9c48922"
 metafile = true
 
 [[files]]
+file = "mods/deimos.pw.toml"
+hash = "5e0e8f537766c1f4f19edc3f4418bcc589abf7cf1f4d98a445815c7648ec3a47"
+metafile = true
+
+[[files]]
 file = "mods/difficulty.pw.toml"
 hash = "cc6d1c8893c0433f2b08c41fd184dde148817f09c82fb040934d78d0cad34ea7"
 metafile = true
@@ -45,13 +50,53 @@ hash = "a21d53ebe3ce294cf6c69658d0ac355334df288b9e11f6f63c8a9bd3dba686f3"
 metafile = true
 
 [[files]]
+file = "mods/expanded-axe-enchanting.pw.toml"
+hash = "d6a4d25c052b0dad9868b62f7ea5ae7a41347905cf7dc77514739c98eb91eb57"
+metafile = true
+
+[[files]]
+file = "mods/expanded-bow-enchanting.pw.toml"
+hash = "bbe83aa6ab6b8014f73b280ee1c80c7adf4b3be54c9bccfaa5cc8254e33728f1"
+metafile = true
+
+[[files]]
+file = "mods/expanded-crossbow-enchanting.pw.toml"
+hash = "d4de12d2f98fcd336defb3c133da4892b7f04321d67c7da2435f8de18ac67bf6"
+metafile = true
+
+[[files]]
+file = "mods/expanded-mace-enchanting.pw.toml"
+hash = "12e3ce5bd059d12a781f8bd92af86f4c669b18ac5ea3bdcea9adecaa1532ac2f"
+metafile = true
+
+[[files]]
+file = "mods/expanded-trident-enchanting.pw.toml"
+hash = "d55ef39002c808e95afeb628eb31705db3997b235ed9d9d85b6197b1e2533c80"
+metafile = true
+
+[[files]]
 file = "mods/fabric-api.pw.toml"
 hash = "2a28528303ba297add7d89da6cc3c8ad946a4c4c87b21bf16364bffaffc7fdaa"
 metafile = true
 
 [[files]]
+file = "mods/fabric-language-kotlin.pw.toml"
+hash = "9a4e05fe946f6659c66990733cda91e7a483f7dc514cf609686a37d2d4ea5213"
+metafile = true
+
+[[files]]
 file = "mods/ferrite-core.pw.toml"
 hash = "4385a242de62d01f91894aa2b011bb53cfdcfbdd4d950def81ec78aba7be66a3"
+metafile = true
+
+[[files]]
+file = "mods/flan.pw.toml"
+hash = "76fb49ef2cf2784b0765b98d9d993b1a080f5a219d523211770ceb220c7976a0"
+metafile = true
+
+[[files]]
+file = "mods/flat-exp-costs.pw.toml"
+hash = "d825fd82105df64d6a2ea65a156e614a5903642c1dd3b97baf3b249ffed59481"
 metafile = true
 
 [[files]]
@@ -125,6 +170,11 @@ hash = "4b7c84e0e66e3fc6a06bf2a774bc7852be79ceed332af1315a8d38ece2c35066"
 metafile = true
 
 [[files]]
+file = "mods/luckperms.pw.toml"
+hash = "4b8f60035bbc046b7ea9ea64c667430fa07e94b885a547dc0405f9b54ead31c1"
+metafile = true
+
+[[files]]
 file = "mods/midnightlib.pw.toml"
 hash = "249d8e7300c832e8ecd0b155ff38194f43463af0de0d05d3398a1a43b76d64c9"
 metafile = true
@@ -147,6 +197,11 @@ metafile = true
 [[files]]
 file = "mods/noisiumforked.pw.toml"
 hash = "6191b4436a910fa2f956343689f7c29567eea2742af0810a029333b47ec29942"
+metafile = true
+
+[[files]]
+file = "mods/owo-lib.pw.toml"
+hash = "33970a0e6a4a30ccfd5ab3f71e38ddac11e67bf7ea6ac08377cbc3b685db4ecc"
 metafile = true
 
 [[files]]

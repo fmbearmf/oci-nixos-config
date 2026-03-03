@@ -1,0 +1,13 @@
+name = "Expanded Crossbow Enchanting"
+filename = "expanded-crossbow-enchanting-1.0.13.jar"
+side = "server"
+
+[download]
+url = "https://cdn.modrinth.com/data/K3OgPF57/versions/UoU1dtRK/expanded-crossbow-enchanting-1.0.13.jar"
+hash-format = "sha1"
+hash = "8f7831724e837387279e800ed295db00b595ed45"
+
+[update]
+[update.modrinth]
+mod-id = "K3OgPF57"
+version = "UoU1dtRK"

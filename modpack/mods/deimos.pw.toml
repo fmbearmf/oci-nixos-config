@@ -1,0 +1,13 @@
+name = "Deimos"
+filename = "deimos-1.21.11-fabric-2.5.jar"
+side = "both"
+
+[download]
+url = "https://cdn.modrinth.com/data/WQaxNzFg/versions/X6igL7Ew/deimos-1.21.11-fabric-2.5.jar"
+hash-format = "sha1"
+hash = "ef4feb011100f7c9c301e5389157596538723dfe"
+
+[update]
+[update.modrinth]
+mod-id = "WQaxNzFg"
+version = "X6igL7Ew"
