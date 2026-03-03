@@ -1,0 +1,21 @@
+{
+  "general": {
+    "fleeGoal": true,
+    "swimGoal": true
+  },
+  "skeleton": {
+    "spectralArrow": true
+  },
+  "stray": {
+    "frozenArrows": true,
+    "coldBiomeSpawn": true
+  },
+  "witherSkeleton": {
+    "bow": true,
+    "ironSword": true
+  },
+  "skeletonHorse": {
+    "skeletonsVariationOnTrap": true,
+    "increasedSpeed": true
+  }
+}

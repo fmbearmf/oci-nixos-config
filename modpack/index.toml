@@ -5,6 +5,50 @@ file = "config/highspeed-rail.json5"
 hash = "507d042455454d4b13f515370a93e138f83d3a1c0aa92c34451e39082f8caa9b"
 
 [[files]]
+file = "config/sihywtcamd/arthropods.json"
+hash = "34ee371649ba6d400400356e7a1da2c505bdacc646ea08cb9f43b6048eaaf705"
+
+[[files]]
+file = "config/sihywtcamd/bosses.json"
+hash = "47ea62a4dd18e30d80e3d6aa04313ee4e6adbe553dd52f8c7a588186428e33bd"
+
+[[files]]
+file = "config/sihywtcamd/end.json"
+hash = "99d92ec5545caf3b8170c2e4ea1e75d9136ae6caba6903e81af50e3812602db2"
+
+[[files]]
+file = "config/sihywtcamd/general.json"
+hash = "9e95a1f4e4703cf743fe773a46c32f93af78ea6e7d39dd9f988085f9b12b1deb"
+
+[[files]]
+file = "config/sihywtcamd/illagers.json"
+hash = "1e96e4aceb35c57ee09d4cb61f9da4e33e28ee1e2eccc11f89a0ce4f400a05b9"
+
+[[files]]
+file = "config/sihywtcamd/nether.json"
+hash = "0f205b62f87b6bedc0d8c73ed70f35502b433157bc3c56e9b150171f5eeda7e4"
+
+[[files]]
+file = "config/sihywtcamd/overworld.json"
+hash = "0a255952db94c83b9dc86c5b13d37bee5c5e0917dfd742b4f3761434980b7ba1"
+
+[[files]]
+file = "config/sihywtcamd/skeletons.json"
+hash = "e2d7831536541dc8459569efd57f905289eb0ef9c80a6d53e6412edc87b5fa8b"
+
+[[files]]
+file = "config/sihywtcamd/undead.json"
+hash = "47389c96a90a7aabe1a53dcaaebd274d25d6477564cbbe6e23e154c6a393a1fc"
+
+[[files]]
+file = "config/sihywtcamd/zombies.json"
+hash = "695c561c8985c902ad9de98ce53c5d8a030ad27f12146aa0f071cf1fc1f1255f"
+
+[[files]]
+file = "icon.png"
+hash = "4224bf7cb4fdd52244f8d0b87743fea805bd58f728c94514bd779083e243da66"
+
+[[files]]
 file = "mods/alternate-current.pw.toml"
 hash = "0333c9d2aaa16ea818bd61dc7ac07f13ddb99fc633d789e0460ec6f8b6b54ca0"
 metafile = true

@@ -1,0 +1,13 @@
+{
+  "general": {
+    "noFallDamage": true,
+    "larvaeSpeedBonus": true
+  },
+  "silverfish": {
+    "infestedEverywhere": true
+  },
+  "caveSpider": {
+    "jockey": true,
+    "naturalSpawn": true
+  }
+}
