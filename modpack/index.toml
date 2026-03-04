@@ -304,6 +304,11 @@ hash = "3f9242c38acc3e18d59f02e74a86d5309db1fe9337b76b36e81f20f7f3182df8"
 metafile = true
 
 [[files]]
+file = "mods/simple-resource-loader.pw.toml"
+hash = "898ed168073d22ebec4574565edf34d5d38c87e7ae9d43c6ed56bdac5be5d005"
+metafile = true
+
+[[files]]
 file = "mods/slumber.pw.toml"
 hash = "89f07d2da374baf2e1d81287f7e3a1a251ebbf167b6eb6a774c727d2ef8cf816"
 metafile = true
@@ -347,3 +352,7 @@ metafile = true
 file = "mods/withering-enchantment.pw.toml"
 hash = "0e96d905de0e381631e99b7d7fe27b7add7007426f5c1acf2414080c49291dac"
 metafile = true
+
+[[files]]
+file = "resources/resourcepack/required/pipeguns.zip"
+hash = "eff7c8fe3aa481d4336d5ee86f2cf75c28d1574c6698df791a3047472eede8d6"
