@@ -164,6 +164,11 @@ hash = "12a1452fb8f9ea0cab5f4b9b2ed08c2e0e8c4fe498df3c2f4f5ec5df124a082e"
 metafile = true
 
 [[files]]
+file = "mods/freedomchat.pw.toml"
+hash = "52ada17ca9edee66ef5b387782113f515953b2f86220a25116218e003c3da06a"
+metafile = true
+
+[[files]]
 file = "mods/freezing-enchantment.pw.toml"
 hash = "6ac9bfbaed0162c1d0ad895ebf30a825114c0e23ab1e761b45686c3ab9bb820f"
 metafile = true

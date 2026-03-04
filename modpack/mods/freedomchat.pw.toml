@@ -1,0 +1,7 @@
+name = "freedomchat"
+filename = "FreedomChat-Fabric-1.7.7.jar"
+
+[download]
+url = "https://cdn.modrinth.com/data/MubyTbnA/versions/8gxAdgxm/FreedomChat-Fabric-1.7.7.jar"
+hash-format = "sha1"
+hash = "1387723ced892f340b7dbb962d4017b3b2beafbd"
