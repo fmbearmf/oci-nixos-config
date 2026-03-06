@@ -1,6 +1,10 @@
 hash-format = "sha256"
 
 [[files]]
+file = "config/flan/flan_config.json"
+hash = "d599ebe8c969c51f87ad0f2b3226095aacd2a1e1d5cbb5c022c1b832a6d745de"
+
+[[files]]
 file = "config/highspeed-rail.json5"
 hash = "507d042455454d4b13f515370a93e138f83d3a1c0aa92c34451e39082f8caa9b"
 

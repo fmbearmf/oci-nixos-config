@@ -14,7 +14,7 @@ let
   inherit (inputs.nix-minecraft.lib) collectFilesAt;
   modpack = pkgs.fetchPackwizModpack {
     src = ../modpack;
-    packHash = "sha256-2VUPke8cw/um0Q2X0r+7oZHafkxOAEQs2kVZ7IiUb90=";
+    packHash = "sha256-VbFT7PtQ8vw8+pX++q1qFtk3/LnFmvx7gs0TOL7sSVA=";
   };
   mcVersion = modpack.manifest.versions.minecraft;
   fabricVersion = modpack.manifest.versions.fabric;
