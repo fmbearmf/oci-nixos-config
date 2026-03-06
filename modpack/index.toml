@@ -9,6 +9,10 @@ file = "config/highspeed-rail.json5"
 hash = "507d042455454d4b13f515370a93e138f83d3a1c0aa92c34451e39082f8caa9b"
 
 [[files]]
+file = "config/libjf-web-v1.json5"
+hash = "131cb15985700725885a5624f949c7d73a6addd32c3dfdda25abb599cd8a3582"
+
+[[files]]
 file = "config/sihywtcamd/arthropods.json"
 hash = "34ee371649ba6d400400356e7a1da2c505bdacc646ea08cb9f43b6048eaaf705"
 
@@ -90,6 +94,11 @@ metafile = true
 [[files]]
 file = "mods/disable-too-expensive.pw.toml"
 hash = "ac4058e45059e5f96ad1a213ef76e810204598449eb7e9876627f48afff883dc"
+metafile = true
+
+[[files]]
+file = "mods/dynres.pw.toml"
+hash = "fe9652be91f556062852a48bacf2175cdb150db2b3119bafcd7e72dd9504b044"
 metafile = true
 
 [[files]]
@@ -215,6 +224,11 @@ metafile = true
 [[files]]
 file = "mods/leaves-be-gone.pw.toml"
 hash = "82df2450a08174c45dd90cffc155192710bda3e7e4b9edd5f2357eaa5ae65a83"
+metafile = true
+
+[[files]]
+file = "mods/libjf.pw.toml"
+hash = "01eed03ddb01134db064f478eb8ffd3b446d6b5b990577bbc2b8e4f53cb2ec5b"
 metafile = true
 
 [[files]]
@@ -356,7 +370,3 @@ metafile = true
 file = "mods/withering-enchantment.pw.toml"
 hash = "0e96d905de0e381631e99b7d7fe27b7add7007426f5c1acf2414080c49291dac"
 metafile = true
-
-[[files]]
-file = "resources/resourcepack/required/pipeguns.zip"
-hash = "eff7c8fe3aa481d4336d5ee86f2cf75c28d1574c6698df791a3047472eede8d6"

@@ -14,7 +14,7 @@ let
   inherit (inputs.nix-minecraft.lib) collectFilesAt;
   modpack = pkgs.fetchPackwizModpack {
     src = ../modpack;
-    packHash = "sha256-VbFT7PtQ8vw8+pX++q1qFtk3/LnFmvx7gs0TOL7sSVA=";
+    packHash = "sha256-sDxaC3SKn0ozVzLJvFDv5sjjE3AsC09gFrfTUwEgCws=";
   };
   mcVersion = modpack.manifest.versions.minecraft;
   fabricVersion = modpack.manifest.versions.fabric;
@@ -92,12 +92,10 @@ in
         jre_headless = pkgs.graalvmPackages.graalvm-ce;
       };
       symlinks = collectFilesAt modpack "mods";
-      files =
-        collectFilesAt modpack "config"
-        // {
-          "server-icon.png" = ../modpack/icon.png;
-        }
-        // collectFilesAt modpack "resources";
+      files = collectFilesAt modpack "config" // {
+        "server-icon.png" = ../modpack/icon.png;
+        "resources.zip" = ../modpack/resources.zip;
+      };
       serverProperties = {
         difficulty = 3;
         motd = "§l§aXerncraft Online";
