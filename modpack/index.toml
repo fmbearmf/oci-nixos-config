@@ -67,6 +67,16 @@ hash = "5f69b6824dba3e85a943dc5fdb20d3a8c1c79fd1a1e9de02ef35bcd0a3e5c85c"
 metafile = true
 
 [[files]]
+file = "mods/carpet-extra-extras.pw.toml"
+hash = "560aa37427b724ecdfe3b522209ab931747b5e6c3b072b7613b55b96d8fcf264"
+metafile = true
+
+[[files]]
+file = "mods/carpet.pw.toml"
+hash = "9d0773797cc7e87360c8556e81a663bf21bfeecedf3772e324510485c2f8eea0"
+metafile = true
+
+[[files]]
 file = "mods/chunky.pw.toml"
 hash = "125d5f809e1fa06715bbb585463dd845cb256c69c901655a2e9f80dae99348e2"
 metafile = true
@@ -188,7 +198,7 @@ metafile = true
 
 [[files]]
 file = "mods/geyser.pw.toml"
-hash = "d94b889b77c31da75f474d6e48ab3f8814b50335238d3f6c28d2881ff281cfe7"
+hash = "8f8947a2285d46f16beadb0c260cf017de5e4bc3559bfb6e11bd8a8c71c04820"
 metafile = true
 
 [[files]]
@@ -204,6 +214,11 @@ metafile = true
 [[files]]
 file = "mods/incendium.pw.toml"
 hash = "274a89e6ea20032e90040a1fc96a930973e0c101e94a67511981680f8cf228f7"
+metafile = true
+
+[[files]]
+file = "mods/invview.pw.toml"
+hash = "c5563fce4ae2ea1508e25ea0311228a4fb9ef7f1a5b74e9e9d4685074a9b1a19"
 metafile = true
 
 [[files]]
@@ -228,17 +243,17 @@ metafile = true
 
 [[files]]
 file = "mods/libjf.pw.toml"
-hash = "01eed03ddb01134db064f478eb8ffd3b446d6b5b990577bbc2b8e4f53cb2ec5b"
+hash = "484a6cbee5e88ff895bb99f99c333a6a728d5cc07e5f7c9f230d02ba87df402d"
 metafile = true
 
 [[files]]
 file = "mods/lithium.pw.toml"
-hash = "a7c7ba729cd9a24693f6cf64768e3a8a6d81bcc82804ffc9b36e7b7b200f7650"
+hash = "34f69fcc3b2fb7007a4672ee278d5b8f6e804da900e07d3b589757962348eb70"
 metafile = true
 
 [[files]]
 file = "mods/lithostitched.pw.toml"
-hash = "4b7c84e0e66e3fc6a06bf2a774bc7852be79ceed332af1315a8d38ece2c35066"
+hash = "e0141dda314787e9833d3057fb9a4d0b39d3c096b5bc449a55f0cfccbfef4349"
 metafile = true
 
 [[files]]
@@ -253,7 +268,7 @@ metafile = true
 
 [[files]]
 file = "mods/modernfix-mvus.pw.toml"
-hash = "6a7ebc822facc96b252e45d673701cae9eccaafde35c23534ac79eec2d47961a"
+hash = "1b01a06b728beec0ce8224572cfc568a487ca72a63706df8273be6504c72b677"
 metafile = true
 
 [[files]]
@@ -332,6 +347,11 @@ hash = "89f07d2da374baf2e1d81287f7e3a1a251ebbf167b6eb6a774c727d2ef8cf816"
 metafile = true
 
 [[files]]
+file = "mods/spark.pw.toml"
+hash = "b49d95af95cc77098c7fc5426318d87b5471d23bb6478c354780cf1cf582615b"
+metafile = true
+
+[[files]]
 file = "mods/structory.pw.toml"
 hash = "471f3dd97818177427fb8b4346adab69b23a00bc2906966a753bf8d290c2b7de"
 metafile = true
@@ -359,6 +379,11 @@ metafile = true
 [[files]]
 file = "mods/toughness-enchantment.pw.toml"
 hash = "8cc9bc02317bf8090c565d01efad26831930669d4b856e1679f06ae0af36bfaa"
+metafile = true
+
+[[files]]
+file = "mods/vanilla-permissions.pw.toml"
+hash = "55f57c83c54e8beb10256e5135e543bbab9650508b9ca106b24ecea81ae6394b"
 metafile = true
 
 [[files]]

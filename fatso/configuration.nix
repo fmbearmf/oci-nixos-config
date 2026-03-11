@@ -14,7 +14,7 @@ let
   inherit (inputs.nix-minecraft.lib) collectFilesAt;
   modpack = pkgs.fetchPackwizModpack {
     src = ../modpack;
-    packHash = "sha256-sDxaC3SKn0ozVzLJvFDv5sjjE3AsC09gFrfTUwEgCws=";
+    packHash = "sha256-e4YwIp73slRSX7c516AxZD8HmxCkGaexCimQFu2xboU=";
   };
   mcVersion = modpack.manifest.versions.minecraft;
   fabricVersion = modpack.manifest.versions.fabric;
@@ -219,7 +219,7 @@ in
 
   services.mediawiki = {
     enable = true;
-    name = "Rugiverse Cinematic Universe";
+    name = "Xertuncord Cinematic Universe";
     nginx = {
       hostName = wikiHost;
     };
@@ -245,6 +245,9 @@ in
     url = "https://${wikiHost}";
     extensions = {
       VisualEditor = null;
+      Cite = null;
+      CiteThisPage = null;
+      CategoryTree = null;
     };
   };
 
