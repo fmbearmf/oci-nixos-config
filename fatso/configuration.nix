@@ -111,6 +111,8 @@ in
       jvmOpts = "--enable-preview --enable-native-access=ALL-UNNAMED -Xms6144M -Xmx14336M";
       operators = {
         mincaraft = "bd0381fd-a21c-4289-bdb7-24892bda8e47";
+      };
+      whitelist = {
         Hi_There = "3c9bcef4-5044-4dfb-a254-ceac4560159c";
         LudaLudaLuda = "1f2b5252-cfd4-4faf-b6cf-ac99b445fcf6";
         CoiMachine = "a943ff91-0a99-4665-b1fc-59fefb8b19e8";
