@@ -321,9 +321,12 @@ in
     enable = true;
     hostName = "backend.bear.oops.wtf";
     extraConfig = ''
-      $config['smtp_host'] = "tls://127.0.0.1";
+      $config['smtp_host'] = "tls://${config.mailserver.fqdn}";
       $config['smtp_user'] = "%u";
       $config['smtp_pass'] = "%p";
+
+      $config['default_host'] = 'tls://127.0.0.1';
+      $config['default_port'] = 993;
     '';
 
   };
