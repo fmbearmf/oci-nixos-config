@@ -106,9 +106,17 @@ in
         sync-chunk-writes = false;
         view-distance = 14;
         simulation-distance = 8;
+        white-list = true;
       };
       jvmOpts = "--enable-preview --enable-native-access=ALL-UNNAMED -Xms6144M -Xmx14336M";
       operators = {
+        mincaraft = "bd0381fd-a21c-4289-bdb7-24892bda8e47";
+        Hi_There = "3c9bcef4-5044-4dfb-a254-ceac4560159c";
+        LudaLudaLuda = "1f2b5252-cfd4-4faf-b6cf-ac99b445fcf6";
+        CoiMachine = "a943ff91-0a99-4665-b1fc-59fefb8b19e8";
+        s3bladezz = "47065da1-4e0d-479c-a8e1-595141de6935";
+        T8theGr8 = "9d266a07-1ce9-4272-b7fb-80348839c14b";
+        ukebee = "77a110d7-91be-4094-a836-c4332915fc23";
         mincaraft = "bd0381fd-a21c-4289-bdb7-24892bda8e47";
       };
     };
