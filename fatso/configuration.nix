@@ -298,7 +298,7 @@ in
     #hostname = "backend.bear.oops.wtf";
     #relayHost = "[smtp.email.us-phoenix-1.oci.oraclecloud.com]:587";
     #relayPort = 587;
-    config = {
+    settings.main = {
       #relay_domains = [ "hash:/var/lib/mailman/data/postfix_domains" ];
       #transport_maps = [ "hash:/var/lib/mailman/data/postfix_lmtp" ];
       #local_recipient_maps = [ "hash:/var/lib/mailman/data/postfix_lmtp" ];
@@ -325,10 +325,19 @@ in
       $config['smtp_user'] = "%u";
       $config['smtp_pass'] = "%p";
 
-      $config['default_host'] = 'tls://127.0.0.1';
+      $config['default_host'] = "ssl://${config.mailserver.fqdn}:993";
       $config['default_port'] = 993;
     '';
 
+  };
+
+  networking.extraHosts = ''
+    127.0.0.1 backend.bear.oops.wtf
+  '';
+
+  services.dovecot2 = {
+    enable = true;
+    protocols = [ "imap" ];
   };
 
   systemd.services.tailscale-autoconnect = {
