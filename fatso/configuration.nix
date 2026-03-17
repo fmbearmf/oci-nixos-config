@@ -98,8 +98,8 @@ in
       };
       serverProperties = {
         difficulty = 3;
-        motd = "§l§aXerncraft Online";
-        level-seed = -5682820163323304945;
+        motd = "§l§aXertuncraft Online";
+        level-seed = -386721657696726759;
         max-players = 15;
         enforce-secure-profile = true;
         spawn-protection = 1;
