@@ -85,7 +85,7 @@ in
     eula = true;
     managementSystem.systemd-socket.enable = true;
     servers.bearcraft = {
-      enable = true;
+      enable = false;
       restart = "always";
       package = pkgs.fabricServers.${serverVersion}.override {
         loaderVersion = fabricVersion;
