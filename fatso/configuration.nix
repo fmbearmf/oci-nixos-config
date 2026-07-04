@@ -287,7 +287,7 @@ in
       };
     };
 
-    certificateScheme = "acme";
+    x509.useACMEHost = true;
     stateVersion = 3;
   };
 
