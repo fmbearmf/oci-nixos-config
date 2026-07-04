@@ -255,6 +255,8 @@ in
     url = "https://${wikiHost}";
     extensions = {
       VisualEditor = null;
+      CodeEditor = null;
+      WikiEditor = null;
       Cite = null;
       CiteThisPage = null;
       CategoryTree = null;
