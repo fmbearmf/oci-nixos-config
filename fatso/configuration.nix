@@ -260,6 +260,7 @@ in
       Cite = null;
       CiteThisPage = null;
       CategoryTree = null;
+      TemplateStyles = null;
     };
   };
 
