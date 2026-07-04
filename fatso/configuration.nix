@@ -280,14 +280,14 @@ in
     fqdn = "backend.bear.oops.wtf";
     domains = [ "bear.oops.wtf" ];
 
-    loginAccounts = {
+    accounts = {
       "bear@bear.oops.wtf" = {
         hashedPassword = "$2b$05$.Fl7sF4Ab6nXlqC/mxhqbOYPvA233NBrFQB2XRpEionfmEczfQo2e";
         aliases = [ "admin@bear.oops.wtf" ];
       };
     };
 
-    x509.useACMEHost = true;
+    x509.useACMEHost = "backend.bear.oops.wtf";
     stateVersion = 3;
   };
 
@@ -337,7 +337,9 @@ in
 
   services.dovecot2 = {
     enable = true;
-    protocols = [ "imap" ];
+    settings.protocols = {
+      imap = true;
+    };
   };
 
   systemd.services.tailscale-autoconnect = {
