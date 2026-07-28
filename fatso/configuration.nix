@@ -26,7 +26,10 @@ let
       (builtins.readFile cloudflareIpv4) + "\n" + (builtins.readFile cloudflareIpv6)
     )
   );
-  realIpConfig = lib.concatMapStrings (ip: "set_real_ip_from ${ip};\n") cloudflareIps;
+  realIpConfig = ''
+    ${lib.concatMapStrings (ip: "set_real_ip_from ${ip};\n") cloudflareIps}
+    real_ip_header CF-Connecting-IP;
+  '';
 in
 {
   imports = [
@@ -290,6 +293,7 @@ in
     };
 
     virtualHosts."gembox.dev" = {
+      extraConfig = realIpConfig;
       enableACME = true;
       forceSSL = true;
       locations."/" = {
