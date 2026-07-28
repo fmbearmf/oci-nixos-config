@@ -19,6 +19,14 @@ let
   mcVersion = modpack.manifest.versions.minecraft;
   fabricVersion = modpack.manifest.versions.fabric;
   serverVersion = lib.replaceStrings [ "." ] [ "_" ] "fabric-${mcVersion}";
+  cloudflareIpv4 = builtins.fetchurl "https://www.cloudflare.com/ips-v4";
+  cloudflareIpv6 = builtins.fetchurl "https://www.cloudflare.com/ips-v6";
+  cloudflareIps = lib.filter (ip: ip != "") (
+    lib.splitString "\n" (
+      (builtins.readFile cloudflareIpv4) + "\n" + (builtins.readFile cloudflareIpv6)
+    )
+  );
+  realIpConfig = lib.concatMapStrings (ip: "set_real_ip_from ${ip};\n") cloudflareIps;
 in
 {
   imports = [
@@ -264,6 +272,10 @@ in
     };
   };
 
+  services.gembox = {
+    enable = true;
+  };
+
   services.nginx = {
     enable = true;
 
@@ -275,6 +287,14 @@ in
     virtualHosts."backend.bear.oops.wtf" = {
       enableACME = true;
       forceSSL = true;
+    };
+
+    virtualHosts."gembox.dev" = {
+      enableACME = true;
+      forceSSL = true;
+      locations."/" = {
+        proxyPass = "http://unix:${config.services.gembox.socketPath}:/";
+      };
     };
   };
 
