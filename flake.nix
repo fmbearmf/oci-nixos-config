@@ -5,10 +5,9 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-26.05";
     flake-utils.url = "github:numtide/flake-utils";
     nix-minecraft.url = "github:Infinidoge/nix-minecraft";
-    gamblepert.url = "github:fmbearmf/gamblepert";
     nix-minecraft.inputs.nixpkgs.follows = "nixpkgs";
     simple-nixos-mailserver.url = "gitlab:simple-nixos-mailserver/nixos-mailserver/nixos-26.05";
-    gembox.url = "./gembox";
+    gembox.url = "git+file:./gembox";
   };
 
   #nixConfig = {
@@ -23,7 +22,6 @@
       gembox,
       flake-utils,
       simple-nixos-mailserver,
-      gamblepert,
       ...
     }@inputs:
     let
