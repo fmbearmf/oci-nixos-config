@@ -19,8 +19,14 @@ let
   mcVersion = modpack.manifest.versions.minecraft;
   fabricVersion = modpack.manifest.versions.fabric;
   serverVersion = lib.replaceStrings [ "." ] [ "_" ] "fabric-${mcVersion}";
-  cloudflareIpv4 = builtins.fetchurl "https://www.cloudflare.com/ips-v4";
-  cloudflareIpv6 = builtins.fetchurl "https://www.cloudflare.com/ips-v6";
+  cloudflareIpv4 = pkgs.fetchurl {
+    url = "https://www.cloudflare.com/ips-v4";
+    hash = "sha256-8Cxtg7wBqwroV3Fg4DbXAMdFU1m84FTfiE5dfZ5Onns=";
+  };
+  cloudflareIpv6 = pkgs.fetchurl {
+    url = "https://www.cloudflare.com/ips-v6";
+    hash = "sha256-np054+g7rQDE3sr9U8Y/piAp89ldto3pN9K+KCNMoKk=";
+  };
   cloudflareIps = lib.filter (ip: ip != "") (
     lib.splitString "\n" (
       (builtins.readFile cloudflareIpv4) + "\n" + (builtins.readFile cloudflareIpv6)
