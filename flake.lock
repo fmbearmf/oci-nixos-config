@@ -114,10 +114,10 @@
         "nixpkgs": "nixpkgs"
       },
       "locked": {
-        "lastModified": 1785236945,
-        "narHash": "sha256-VOYgy6QMfdHKXJFjagCdsiwISR3o/Llnrkkji/cZtLI=",
-        "rev": "142bc02e834a3d728a9bfdbf6e28fce35e1f9dec",
-        "revCount": 4,
+        "lastModified": 1785238737,
+        "narHash": "sha256-JsWymJRfYbos9FOOiJZVT+pwC6NV6/xOnR1mJHxMdc0=",
+        "rev": "156f488641c6206a8b7b377baf582901d6e3988a",
+        "revCount": 5,
         "type": "git",
         "url": "file:./gembox"
       },
