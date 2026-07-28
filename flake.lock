@@ -114,14 +114,17 @@
         "nixpkgs": "nixpkgs"
       },
       "locked": {
-        "path": "./gembox",
-        "type": "path"
+        "lastModified": 1785226559,
+        "narHash": "sha256-e4Uaw2yv94/o1WlHuyM39NDrJ1GHlaB26dhObTsin30=",
+        "rev": "9e6416e141b613233e91fa4a1a3dcfbdda107352",
+        "revCount": 3,
+        "type": "git",
+        "url": "file:./gembox"
       },
       "original": {
-        "path": "./gembox",
-        "type": "path"
-      },
-      "parent": []
+        "type": "git",
+        "url": "file:./gembox"
+      }
     },
     "git-hooks": {
       "inputs": {
