@@ -7,10 +7,10 @@
 }:
 
 {
-  virtualisation.containers.enable = true;
+  virtualisation.containers.enable = false;
 
   containers.minecraft = {
-    autoStart = true;
+    autoStart = false;
     privateNetwork = false;
     bindMounts = {
       "/srv" = {

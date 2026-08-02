@@ -35,7 +35,7 @@
           gembox.nixosModules.default
           (./fatso/configuration.nix)
           (simple-nixos-mailserver.nixosModule)
-          { nixpkgs.overlays = [ inputs.nix-minecraft.overlay ]; }
+          #{ nixpkgs.overlays = [ inputs.nix-minecraft.overlay ]; }
         ];
         specialArgs = { inherit inputs; };
       };

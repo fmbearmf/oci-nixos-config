@@ -12,13 +12,6 @@
 let
   wikiHost = "wiki.bear.oops.wtf";
   inherit (inputs.nix-minecraft.lib) collectFilesAt;
-  modpack = pkgs.fetchPackwizModpack {
-    src = ../modpack;
-    packHash = "sha256-e4YwIp73slRSX7c516AxZD8HmxCkGaexCimQFu2xboU=";
-  };
-  mcVersion = modpack.manifest.versions.minecraft;
-  fabricVersion = modpack.manifest.versions.fabric;
-  serverVersion = lib.replaceStrings [ "." ] [ "_" ] "fabric-${mcVersion}";
   cloudflareIpv4 = pkgs.fetchurl {
     url = "https://www.cloudflare.com/ips-v4";
     hash = "sha256-8Cxtg7wBqwroV3Fg4DbXAMdFU1m84FTfiE5dfZ5Onns=";
@@ -96,50 +89,78 @@ in
 
   # Enable the X11 windowing system.
   # services.xserver.enable = true;
-
-  services.minecraft-servers = {
-    enable = true;
-    eula = true;
-    managementSystem.systemd-socket.enable = true;
-    servers.bearcraft = {
-      enable = false;
-      restart = "always";
-      package = pkgs.fabricServers.${serverVersion}.override {
-        loaderVersion = fabricVersion;
-        jre_headless = pkgs.graalvmPackages.graalvm-ce;
+  #
+  services.minecraft-server =
+    let
+      crucibleJar = pkgs.fetchurl {
+        url = "https://github.com/sarabveer/CraftBukkit-Spigot-Binary/raw/refs/heads/master/spigot-1.7.10-1.8-R0.1/spigot-1.7.10-1.8-R0.1-1656.jar";
+        hash = "sha256-e1DglMIQiHU7QcX9KpqKmVOQjNDub6Cz3t9R949hKS0=";
       };
-      symlinks = collectFilesAt modpack "mods";
-      files = collectFilesAt modpack "config" // {
-        "server-icon.png" = ../modpack/icon.png;
-        "resources.zip" = ../modpack/resources.zip;
+      crucibleServer = pkgs.stdenv.mkDerivation {
+        pname = "crucible-server";
+        version = "1.7.10";
+        dontUnpack = true;
+
+        installPhase = ''
+          mkdir -p $out/bin
+          cat <<EOF > $out/bin/minecraft-server
+          #!/bin/sh
+          exec ${pkgs.openjdk8_headless}/bin/java \$JVMOPTS -jar ${crucibleJar} nogui
+          EOF
+          chmod +x $out/bin/minecraft-server
+        '';
+      };
+      log4ShellMitigator = pkgs.fetchurl {
+        url = "https://launcher.mojang.com/v1/objects/4bb89a97a66f350bc9f73b3ca8509632682aea2e/log4j2_17-111.xml";
+        hash = "sha256-wE6xWjtrDMVkKkOXk8KVFySRqG2jTBdkA3UvrGG6/XI=";
+      };
+    in
+    {
+      enable = true;
+      eula = true;
+      package = crucibleServer;
+
+      # https://exa.y2k.diy/garden/jvm-args/
+      jvmOpts = "-Dlog4j.configurationFile=${log4ShellMitigator} -Xms2G -Xmx6G -XX:+UseG1GC";
+
+      declarative = true;
+      whitelist = {
+        mincaraft = "bd0381fd-a21c-4289-bdb7-24892bda8e47";
       };
       serverProperties = {
-        difficulty = 3;
-        motd = "§l§aXertuncraft Online";
-        level-seed = -386721657696726759;
-        max-players = 15;
-        enforce-secure-profile = true;
-        spawn-protection = 1;
-        sync-chunk-writes = false;
-        view-distance = 14;
-        simulation-distance = 8;
+        server-port = 25565;
+        motd = "Swag Mode: Enabled";
+        difficulty = 2;
+        max-players = 20;
         white-list = true;
-      };
-      jvmOpts = "--enable-preview --enable-native-access=ALL-UNNAMED -Xms6144M -Xmx14336M";
-      operators = {
-        mincaraft = "bd0381fd-a21c-4289-bdb7-24892bda8e47";
-      };
-      whitelist = {
-        Hi_There = "3c9bcef4-5044-4dfb-a254-ceac4560159c";
-        LudaLudaLuda = "1f2b5252-cfd4-4faf-b6cf-ac99b445fcf6";
-        CoiMachine = "a943ff91-0a99-4665-b1fc-59fefb8b19e8";
-        s3bladezz = "47065da1-4e0d-479c-a8e1-595141de6935";
-        T8theGr8 = "9d266a07-1ce9-4272-b7fb-80348839c14b";
-        ukebee = "77a110d7-91be-4094-a836-c4332915fc23";
-        mincaraft = "bd0381fd-a21c-4289-bdb7-24892bda8e47";
+        allow-cheats = true;
       };
     };
-  };
+
+  systemd.services.minecraft-server.preStart =
+    let
+      plugins = [
+        (pkgs.fetchurl {
+          name = "WorldEdit-6.1.9.jar";
+          url = "https://cdn.modrinth.com/data/1u6JkXh5/versions/JezAXbj7/worldedit-bukkit-6.1.9.jar";
+          hash = "sha256-WnuI9vdbSgtu/UeuA+nCaiA27NEisDpFymNd3jhtYYY=";
+        })
+        (pkgs.fetchurl {
+          name = "CraftBook-3.8.9.jar";
+          url = "https://cdn.modrinth.com/data/jrO7z7l7/versions/bhFLT0vN/CraftBook_3.8.9.jar";
+          hash = "sha256-8roKjhtan1WPXEcUvytgE/QoK3/HHbtvdHUWZ1dBaKs=";
+        })
+      ];
+    in
+    ''
+      mkdir -p ${config.services.minecraft-server.dataDir}/plugins
+
+      find ${config.services.minecraft-server.dataDir}/plugins/ -type l -delete
+
+      ${lib.concatMapStringsSep "\n" (
+        plugin: "ln -sf ${plugin} ${config.services.minecraft-server.dataDir}/plugins/${plugin.name}"
+      ) plugins}
+    '';
 
   # Configure keymap in X11
   # services.xserver.xkb.layout = "us";
