@@ -126,6 +126,7 @@ in
       declarative = true;
       whitelist = {
         mincaraft = "bd0381fd-a21c-4289-bdb7-24892bda8e47";
+        Incspa = "bf68bf6c-d2b7-4bba-9c2d-e33280c0808e";
       };
       serverProperties = {
         server-port = 25565;
