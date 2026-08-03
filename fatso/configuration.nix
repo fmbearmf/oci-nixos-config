@@ -393,6 +393,12 @@ in
           hash = "sha256-UkdExcPeZ99LhK3IC6u/XZ8AQSwaWT90qK5ubd6SwG8=";
         };
 
+        "plugins/ViaVersion.jar" = fetchurl {
+          name = "ViaVersion.jar";
+          url = "https://cdn.modrinth.com/data/P1OZGk5p/versions/ZH8459B6/ViaVersion-5.11.0.jar";
+          hash = "sha256-idt2yOPmdCOPXu4rt6npor7roHYLvRuGSUd46KWlL3A=";
+        };
+
         "plugins/Geyser-Velocity/config.yml" = yamlFormat.generate "geyser-config.yml" {
           bedrock = {
             address = "0.0.0.0";
