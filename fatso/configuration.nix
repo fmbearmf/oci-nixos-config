@@ -267,6 +267,8 @@ in
       whitelist = {
         mincaraft = "bd0381fd-a21c-4289-bdb7-24892bda8e47";
         Incspa = "bf68bf6c-d2b7-4bba-9c2d-e33280c0808e";
+        # deco
+        Alt_Deco = "497c7e82-fce4-4fcc-8a32-ef109b660493";
         # lobotomite
         DisgustedConure = "abd2ef19-2077-45a2-992b-62a4b03aa381";
         # incspa bedrock
