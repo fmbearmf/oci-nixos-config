@@ -267,7 +267,14 @@ in
       whitelist = {
         mincaraft = "bd0381fd-a21c-4289-bdb7-24892bda8e47";
         Incspa = "bf68bf6c-d2b7-4bba-9c2d-e33280c0808e";
+        # lobotomite
+        DisgustedConure = "abd2ef19-2077-45a2-992b-62a4b03aa381";
+        # incspa bedrock
         ".Shrek12346" = "00000000-0000-0000-0009-01f0e45556f7";
+        # oscar bedrock
+        ".GoldArdeo4669" = "00000000-0000-0000-0009-01f401ac62d8";
+        # ren bedrock
+        ".BerserkBlader303" = "00000000-0000-0000-0009-01f04099d1b2";
       };
       serverProperties = {
         online-mode = false;
