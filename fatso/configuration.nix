@@ -399,6 +399,18 @@ in
           hash = "sha256-idt2yOPmdCOPXu4rt6npor7roHYLvRuGSUd46KWlL3A=";
         };
 
+        "plugins/ViaBackwards.jar" = fetchurl {
+          name = "ViaBackwards.jar";
+          url = "https://cdn.modrinth.com/data/NpvuJQoq/versions/hYhg2QBT/ViaBackwards-5.11.0.jar";
+          hash = "sha256-QQhaWdeEyaDRSRf+dIfvXiAanaeCX9BH8I0yj/M+7Nw=";
+        };
+
+        "plugins/ViaRewind.jar" = fetchurl {
+          name = "ViaRewind.jar";
+          url = "https://cdn.modrinth.com/data/TbHIxhx5/versions/r9d7WsYA/ViaRewind-4.1.3.jar";
+          hash = "sha256-JO5wRdU4KHuyBuV/2gcetIbFK3oLpFLQbFgtNrWh+Og=";
+        };
+
         "plugins/Geyser-Velocity/config.yml" = yamlFormat.generate "geyser-config.yml" {
           bedrock = {
             address = "0.0.0.0";
