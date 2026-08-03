@@ -267,11 +267,12 @@ in
       whitelist = {
         mincaraft = "bd0381fd-a21c-4289-bdb7-24892bda8e47";
         Incspa = "bf68bf6c-d2b7-4bba-9c2d-e33280c0808e";
+        ".Shrek12346" = "00000000-0000-0000-0009-01f0e45556f7";
       };
       serverProperties = {
         online-mode = false;
         server-ip = "127.0.0.1";
-        server-port = 25566;
+        server-port = 25567;
         motd = "Swag Mode: Enabled";
         difficulty = 2;
         max-players = 20;
@@ -312,6 +313,88 @@ in
     createHome = true;
   };
   users.groups.velocity = { };
+
+  users.users.viaproxy = {
+    isSystemUser = true;
+    group = "viaproxy";
+    home = "/var/lib/viaproxy";
+    createHome = true;
+  };
+  users.groups.viaproxy = { };
+
+  systemd.services.viaproxy =
+    let
+      vpRoot = config.users.users.viaproxy.home;
+
+      inherit (pkgs) lib fetchurl formats;
+
+      yamlFormat = formats.yaml { };
+
+      vpJar = fetchurl {
+        name = "ViaProxy.jar";
+        url = "https://github.com/ViaVersion/ViaProxy/releases/download/v3.4.12/ViaProxy-3.4.12.jar";
+        hash = "sha256-Ms6a2HGusDKGgjwp2iYuvXWZKGTnhX2yg/EDUlx/wMs=";
+      };
+
+      files = {
+        "viaproxy.yml" = yamlFormat.generate "viaproxy.yml" {
+          bind-address = "127.0.0.1:25566";
+          target-address = "127.0.0.1:25567";
+          target-version = 5;
+          connection-timeout = 8000;
+          proxy-online-mode = false;
+          auth-method = "NONE";
+          minecraft-account-index = 0;
+          betacraft-auth = false;
+          backend-proxy-url = "";
+          backend-haproxy = false;
+          frontend-haproxy = false;
+          chat-signing = false;
+          compression-threshold = 256;
+          allow-beta-pinging = false;
+          ignore-protocol-translation-errors = false;
+          suppress-client-protocol-errors = false;
+          allow-legacy-client-passthrough = false;
+          bungeecord-player-info-passthrough = true;
+          rewrite-handshake-packet = true;
+          rewrite-transfer-packets = true;
+          custom-motd = "";
+          custom-favicon-path = "";
+          resource-pack-url = "";
+          wildcard-domain-handling = "NONE";
+          simple-voice-chat-support = false;
+          fix-fabric-particle-api = true;
+          fake-accept-resource-packs = false;
+          skip-config-state-packet-queue = false;
+          log-ips = false;
+          log-client-status-requests = false;
+        };
+      };
+    in
+    {
+      description = "viaproxy";
+      after = [ "network.target" ];
+      wantedBy = [ "multi-user.target" ];
+
+      preStart = lib.concatStringsSep "\n" (
+        lib.mapAttrsToList (relPath: src: ''
+          mkdir -p "${vpRoot}/${dirOf relPath}"
+          cp -vf ${src} "${vpRoot}/${relPath}"
+          chmod 644 "${vpRoot}/${relPath}"
+        '') files
+      );
+
+      serviceConfig = {
+        Type = "simple";
+        User = "viaproxy";
+        Group = "viaproxy";
+        StateDirectory = "viaproxy";
+        WorkingDirectory = vpRoot;
+        ExecStart = "${pkgs.jdk25_headless}/bin/java -Xms512M -Xmx1024M -jar ${vpJar} config viaproxy.yml";
+        Restart = "always";
+        RestartSec = "10s";
+      };
+    };
 
   systemd.services.velocity =
     let
@@ -391,24 +474,6 @@ in
           name = "Floodgate-Geyser.jar";
           url = "https://download.geysermc.org/v2/projects/floodgate/versions/latest/builds/latest/downloads/velocity";
           hash = "sha256-UkdExcPeZ99LhK3IC6u/XZ8AQSwaWT90qK5ubd6SwG8=";
-        };
-
-        "plugins/ViaVersion.jar" = fetchurl {
-          name = "ViaVersion.jar";
-          url = "https://cdn.modrinth.com/data/P1OZGk5p/versions/ZH8459B6/ViaVersion-5.11.0.jar";
-          hash = "sha256-idt2yOPmdCOPXu4rt6npor7roHYLvRuGSUd46KWlL3A=";
-        };
-
-        "plugins/ViaBackwards.jar" = fetchurl {
-          name = "ViaBackwards.jar";
-          url = "https://cdn.modrinth.com/data/NpvuJQoq/versions/hYhg2QBT/ViaBackwards-5.11.0.jar";
-          hash = "sha256-QQhaWdeEyaDRSRf+dIfvXiAanaeCX9BH8I0yj/M+7Nw=";
-        };
-
-        "plugins/ViaRewind.jar" = fetchurl {
-          name = "ViaRewind.jar";
-          url = "https://cdn.modrinth.com/data/TbHIxhx5/versions/r9d7WsYA/ViaRewind-4.1.3.jar";
-          hash = "sha256-JO5wRdU4KHuyBuV/2gcetIbFK3oLpFLQbFgtNrWh+Og=";
         };
 
         "plugins/Geyser-Velocity/config.yml" = yamlFormat.generate "geyser-config.yml" {
@@ -527,7 +592,7 @@ in
         Group = "velocity";
         StateDirectory = "velocity";
         WorkingDirectory = velocityRoot;
-        ExecStart = "${pkgs.jdk25_headless}/bin/java -Xmx512M -Xmx1024M -jar ${velocityJar}";
+        ExecStart = "${pkgs.jdk25_headless}/bin/java -Xms512M -Xmx1024M -jar ${velocityJar}";
         Restart = "always";
         RestartSec = "10s";
       };
