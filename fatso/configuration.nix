@@ -92,11 +92,148 @@ in
   #
   services.minecraft-server =
     let
-      crucibleJar = pkgs.fetchurl {
+      spigotConfig = (pkgs.formats.yaml { }).generate "spigot.yml" {
+        config-version = 8;
+        settings = {
+          save-user-cache-on-stop-only = false;
+          sample-count = 12;
+          player-shuffle = 0;
+          filter-creative-items = true;
+          user-cache-size = 1000;
+          int-cache-limit = 1024;
+          moved-wrongly-threshold = 0.5;
+          moved-too-quickly-multiplier = 100.0;
+          timeout-time = 60;
+          restart-on-crash = false;
+          restart-script = "./start.sh";
+          netty-threads = 4;
+
+          attribute = {
+            maxHealth.max = 2048.0;
+            movementSpeed.max = 2048.0;
+            attackDamage.max = 2048.0;
+          };
+
+          global-api-cache = false;
+          bungeecord = true;
+          late-bind = false;
+          debug = false;
+        };
+        commands = {
+          tab-complete = 0;
+          spam-exclusions = [ "/skill" ];
+          silent-commandblock-console = false;
+          replace-commands = [
+            "setblock"
+            "summon"
+            "testforblock"
+            "tellraw"
+          ];
+          log = true;
+        };
+        messages = {
+          whitelist = "You are not whitelisted!";
+          unknown-command = "Unknown command. Type \"/help\" for help";
+          server-full = "The server is full!";
+          outdated-client = "Outdated client! Use {0}";
+          outdated-server = "Outdated server! I'm still on {0}";
+          restart = "Server is restarting!! Literally 1984.";
+        };
+        stats = {
+          disable-saving = false;
+          forced-stats = { };
+        };
+        world-settings = {
+          default = {
+            verbose = true;
+            nerf-spawner-mobs = false;
+            anti-xray = {
+              enabled = false;
+              engine-mode = 1;
+              hide-blocks = [
+                14
+                15
+                16
+                21
+                48
+                49
+                54
+                56
+                73
+                74
+                82
+                129
+                130
+              ];
+              replace-blocks = [
+                1
+                5
+              ];
+            };
+            mob-spawn-range = 4;
+            growth = {
+              cactus-modifier = 100;
+              cane-modifier = 100;
+              melon-modifier = 100;
+              mushroom-modifier = 100;
+              pumpkin-modifier = 100;
+              sapling-modifier = 100;
+              wheat-modifier = 100;
+            };
+            entity-activation-range = {
+              animals = 32;
+              monsters = 32;
+              misc = 16;
+            };
+            entity-tracking-range = {
+              players = 128;
+              animals = 48;
+              monsters = 32;
+              misc = 32;
+              other = 64;
+            };
+            hopper-alt-ticking = false;
+            ticks-per = {
+              hopper-transfer = 8;
+              hopper-check = 8;
+            };
+            hopper-amount = 1;
+            random-light-updates = false;
+            save-structure-info = true;
+            max-bulk-chunks = 5;
+            max-entity-collisions = 8;
+            dragon-death-sound-radius = 0;
+            seed-village = 10387312;
+            seed-feature = 14357617;
+            hunger = {
+              walk-exhaustion = 0.15;
+              sprint-exhaustion = 0.6;
+              combat-exhaustion = 0.2;
+              regen-exhaustion = 2.5;
+            };
+            max-tnt-per-tick = 10;
+            view-distance = 10;
+            chunks-per-tick = 650;
+            clear-tick-list = false;
+            merge-radius = {
+              exp = 4.0;
+              item = 2.5;
+            };
+            item-despawn-rate = 6000;
+            arrow-despawn-rate = 1200;
+            enable-zombie-pigmen-portal-spawns = false;
+            wither-spawn-sound-radius = 0;
+            hanging-tick-frequency = 100;
+            zombie-aggressive-towards-villager = true;
+          };
+        };
+      };
+
+      serverJar = pkgs.fetchurl {
         url = "https://github.com/sarabveer/CraftBukkit-Spigot-Binary/raw/refs/heads/master/spigot-1.7.10-1.8-R0.1/spigot-1.7.10-1.8-R0.1-1656.jar";
         hash = "sha256-e1DglMIQiHU7QcX9KpqKmVOQjNDub6Cz3t9R949hKS0=";
       };
-      crucibleServer = pkgs.stdenv.mkDerivation {
+      serverWrapper = pkgs.stdenv.mkDerivation {
         pname = "crucible-server";
         version = "1.7.10";
         dontUnpack = true;
@@ -105,7 +242,10 @@ in
           mkdir -p $out/bin
           cat <<EOF > $out/bin/minecraft-server
           #!/bin/sh
-          exec ${pkgs.openjdk8_headless}/bin/java \$JVMOPTS -jar ${crucibleJar} nogui
+          cp -f ${spigotConfig} ./spigot.yml
+          chmod 644 ./spigot.yml
+
+          exec ${pkgs.openjdk8_headless}/bin/java \$@ -jar ${serverJar} nogui
           EOF
           chmod +x $out/bin/minecraft-server
         '';
@@ -118,7 +258,7 @@ in
     {
       enable = true;
       eula = true;
-      package = crucibleServer;
+      package = serverWrapper;
 
       # https://exa.y2k.diy/garden/jvm-args/
       jvmOpts = "-Dlog4j.configurationFile=${log4ShellMitigator} -Xms2G -Xmx6G -XX:+UseG1GC";
@@ -129,7 +269,9 @@ in
         Incspa = "bf68bf6c-d2b7-4bba-9c2d-e33280c0808e";
       };
       serverProperties = {
-        server-port = 25565;
+        online-mode = false;
+        server-ip = "127.0.0.1";
+        server-port = 25566;
         motd = "Swag Mode: Enabled";
         difficulty = 2;
         max-players = 20;
@@ -162,6 +304,119 @@ in
         plugin: "ln -sf ${plugin} ${config.services.minecraft-server.dataDir}/plugins/${plugin.name}"
       ) plugins}
     '';
+
+  users.users.velocity = {
+    isSystemUser = true;
+    group = "velocity";
+    home = "/var/lib/velocity";
+    createHome = true;
+  };
+  users.groups.velocity = { };
+
+  systemd.services.velocity =
+    let
+      velocityRoot = config.users.users.velocity.home;
+
+      velocityJar = pkgs.fetchurl {
+        name = "Velocity-Server.jar";
+        url = "https://fill-data.papermc.io/v1/objects/d94545b4fc9a7a7b7eae3e29999b1882f9ca3b5b30873b173d84199d3b84039b/velocity-4.1.0-SNAPSHOT-14.jar";
+        hash = "sha256-2UVFtPyaent+rj4pmZsYgvnKO1swhzsXPYQZnTuEA5s=";
+      };
+
+      geyserJar = pkgs.fetchurl {
+        name = "Geyser-Velocity.jar";
+        url = "https://download.geysermc.org/v2/projects/geyser/versions/latest/builds/latest/downloads/velocity";
+        hash = "sha256-OzMvOqWpOs8B9WaMkPNusxd7bXaRAZzc6jyj6XeRLBw=";
+      };
+
+      floodgateJar = pkgs.fetchurl {
+        name = "Floodgate-Geyser.jar";
+        url = "https://download.geysermc.org/v2/projects/floodgate/versions/latest/builds/latest/downloads/velocity";
+        hash = "sha256-UkdExcPeZ99LhK3IC6u/XZ8AQSwaWT90qK5ubd6SwG8=";
+      };
+
+      tomlFormat = pkgs.formats.toml { };
+      velocityCfg = tomlFormat.generate "velocity.toml" {
+        config-version = "2.8";
+        bind = "0.0.0.0:25565";
+        motd = "Swag Mode: Enabled";
+        show-max-players = 30;
+        online-mode = true;
+
+        prevent-client-proxy-connections = false;
+
+        forwarding-secret-file = "swagballs.secret";
+        kick-existing-players = false;
+        player-info-forwarding-mode = "legacy";
+        ping-passthrough = "all";
+
+        servers = {
+          backend1710 = "127.0.0.1:25566";
+          try = [ "backend1710" ];
+        };
+
+        forced-hosts = { };
+
+        advanced = {
+          compression-threshold = 256;
+          compression-level = -1;
+          login-ratelimit = 1000;
+          connection-timeout = 5000;
+          read-timeout = 30000;
+          haproxy-protocol = false;
+          tcp-fast-open = true;
+          bungee-plugin-message-channel = true;
+          show-ping-requests = false;
+          failover-on-unexpected-server-disconnect = true;
+          announce-proxy-commands = true;
+          log-command-executions = false;
+          log-player-connections = true;
+          accepts-transfers = false;
+          enable-reuse-port = true;
+          command-rate-limit = 100;
+          forward-commands-if-rate-limited = true;
+          kick-after-rate-limited-commands = 0;
+          tab-complete-rate-limit = 10;
+          kick-after-rate-limited-tab-completes = 0;
+        };
+
+        query = {
+          enabled = false;
+          port = 25565;
+          map = "swagballs";
+          show-plugins = false;
+        };
+      };
+    in
+    {
+      description = "velocity mc proxy";
+      after = [ "network.target" ];
+      wantedBy = [ "multi-user.target" ];
+
+      preStart = ''
+        mkdir -p ${velocityRoot}/plugins
+
+        cp -f ${velocityCfg} ${velocityRoot}/velocity.toml
+        chmod 644 ${velocityRoot}/velocity.toml
+
+        cp -f ${geyserJar} ${velocityRoot}/plugins/Geyser-Velocity.jar
+        chmod 644 ${velocityRoot}/plugins/Geyser-Velocity.jar
+
+        cp -f ${floodgateJar} ${velocityRoot}/plugins/Floodgate-Velocity.jar
+        chmod 644 ${velocityRoot}/plugins/Floodgate-Velocity.jar
+      '';
+
+      serviceConfig = {
+        Type = "simple";
+        User = "velocity";
+        Group = "velocity";
+        StateDirectory = "velocity";
+        WorkingDirectory = velocityRoot;
+        ExecStart = "${pkgs.jdk25_headless}/bin/java -Xmx512M -Xmx1024M -jar ${velocityJar}";
+        Restart = "always";
+        RestartSec = "10s";
+      };
+    };
 
   # Configure keymap in X11
   # services.xserver.xkb.layout = "us";
@@ -433,7 +688,6 @@ in
       22
       25565
       24454
-      19132
       34456
       80
       443
