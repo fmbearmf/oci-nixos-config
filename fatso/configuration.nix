@@ -317,74 +317,176 @@ in
     let
       velocityRoot = config.users.users.velocity.home;
 
-      velocityJar = pkgs.fetchurl {
+      inherit (pkgs) lib fetchurl formats;
+
+      tomlFormat = formats.toml { };
+      yamlFormat = formats.yaml { };
+
+      velocityJar = fetchurl {
         name = "Velocity-Server.jar";
         url = "https://fill-data.papermc.io/v1/objects/d94545b4fc9a7a7b7eae3e29999b1882f9ca3b5b30873b173d84199d3b84039b/velocity-4.1.0-SNAPSHOT-14.jar";
         hash = "sha256-2UVFtPyaent+rj4pmZsYgvnKO1swhzsXPYQZnTuEA5s=";
       };
 
-      geyserJar = pkgs.fetchurl {
-        name = "Geyser-Velocity.jar";
-        url = "https://download.geysermc.org/v2/projects/geyser/versions/latest/builds/latest/downloads/velocity";
-        hash = "sha256-OzMvOqWpOs8B9WaMkPNusxd7bXaRAZzc6jyj6XeRLBw=";
-      };
+      files = {
+        "velocity.toml" = tomlFormat.generate "velocity.toml" {
+          config-version = "2.8";
+          bind = "0.0.0.0:25565";
+          motd = "Swag Mode: Enabled";
+          show-max-players = 30;
+          online-mode = true;
 
-      floodgateJar = pkgs.fetchurl {
-        name = "Floodgate-Geyser.jar";
-        url = "https://download.geysermc.org/v2/projects/floodgate/versions/latest/builds/latest/downloads/velocity";
-        hash = "sha256-UkdExcPeZ99LhK3IC6u/XZ8AQSwaWT90qK5ubd6SwG8=";
-      };
+          prevent-client-proxy-connections = false;
 
-      tomlFormat = pkgs.formats.toml { };
-      velocityCfg = tomlFormat.generate "velocity.toml" {
-        config-version = "2.8";
-        bind = "0.0.0.0:25565";
-        motd = "Swag Mode: Enabled";
-        show-max-players = 30;
-        online-mode = true;
+          forwarding-secret-file = "swagballs.secret";
+          kick-existing-players = false;
+          player-info-forwarding-mode = "legacy";
+          ping-passthrough = "all";
 
-        prevent-client-proxy-connections = false;
+          servers = {
+            backend1710 = "127.0.0.1:25566";
+            try = [ "backend1710" ];
+          };
 
-        forwarding-secret-file = "swagballs.secret";
-        kick-existing-players = false;
-        player-info-forwarding-mode = "legacy";
-        ping-passthrough = "all";
+          forced-hosts = { };
 
-        servers = {
-          backend1710 = "127.0.0.1:25566";
-          try = [ "backend1710" ];
+          advanced = {
+            compression-threshold = 256;
+            compression-level = -1;
+            login-ratelimit = 1000;
+            connection-timeout = 5000;
+            read-timeout = 30000;
+            haproxy-protocol = false;
+            tcp-fast-open = true;
+            bungee-plugin-message-channel = true;
+            show-ping-requests = false;
+            failover-on-unexpected-server-disconnect = true;
+            announce-proxy-commands = true;
+            log-command-executions = false;
+            log-player-connections = true;
+            accepts-transfers = false;
+            enable-reuse-port = true;
+            command-rate-limit = 100;
+            forward-commands-if-rate-limited = true;
+            kick-after-rate-limited-commands = 0;
+            tab-complete-rate-limit = 10;
+            kick-after-rate-limited-tab-completes = 0;
+          };
+
+          query = {
+            enabled = false;
+            port = 25565;
+            map = "swagballs";
+            show-plugins = false;
+          };
         };
 
-        forced-hosts = { };
-
-        advanced = {
-          compression-threshold = 256;
-          compression-level = -1;
-          login-ratelimit = 1000;
-          connection-timeout = 5000;
-          read-timeout = 30000;
-          haproxy-protocol = false;
-          tcp-fast-open = true;
-          bungee-plugin-message-channel = true;
-          show-ping-requests = false;
-          failover-on-unexpected-server-disconnect = true;
-          announce-proxy-commands = true;
-          log-command-executions = false;
-          log-player-connections = true;
-          accepts-transfers = false;
-          enable-reuse-port = true;
-          command-rate-limit = 100;
-          forward-commands-if-rate-limited = true;
-          kick-after-rate-limited-commands = 0;
-          tab-complete-rate-limit = 10;
-          kick-after-rate-limited-tab-completes = 0;
+        "plugins/Geyser-Velocity.jar" = fetchurl {
+          name = "Geyser-Velocity.jar";
+          url = "https://download.geysermc.org/v2/projects/geyser/versions/latest/builds/latest/downloads/velocity";
+          hash = "sha256-OzMvOqWpOs8B9WaMkPNusxd7bXaRAZzc6jyj6XeRLBw=";
         };
 
-        query = {
-          enabled = false;
-          port = 25565;
-          map = "swagballs";
-          show-plugins = false;
+        "plugins/Floodgate-Velocity.jar" = fetchurl {
+          name = "Floodgate-Geyser.jar";
+          url = "https://download.geysermc.org/v2/projects/floodgate/versions/latest/builds/latest/downloads/velocity";
+          hash = "sha256-UkdExcPeZ99LhK3IC6u/XZ8AQSwaWT90qK5ubd6SwG8=";
+        };
+
+        "plugins/Geyser-Velocity/config.yml" = yamlFormat.generate "geyser-config.yml" {
+          bedrock = {
+            address = "0.0.0.0";
+            port = 19132;
+            clone-remote-port = false;
+          };
+          java.auth-type = "floodgate";
+          motd = {
+            primary-motd = "";
+            secondary-motd = "";
+            passthrough-motd = true;
+            max-players = 100;
+            passthrough-player-counts = true;
+            integrated-ping-passthrough = true;
+            ping-passthrough-interval = 3;
+          };
+          gameplay = {
+            server-name = "Swagballs";
+            cooldown-type = "disabled";
+            command-suggestions = false;
+            show-coordinates = true;
+            disable-bedrock-scaffolding = true;
+            nether-roof-workaround = false;
+            emotes-enabled = true;
+            block-legacy-codes = true;
+            unusable-space-block = "minecraft:barrier";
+            enable-custom-content = true;
+            force-resource-packs = true;
+            enabled-integrated-pack = true;
+            forward-player-ping = false;
+            xbox-achievements-enabled = false;
+            max-visible-custom-skulls = 128;
+            custom-skull-render-distance = 32;
+          };
+
+          default-locale = "system";
+          log-player-ip-addresses = true;
+          saved-user-logins = [ "ASOIDAsdioaiowjdaowidjioasi232193" ];
+          pending-authentication-timeout = 120;
+          notify-on-new-bedrock-update = true;
+
+          debug-mode = false;
+          config-version = 7;
+
+          advanced = {
+            cache-images = 0;
+            scoreboard-packet-threshold = 20;
+            add-team-suggestions = true;
+            resource-pack-urls = [ ];
+            floodgate-key-file = "key.pem";
+            java = {
+              use-haproxy-protocol = false;
+              use-direct-connection = true;
+              disable-compression = true;
+            };
+            bedrock = {
+              broadcast-port = 0;
+              compression-level = 4;
+              use-haproxy-protocol = false;
+              haproxy-protocol-whitelisted-ips = [ ];
+              use-waterdogpe-forwarding = false;
+              mtu = 1400;
+              validate-bedrock-login = true;
+            };
+          };
+        };
+
+        "plugins/floodgate/config.yml" = yamlFormat.generate "floodgate-config.yml" {
+          key-file-name = "key.pem";
+          username-prefix = ".";
+          replace-spaces = true;
+          send-floodgate-data = false;
+
+          disconnect = {
+            invalid-key = "invalid-key; Ping lord.foog.the.2st. if you see this.";
+            invalid-arguments-length = "Expected {} arguments, got {}. Is geyser up-to-date?";
+          };
+
+          player-link = {
+            enabled = true;
+            require-link = false;
+            enabled-own-linking = false;
+            allowed = true;
+            link-code-timeout = 600;
+            type = "sqlite";
+            enable-global-linking = true;
+          };
+
+          metrics = {
+            enabled = false;
+            uuid = "7f6287ff-6f2e-423d-ac82-20b48abc7e27";
+          };
+
+          config-version = 3;
         };
       };
     in
@@ -393,18 +495,13 @@ in
       after = [ "network.target" ];
       wantedBy = [ "multi-user.target" ];
 
-      preStart = ''
-        mkdir -p ${velocityRoot}/plugins
-
-        cp -f ${velocityCfg} ${velocityRoot}/velocity.toml
-        chmod 644 ${velocityRoot}/velocity.toml
-
-        cp -f ${geyserJar} ${velocityRoot}/plugins/Geyser-Velocity.jar
-        chmod 644 ${velocityRoot}/plugins/Geyser-Velocity.jar
-
-        cp -f ${floodgateJar} ${velocityRoot}/plugins/Floodgate-Velocity.jar
-        chmod 644 ${velocityRoot}/plugins/Floodgate-Velocity.jar
-      '';
+      preStart = lib.concatStringsSep "\n" (
+        lib.mapAttrsToList (relPath: src: ''
+          mkdir -p "${velocityRoot}/${dirOf relPath}"
+          cp -vf ${src} "${velocityRoot}/${relPath}"
+          chmod 644 "${velocityRoot}/${relPath}"
+        '') files
+      );
 
       serviceConfig = {
         Type = "simple";
