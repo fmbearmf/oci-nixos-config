@@ -297,6 +297,11 @@ in
     let
       plugins = [
         (pkgs.fetchurl {
+          name = "LP.jar";
+          url = "https://download.luckperms.net/1652/bukkit/loader/LuckPerms-Bukkit-5.5.65.jar";
+          hash = "sha256-i4QtnZXD88BW5HEhTRVsDT1wSkbL3RoEqbxHKB1UuKM=";
+        })
+        (pkgs.fetchurl {
           name = "WorldGuard.jar";
           url = "https://cdn.modrinth.com/data/DKY9btbd/versions/edZOJWth/worldguard-6.2.jar";
           hash = "sha256-1yZcpQrgcbB3avqyDsOb9Z8MjZdPNKOJnm+EE2fl6sY=";
@@ -489,7 +494,7 @@ in
         "plugins/Geyser-Velocity.jar" = fetchurl {
           name = "Geyser-Velocity.jar";
           url = "https://download.geysermc.org/v2/projects/geyser/versions/latest/builds/latest/downloads/velocity";
-          hash = "sha256-OzMvOqWpOs8B9WaMkPNusxd7bXaRAZzc6jyj6XeRLBw=";
+          hash = "sha256-XYvTgxk1+KWAVuZObuvCnNINtDzLsk6UAF1FwV+1Fig=";
         };
 
         "plugins/Floodgate-Velocity.jar" = fetchurl {
