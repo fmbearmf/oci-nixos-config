@@ -297,6 +297,11 @@ in
     let
       plugins = [
         (pkgs.fetchurl {
+          name = "WorldGuard.jar";
+          url = "https://cdn.modrinth.com/data/DKY9btbd/versions/edZOJWth/worldguard-6.2.jar";
+          hash = "sha256-1yZcpQrgcbB3avqyDsOb9Z8MjZdPNKOJnm+EE2fl6sY=";
+        })
+        (pkgs.fetchurl {
           name = "PlayerSleep.jar";
           url = "https://cdn.modrinth.com/data/HoTh6hJr/versions/IsATHK8a/OnePlayerSleepX-1.0.0.jar";
           hash = "sha256-XqgHw1Nj7301mpZu34l/Bx9vGKz/XHiI/B6+QyqYwF0=";
