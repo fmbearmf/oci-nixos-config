@@ -230,12 +230,12 @@ in
       };
 
       serverJar = pkgs.fetchurl {
-        url = "https://github.com/sarabveer/CraftBukkit-Spigot-Binary/raw/refs/heads/master/spigot-1.7.10-1.8-R0.1/spigot-1.7.10-1.8-R0.1-1656.jar";
-        hash = "sha256-e1DglMIQiHU7QcX9KpqKmVOQjNDub6Cz3t9R949hKS0=";
+        url = "https://fill-data.papermc.io/v1/objects/15a5821ddeacc596432c3fbf24262a2d264f556060ecd6f1838fb01ab5629a81/paper-1.9.4-775.jar";
+        hash = "sha256-FaWCHd6sxZZDLD+/JCYqLSZPVWBg7Nbxg4+wGrVimoE=";
       };
       serverWrapper = pkgs.stdenv.mkDerivation {
         pname = "crucible-server";
-        version = "1.7.10";
+        version = "1.9.4";
         dontUnpack = true;
 
         installPhase = ''
@@ -296,6 +296,11 @@ in
   systemd.services.minecraft-server.preStart =
     let
       plugins = [
+        (pkgs.fetchurl {
+          name = "PlayerSleep.jar";
+          url = "https://cdn.modrinth.com/data/HoTh6hJr/versions/IsATHK8a/OnePlayerSleepX-1.0.0.jar";
+          hash = "sha256-XqgHw1Nj7301mpZu34l/Bx9vGKz/XHiI/B6+QyqYwF0=";
+        })
         (pkgs.fetchurl {
           name = "WorldEdit-6.1.9.jar";
           url = "https://cdn.modrinth.com/data/1u6JkXh5/versions/JezAXbj7/worldedit-bukkit-6.1.9.jar";
