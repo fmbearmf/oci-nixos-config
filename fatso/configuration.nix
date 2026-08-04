@@ -245,7 +245,7 @@ in
           cp -f ${spigotConfig} ./spigot.yml
           chmod 644 ./spigot.yml
 
-          exec ${pkgs.openjdk8_headless}/bin/java \$@ -jar ${serverJar} nogui
+          exec ${pkgs.openjdk11_headless}/bin/java \$@ -jar ${serverJar} nogui
           EOF
           chmod +x $out/bin/minecraft-server
         '';
