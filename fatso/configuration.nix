@@ -290,6 +290,7 @@ in
         max-players = 20;
         white-list = true;
         allow-cheats = true;
+        allow-flight = true;
       };
     };
 
