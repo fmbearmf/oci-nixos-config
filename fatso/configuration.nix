@@ -284,7 +284,7 @@ in
       serverProperties = {
         online-mode = false;
         server-ip = "127.0.0.1";
-        server-port = 25567;
+        server-port = 25566;
         motd = "Swag Mode: Enabled";
         difficulty = 2;
         max-players = 20;
@@ -296,6 +296,11 @@ in
   systemd.services.minecraft-server.preStart =
     let
       plugins = [
+        (pkgs.fetchurl {
+          name = "ViaVersion.jar";
+          url = "https://cdn.modrinth.com/data/P1OZGk5p/versions/ZH8459B6/ViaVersion-5.11.0.jar";
+          hash = "sha256-idt2yOPmdCOPXu4rt6npor7roHYLvRuGSUd46KWlL3A=";
+        })
         (pkgs.fetchurl {
           name = "LP.jar";
           url = "https://download.luckperms.net/1652/bukkit/loader/LuckPerms-Bukkit-5.5.65.jar";
@@ -341,87 +346,245 @@ in
   };
   users.groups.velocity = { };
 
-  users.users.viaproxy = {
+  users.users.cuberite = {
     isSystemUser = true;
-    group = "viaproxy";
-    home = "/var/lib/viaproxy";
+    group = "cuberite";
+    home = "/var/lib/cuberite";
     createHome = true;
   };
-  users.groups.viaproxy = { };
+  users.groups.cuberite = { };
 
-  systemd.services.viaproxy =
+  systemd.services.cuberite =
     let
-      vpRoot = config.users.users.viaproxy.home;
+      cuberiteRoot = config.users.users.cuberite.home;
 
-      inherit (pkgs) lib fetchurl formats;
+      cuberite =
+        let
+          inherit (pkgs)
+            autoPatchelfHook
+            stdenv
+            zlib
+            openssl
+            ;
+        in
+        stdenv.mkDerivation {
+          pname = "cuberite";
+          version = "0+latest";
 
-      yamlFormat = formats.yaml { };
+          src = pkgs.fetchurl {
+            url = "https://download.cuberite.org/linux-aarch64/Cuberite.tar.gz";
+            hash = "sha256-DjkN8es8cPpYKA1rvWotu5vyfhUbB6YiQjmEgZ1UMds=";
+          };
 
-      vpJar = fetchurl {
-        name = "ViaProxy.jar";
-        url = "https://github.com/ViaVersion/ViaProxy/releases/download/v3.4.12/ViaProxy-3.4.12.jar";
-        hash = "sha256-Ms6a2HGusDKGgjwp2iYuvXWZKGTnhX2yg/EDUlx/wMs=";
-      };
+          nativeBuildInputs = [ autoPatchelfHook ];
+          buildInputs = [
+            stdenv.cc.cc.lib
+            zlib
+            openssl
+          ];
 
-      files = {
-        "viaproxy.yml" = yamlFormat.generate "viaproxy.yml" {
-          bind-address = "127.0.0.1:25566";
-          target-address = "127.0.0.1:25567";
-          target-version = 5;
-          connection-timeout = 8000;
-          proxy-online-mode = false;
-          auth-method = "NONE";
-          minecraft-account-index = 0;
-          betacraft-auth = false;
-          backend-proxy-url = "";
-          backend-haproxy = false;
-          frontend-haproxy = false;
-          chat-signing = false;
-          compression-threshold = 256;
-          allow-beta-pinging = false;
-          ignore-protocol-translation-errors = false;
-          suppress-client-protocol-errors = false;
-          allow-legacy-client-passthrough = false;
-          bungeecord-player-info-passthrough = true;
-          rewrite-handshake-packet = true;
-          rewrite-transfer-packets = true;
-          custom-motd = "";
-          custom-favicon-path = "";
-          resource-pack-url = "";
-          wildcard-domain-handling = "NONE";
-          simple-voice-chat-support = false;
-          fix-fabric-particle-api = true;
-          fake-accept-resource-packs = false;
-          skip-config-state-packet-queue = false;
-          log-ips = false;
-          log-client-status-requests = false;
+          installPhase = ''
+            runHook preInstall
+
+            mkdir -p $out/share/cuberite $out/bin
+
+            cp -r . $out/share/cuberite/
+            chmod +x $out/share/cuberite/Cuberite
+
+            ln -sv $out/share/cuberite/Cuberite $out/bin/cuberite
+
+            runHook postInstall
+          '';
+
+          sourceRoot = ".";
+
+          meta = with lib; {
+            description = "Cuberite";
+            homepage = "https://cuberite.org";
+            license = licenses.asl20;
+            mainProgram = "cuberite";
+            platforms = with lib.platforms; intersectLists linux (x86 ++ arm);
+          };
         };
-      };
+
+      files =
+        let
+          iniFmt = pkgs.formats.ini { };
+        in
+        {
+          "settings.ini" = iniFmt.generate "settings.ini" {
+            Authentication = {
+              Authenticate = 0;
+              AllowBungeeCord = 1;
+              OnlyAllowBungeeCord = 1;
+              ProxySharedSecret = "";
+              Server = "sessionserver.mojang.com";
+              Address = "/session/minecraft/hasJoined?username=%USERNAME%&serverId=%SERVERID%";
+            };
+            MojangAPI = {
+              NameToUUIDServer = "api.mojang.com";
+              NameToUUIDAddress = "/profiles/minecraft";
+              UUIDToProfileServer = "sessionserver.mojang.com";
+              UUIDToProfileAddress = "/session/minecraft/profile/%UUID%?unsigned=false";
+            };
+            Server = {
+              Description = "building piggies";
+              Ports = 25567;
+            };
+            AntiCheat.LimitPlayerBlockChanges = 0;
+            Worlds = {
+              DefaultWorld = "world";
+            };
+          };
+
+          "webadmin.ini" = iniFmt.generate "webadmin.ini" {
+            WebAdmin.Enabled = 0;
+          };
+
+          "world/world.ini" = iniFmt.generate "world.ini" {
+            General = {
+              Dimension = "Overworld";
+              UnusedChunkCap = 1000;
+              Gamemode = 1;
+            };
+            Monsters = {
+              AnimalsOn = 0;
+            };
+            Seed.Seed = 12903012;
+            SpawnPosition = {
+              MaxViewDistance = 12;
+              X = 0;
+              Y = 10;
+              Z = 0;
+              PregenerateDistance = 50;
+            };
+            Generator = {
+              BiomeGen = "Constant";
+              ConstantBiome = "Plains";
+              HeightGen = "Flat";
+              FlatHeight = 8;
+              ShapeGen = "HeightMap";
+              SeaLevel = 0;
+              Finishers = "WaterSprings, LavaSprings, OreNests, Trees, SinglePieceStructures: JungleTemple|WitchHut|DesertPyramid|DesertWell, TallGrass, SprinkleFoliage, Ice, Snow, Lilypads, DeadBushes, NaturalPatches, PreSimulator, OverworldClumpFlowers, ForestRocks";
+            };
+          };
+        };
     in
     {
-      description = "viaproxy";
-      after = [ "network.target" ];
+      description = "cuberite build server";
       wantedBy = [ "multi-user.target" ];
-
-      preStart = lib.concatStringsSep "\n" (
-        lib.mapAttrsToList (relPath: src: ''
-          mkdir -p "${vpRoot}/${dirOf relPath}"
-          cp -vf ${src} "${vpRoot}/${relPath}"
-          chmod 644 "${vpRoot}/${relPath}"
-        '') files
-      );
+      after = [ "network.target" ];
 
       serviceConfig = {
         Type = "simple";
-        User = "viaproxy";
-        Group = "viaproxy";
-        StateDirectory = "viaproxy";
-        WorkingDirectory = vpRoot;
-        ExecStart = "${pkgs.jdk25_headless}/bin/java -Xms512M -Xmx1024M -jar ${vpJar} config viaproxy.yml";
+        User = "cuberite";
+        Group = "cuberite";
+        WorkingDirectory = cuberiteRoot;
+        ExecStart = "${lib.getExe pkgs.cuberite}";
         Restart = "always";
-        RestartSec = "10s";
+
+        ProtectSystem = "full";
+        ProtectHome = true;
+        PrivateTmp = true;
       };
+
+      preStart = ''
+        cp -r --no-clobber "${cuberite}/share/cuberite/." "${cuberiteRoot}/"
+        chmod -R u+w "${cuberiteRoot}"
+
+        chown -R cuberite:cuberite "${cuberiteRoot}"
+      ''
+      + "\n"
+      + lib.concatStringsSep "\n" (
+        lib.mapAttrsToList (relPath: src: ''
+          mkdir -p "${cuberiteRoot}/${dirOf relPath}"
+          cp -vf ${src} "${cuberiteRoot}/${relPath}"
+          chmod 644 "${cuberiteRoot}/${relPath}"
+        '') files
+      );
     };
+
+  #users.users.viaproxy = {
+  #  isSystemUser = true;
+  #  group = "viaproxy";
+  #  home = "/var/lib/viaproxy";
+  #  createHome = true;
+  #};
+  #users.groups.viaproxy = { };
+
+  #systemd.services.viaproxy =
+  #  let
+  #    vpRoot = config.users.users.viaproxy.home;
+
+  #    inherit (pkgs) lib fetchurl formats;
+
+  #    yamlFormat = formats.yaml { };
+
+  #    vpJar = fetchurl {
+  #      name = "ViaProxy.jar";
+  #      url = "https://github.com/ViaVersion/ViaProxy/releases/download/v3.4.12/ViaProxy-3.4.12.jar";
+  #      hash = "sha256-Ms6a2HGusDKGgjwp2iYuvXWZKGTnhX2yg/EDUlx/wMs=";
+  #    };
+
+  #    files = {
+  #      "viaproxy.yml" = yamlFormat.generate "viaproxy.yml" {
+  #        bind-address = "127.0.0.1:25566";
+  #        target-address = "127.0.0.1:25567";
+  #        target-version = 5;
+  #        connection-timeout = 8000;
+  #        proxy-online-mode = false;
+  #        auth-method = "NONE";
+  #        minecraft-account-index = 0;
+  #        betacraft-auth = false;
+  #        backend-proxy-url = "";
+  #        backend-haproxy = false;
+  #        frontend-haproxy = false;
+  #        chat-signing = false;
+  #        compression-threshold = 256;
+  #        allow-beta-pinging = false;
+  #        ignore-protocol-translation-errors = false;
+  #        suppress-client-protocol-errors = false;
+  #        allow-legacy-client-passthrough = false;
+  #        bungeecord-player-info-passthrough = true;
+  #        rewrite-handshake-packet = true;
+  #        rewrite-transfer-packets = true;
+  #        custom-motd = "";
+  #        custom-favicon-path = "";
+  #        resource-pack-url = "";
+  #        wildcard-domain-handling = "NONE";
+  #        simple-voice-chat-support = false;
+  #        fix-fabric-particle-api = true;
+  #        fake-accept-resource-packs = false;
+  #        skip-config-state-packet-queue = false;
+  #        log-ips = false;
+  #        log-client-status-requests = false;
+  #      };
+  #    };
+  #  in
+  #  {
+  #    description = "viaproxy";
+  #    after = [ "network.target" ];
+  #    wantedBy = [ "multi-user.target" ];
+
+  #    preStart = lib.concatStringsSep "\n" (
+  #      lib.mapAttrsToList (relPath: src: ''
+  #        mkdir -p "${vpRoot}/${dirOf relPath}"
+  #        cp -vf ${src} "${vpRoot}/${relPath}"
+  #        chmod 644 "${vpRoot}/${relPath}"
+  #      '') files
+  #    );
+
+  #    serviceConfig = {
+  #      Type = "simple";
+  #      User = "viaproxy";
+  #      Group = "viaproxy";
+  #      StateDirectory = "viaproxy";
+  #      WorkingDirectory = vpRoot;
+  #      ExecStart = "${pkgs.jdk25_headless}/bin/java -Xms512M -Xmx1024M -jar ${vpJar} config viaproxy.yml";
+  #      Restart = "always";
+  #      RestartSec = "10s";
+  #    };
+  #  };
 
   systemd.services.velocity =
     let
@@ -454,8 +617,12 @@ in
           ping-passthrough = "all";
 
           servers = {
-            backend1710 = "127.0.0.1:25566";
-            try = [ "backend1710" ];
+            survival = "127.0.0.1:25566";
+            build = "127.0.0.1:25567";
+            try = [
+              "survival"
+              "build"
+            ];
           };
 
           forced-hosts = { };
@@ -484,11 +651,23 @@ in
           };
 
           query = {
-            enabled = false;
+            enabled = true;
             port = 25565;
             map = "swagballs";
             show-plugins = false;
           };
+        };
+
+        "plugins/Reconnect.jar" = fetchurl {
+          name = "Reconnect.jar";
+          url = "https://cdn.modrinth.com/data/Ri89j7v5/versions/jQyUh7jF/VelocityReconnect-1.1.0.jar";
+          hash = "sha256-rkNcXt4dwdJb9UMS3FwtAQ8bm2hp1QwfRQguSfQ4ITo=";
+        };
+
+        "plugins/LP.jar" = fetchurl {
+          name = "LP.jar";
+          url = "https://cdn.modrinth.com/data/Vebnzrzj/versions/BmxJvHsa/LuckPerms-Velocity-5.5.53.jar";
+          hash = "sha256-P0iqr9DGsjYuAtwbdK2gu+V/JWLe9UUIvWSmYY5Ty6w=";
         };
 
         "plugins/Geyser-Velocity.jar" = fetchurl {
