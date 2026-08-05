@@ -273,7 +273,10 @@ in
         DisgustedConure = "abd2ef19-2077-45a2-992b-62a4b03aa381";
         # john the great
         Oohapenny = "13906f4c-314e-445a-b80b-f487ee1a452a";
+        # adam merlin
         swaggiestwizard = "7e460670-2aaf-4ecc-b3c7-a75cc6420eac";
+        # dainis
+        TalkTuahGamer = "83c6da84-4e67-42e0-9748-6fde6d5f74e1";
         # incspa bedrock
         ".Shrek12346" = "00000000-0000-0000-0009-01f0e45556f7";
         # oscar bedrock
