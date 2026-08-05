@@ -245,7 +245,7 @@ in
           cp -f ${spigotConfig} ./spigot.yml
           chmod 644 ./spigot.yml
 
-          exec ${pkgs.openjdk11_headless}/bin/java \$@ -jar ${serverJar} nogui
+          exec ${pkgs.openjdk25_headless}/bin/java \$@ -jar ${serverJar} nogui
           EOF
           chmod +x $out/bin/minecraft-server
         '';
@@ -261,7 +261,7 @@ in
       package = serverWrapper;
 
       # https://exa.y2k.diy/garden/jvm-args/
-      jvmOpts = "-Dlog4j.configurationFile=${log4ShellMitigator} -Xms2G -Xmx6G -XX:+UseG1GC";
+      jvmOpts = "-Dlog4j.configurationFile=${log4ShellMitigator} -Xms8G -Xmx8G -XX:+UseZGC -XX:+UseCompactObjectHeaders --illegal-access=warn --enable-native-access=ALL-UNNAMED --add-opens java.base/java.lang=ALL-UNNAMED --add-opens java.base/java.util=ALL-UNNAMED";
 
       declarative = true;
       whitelist = {
@@ -345,184 +345,6 @@ in
     createHome = true;
   };
   users.groups.velocity = { };
-
-  users.users.cuberite = {
-    isSystemUser = true;
-    group = "cuberite";
-    home = "/var/lib/cuberite";
-    createHome = true;
-  };
-  users.groups.cuberite = { };
-
-  systemd.sockets.cuberite = {
-    bindsTo = [ "cuberite.service" ];
-    socketConfig = {
-      ListenFIFO = "/run/cuberite.stdin";
-      SocketMode = "0660";
-      SocketUser = "cuberite";
-      SocketGroup = "cuberite";
-      RemoveOnStop = true;
-      FlushPending = true;
-    };
-  };
-
-  systemd.services.cuberite =
-    let
-      cuberiteRoot = config.users.users.cuberite.home;
-
-      cuberite =
-        let
-          inherit (pkgs)
-            autoPatchelfHook
-            stdenv
-            zlib
-            openssl
-            ;
-        in
-        stdenv.mkDerivation {
-          pname = "cuberite";
-          version = "0+latest";
-
-          src = pkgs.fetchurl {
-            url = "https://download.cuberite.org/linux-aarch64/Cuberite.tar.gz";
-            hash = "sha256-DjkN8es8cPpYKA1rvWotu5vyfhUbB6YiQjmEgZ1UMds=";
-          };
-
-          nativeBuildInputs = [ autoPatchelfHook ];
-          buildInputs = [
-            stdenv.cc.cc.lib
-            zlib
-            openssl
-          ];
-
-          installPhase = ''
-            runHook preInstall
-
-            mkdir -p $out/share/cuberite $out/bin
-
-            cp -r . $out/share/cuberite/
-            chmod +x $out/share/cuberite/Cuberite
-
-            ln -sv $out/share/cuberite/Cuberite $out/bin/cuberite
-
-            runHook postInstall
-          '';
-
-          sourceRoot = ".";
-
-          meta = with lib; {
-            description = "Cuberite";
-            homepage = "https://cuberite.org";
-            license = licenses.asl20;
-            mainProgram = "cuberite";
-            platforms = platforms.linux;
-          };
-        };
-
-      files =
-        let
-          iniFmt = pkgs.formats.ini { };
-        in
-        {
-          "settings.ini" = iniFmt.generate "settings.ini" {
-            Authentication = {
-              Authenticate = 0;
-              AllowBungeeCord = 1;
-              OnlyAllowBungeeCord = 1;
-              ProxySharedSecret = "";
-              Server = "sessionserver.mojang.com";
-              Address = "/session/minecraft/hasJoined?username=%USERNAME%&serverId=%SERVERID%";
-            };
-            MojangAPI = {
-              NameToUUIDServer = "api.mojang.com";
-              NameToUUIDAddress = "/profiles/minecraft";
-              UUIDToProfileServer = "sessionserver.mojang.com";
-              UUIDToProfileAddress = "/session/minecraft/profile/%UUID%?unsigned=false";
-            };
-            Server = {
-              Description = "building piggies";
-              Ports = 25567;
-            };
-            AntiCheat.LimitPlayerBlockChanges = 0;
-            Worlds = {
-              DefaultWorld = "world";
-            };
-          };
-
-          "webadmin.ini" = iniFmt.generate "webadmin.ini" {
-            WebAdmin.Enabled = 0;
-          };
-
-          "world/world.ini" = iniFmt.generate "world.ini" {
-            General = {
-              Dimension = "Overworld";
-              UnusedChunkCap = 1000;
-              Gamemode = 1;
-            };
-            Monsters = {
-              AnimalsOn = 0;
-            };
-            Seed.Seed = 12903012;
-            SpawnPosition = {
-              MaxViewDistance = 12;
-              X = 0;
-              Y = 10;
-              Z = 0;
-              PregenerateDistance = 50;
-            };
-            Generator = {
-              BiomeGen = "Constant";
-              ConstantBiome = "Plains";
-              HeightGen = "Flat";
-              FlatHeight = 8;
-              ShapeGen = "HeightMap";
-              SeaLevel = 0;
-              Finishers = "WaterSprings, LavaSprings, OreNests, Trees, SinglePieceStructures: JungleTemple|WitchHut|DesertPyramid|DesertWell, TallGrass, SprinkleFoliage, Ice, Snow, Lilypads, DeadBushes, NaturalPatches, PreSimulator, OverworldClumpFlowers, ForestRocks";
-            };
-          };
-        };
-    in
-    {
-      description = "cuberite build server";
-      wantedBy = [ "multi-user.target" ];
-      requires = [ "cuberite.socket" ];
-      after = [
-        "network.target"
-        "cuberite.socket"
-      ];
-
-      serviceConfig = {
-        Type = "simple";
-        User = "cuberite";
-        Group = "cuberite";
-        WorkingDirectory = cuberiteRoot;
-        ExecStart = "${lib.getExe cuberite}";
-        Restart = "always";
-
-        ProtectSystem = "full";
-        ProtectHome = true;
-        PrivateTmp = true;
-
-        StandardInput = "socket";
-        StandardOutput = "journal";
-        StandardError = "journal";
-      };
-
-      preStart = ''
-        cp -r --no-clobber "${cuberite}/share/cuberite/." "${cuberiteRoot}/"
-        chmod -R u+w "${cuberiteRoot}"
-
-        chown -R cuberite:cuberite "${cuberiteRoot}"
-      ''
-      + "\n"
-      + lib.concatStringsSep "\n" (
-        lib.mapAttrsToList (relPath: src: ''
-          mkdir -p "${cuberiteRoot}/${dirOf relPath}"
-          cp -vf ${src} "${cuberiteRoot}/${relPath}"
-          chmod 644 "${cuberiteRoot}/${relPath}"
-        '') files
-      );
-    };
 
   #users.users.viaproxy = {
   #  isSystemUser = true;
