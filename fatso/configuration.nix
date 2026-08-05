@@ -354,6 +354,18 @@ in
   };
   users.groups.cuberite = { };
 
+  systemd.sockets.cuberite = {
+    bindsTo = [ "cuberite.service" ];
+    socketConfig = {
+      ListenFIFO = "/run/cuberite.stdin";
+      SocketMode = "0660";
+      SocketUser = "cuberite";
+      SocketGroup = "cuberite";
+      RemoveOnStop = true;
+      FlushPending = true;
+    };
+  };
+
   systemd.services.cuberite =
     let
       cuberiteRoot = config.users.users.cuberite.home;
@@ -403,7 +415,7 @@ in
             homepage = "https://cuberite.org";
             license = licenses.asl20;
             mainProgram = "cuberite";
-            platforms = with lib.platforms; intersectLists linux (x86 ++ arm);
+            platforms = platforms.linux;
           };
         };
 
@@ -473,19 +485,27 @@ in
     {
       description = "cuberite build server";
       wantedBy = [ "multi-user.target" ];
-      after = [ "network.target" ];
+      requires = [ "cuberite.socket" ];
+      after = [
+        "network.target"
+        "cuberite.socket"
+      ];
 
       serviceConfig = {
         Type = "simple";
         User = "cuberite";
         Group = "cuberite";
         WorkingDirectory = cuberiteRoot;
-        ExecStart = "${lib.getExe pkgs.cuberite}";
+        ExecStart = "${lib.getExe cuberite}";
         Restart = "always";
 
         ProtectSystem = "full";
         ProtectHome = true;
         PrivateTmp = true;
+
+        StandardInput = "socket";
+        StandardOutput = "journal";
+        StandardError = "journal";
       };
 
       preStart = ''
@@ -585,6 +605,17 @@ in
   #      RestartSec = "10s";
   #    };
   #  };
+  systemd.sockets.velocity = {
+    bindsTo = [ "velocity.service" ];
+    socketConfig = {
+      ListenFIFO = "/run/velocity.stdin";
+      SocketMode = "0660";
+      SocketUser = "velocity";
+      SocketGroup = "velocity";
+      RemoveOnStop = true;
+      FlushPending = true;
+    };
+  };
 
   systemd.services.velocity =
     let
@@ -781,7 +812,11 @@ in
     in
     {
       description = "velocity mc proxy";
-      after = [ "network.target" ];
+      requires = [ "velocity.socket" ];
+      after = [
+        "network.target"
+        "velocity.socket"
+      ];
       wantedBy = [ "multi-user.target" ];
 
       preStart = lib.concatStringsSep "\n" (
@@ -801,6 +836,10 @@ in
         ExecStart = "${pkgs.jdk25_headless}/bin/java -Xms512M -Xmx1024M -jar ${velocityJar}";
         Restart = "always";
         RestartSec = "10s";
+
+        StandardInput = "socket";
+        StandardOutput = "journal";
+        StandardError = "journal";
       };
     };
 
