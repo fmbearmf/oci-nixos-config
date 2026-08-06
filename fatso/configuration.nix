@@ -311,11 +311,6 @@ in
           hash = "sha256-i4QtnZXD88BW5HEhTRVsDT1wSkbL3RoEqbxHKB1UuKM=";
         })
         (pkgs.fetchurl {
-          name = "WorldGuard.jar";
-          url = "https://cdn.modrinth.com/data/DKY9btbd/versions/edZOJWth/worldguard-6.2.jar";
-          hash = "sha256-1yZcpQrgcbB3avqyDsOb9Z8MjZdPNKOJnm+EE2fl6sY=";
-        })
-        (pkgs.fetchurl {
           name = "PlayerSleep.jar";
           url = "https://cdn.modrinth.com/data/HoTh6hJr/versions/IsATHK8a/OnePlayerSleepX-1.0.0.jar";
           hash = "sha256-XqgHw1Nj7301mpZu34l/Bx9vGKz/XHiI/B6+QyqYwF0=";
@@ -324,11 +319,6 @@ in
           name = "WorldEdit-6.1.9.jar";
           url = "https://cdn.modrinth.com/data/1u6JkXh5/versions/JezAXbj7/worldedit-bukkit-6.1.9.jar";
           hash = "sha256-WnuI9vdbSgtu/UeuA+nCaiA27NEisDpFymNd3jhtYYY=";
-        })
-        (pkgs.fetchurl {
-          name = "CraftBook-3.8.9.jar";
-          url = "https://cdn.modrinth.com/data/jrO7z7l7/versions/bhFLT0vN/CraftBook_3.8.9.jar";
-          hash = "sha256-8roKjhtan1WPXEcUvytgE/QoK3/HHbtvdHUWZ1dBaKs=";
         })
       ];
     in
