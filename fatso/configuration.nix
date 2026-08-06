@@ -161,6 +161,7 @@ in
         allow-cheats = true;
         allow-flight = true;
         sync-chunk-writes = false;
+        enforce-secure-profile = false;
       };
     };
 
@@ -226,6 +227,11 @@ in
           name = "Paper-API.jar";
           url = "https://cdn.modrinth.com/data/P7dR8mSH/versions/3gT0I5vt/fabric-api-0.156.0%2B26.2.jar";
           hash = "sha256-jeGNn2qKKlshIO+ei/+3nMm3WYnAwCLDnJ38G8Oimpk=";
+        })
+        (pkgs.fetchurl {
+          name = "NoChatReports.jar";
+          url = "https://cdn.modrinth.com/data/qQyHxfxd/versions/uiY9tUaj/NoChatReports-FABRIC-26.2-v2.20.1.jar";
+          hash = "sha256-dUzOHpmRPrP+et7VASyyOjPIT6tK7g+EC600eF9YHic=";
         })
       ];
     in
