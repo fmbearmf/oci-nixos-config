@@ -462,7 +462,7 @@ in
       wantedBy = [ "multi-user.target" ];
 
       preStart = ''
-        echo "${velocity-secret}" > "${velocityRoot}/forwarding.secret"
+        echo "${velocity-secret}" > "${velocityRoot}/swagballs.secret"
 
       ''
       + lib.concatStringsSep "\n" (
