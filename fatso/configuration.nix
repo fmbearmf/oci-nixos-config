@@ -29,6 +29,7 @@ let
     ${lib.concatMapStrings (ip: "set_real_ip_from ${ip};\n") cloudflareIps}
     real_ip_header CF-Connecting-IP;
   '';
+  velocity-secret = "girard231203";
 in
 {
   imports = [
@@ -92,144 +93,15 @@ in
   #
   services.minecraft-server =
     let
-      spigotConfig = (pkgs.formats.yaml { }).generate "spigot.yml" {
-        config-version = 8;
-        settings = {
-          save-user-cache-on-stop-only = false;
-          sample-count = 12;
-          player-shuffle = 0;
-          filter-creative-items = true;
-          user-cache-size = 1000;
-          int-cache-limit = 1024;
-          moved-wrongly-threshold = 0.5;
-          moved-too-quickly-multiplier = 100.0;
-          timeout-time = 60;
-          restart-on-crash = false;
-          restart-script = "./start.sh";
-          netty-threads = 4;
-
-          attribute = {
-            maxHealth.max = 2048.0;
-            movementSpeed.max = 2048.0;
-            attackDamage.max = 2048.0;
-          };
-
-          global-api-cache = false;
-          bungeecord = true;
-          late-bind = false;
-          debug = false;
-        };
-        commands = {
-          tab-complete = 0;
-          spam-exclusions = [ "/skill" ];
-          silent-commandblock-console = false;
-          replace-commands = [
-            "setblock"
-            "summon"
-            "testforblock"
-            "tellraw"
-          ];
-          log = true;
-        };
-        messages = {
-          whitelist = "You are not whitelisted!";
-          unknown-command = "Unknown command. Type \"/help\" for help";
-          server-full = "The server is full!";
-          outdated-client = "Outdated client! Use {0}";
-          outdated-server = "Outdated server! I'm still on {0}";
-          restart = "Server is restarting!! Literally 1984.";
-        };
-        stats = {
-          disable-saving = false;
-          forced-stats = { };
-        };
-        world-settings = {
-          default = {
-            verbose = true;
-            nerf-spawner-mobs = false;
-            anti-xray = {
-              enabled = false;
-              engine-mode = 1;
-              hide-blocks = [
-                14
-                15
-                16
-                21
-                48
-                49
-                54
-                56
-                73
-                74
-                82
-                129
-                130
-              ];
-              replace-blocks = [
-                1
-                5
-              ];
-            };
-            mob-spawn-range = 4;
-            growth = {
-              cactus-modifier = 100;
-              cane-modifier = 100;
-              melon-modifier = 100;
-              mushroom-modifier = 100;
-              pumpkin-modifier = 100;
-              sapling-modifier = 100;
-              wheat-modifier = 100;
-            };
-            entity-activation-range = {
-              animals = 32;
-              monsters = 32;
-              misc = 16;
-            };
-            entity-tracking-range = {
-              players = 128;
-              animals = 48;
-              monsters = 32;
-              misc = 32;
-              other = 64;
-            };
-            hopper-alt-ticking = false;
-            ticks-per = {
-              hopper-transfer = 8;
-              hopper-check = 8;
-            };
-            hopper-amount = 1;
-            random-light-updates = false;
-            save-structure-info = true;
-            max-bulk-chunks = 5;
-            max-entity-collisions = 8;
-            dragon-death-sound-radius = 0;
-            seed-village = 10387312;
-            seed-feature = 14357617;
-            hunger = {
-              walk-exhaustion = 0.15;
-              sprint-exhaustion = 0.6;
-              combat-exhaustion = 0.2;
-              regen-exhaustion = 2.5;
-            };
-            max-tnt-per-tick = 10;
-            view-distance = 10;
-            chunks-per-tick = 650;
-            clear-tick-list = false;
-            merge-radius = {
-              exp = 4.0;
-              item = 2.5;
-            };
-            item-despawn-rate = 6000;
-            arrow-despawn-rate = 1200;
-            enable-zombie-pigmen-portal-spawns = false;
-            wither-spawn-sound-radius = 0;
-            hanging-tick-frequency = 100;
-            zombie-aggressive-towards-villager = true;
-          };
-        };
+      proxyConfig = (pkgs.formats.toml { }).generate "FabricProxy-Lite.toml" {
+        secret = velocity-secret;
       };
 
-      serverJar = ../blob/Vinegar.jar;
+      serverJar = pkgs.fetchurl {
+        url = "https://meta.fabricmc.net/v2/versions/loader/26.2/0.19.3/1.1.2/server/jar";
+        hash = "sha256-MB+DqsNrI/K8ZMxYVg7fmFM8+qMOU68AK6lQx19BALQ=";
+      };
+
       serverWrapper = pkgs.stdenv.mkDerivation {
         pname = "crucible-server";
         version = "1.9.4";
@@ -239,17 +111,14 @@ in
           mkdir -p $out/bin
           cat <<EOF > $out/bin/minecraft-server
           #!/bin/sh
-          cp -f ${spigotConfig} ./spigot.yml
-          chmod 644 ./spigot.yml
+          mkdir -p config
+          cp -f ${proxyConfig} ./config/FabricProxy-Lite.toml
+          chmod 644 ./config/FabricProxy-Lite.toml
 
           exec ${pkgs.openjdk25_headless}/bin/java \$@ -jar ${serverJar} nogui
           EOF
           chmod +x $out/bin/minecraft-server
         '';
-      };
-      log4ShellMitigator = pkgs.fetchurl {
-        url = "https://launcher.mojang.com/v1/objects/4bb89a97a66f350bc9f73b3ca8509632682aea2e/log4j2_17-111.xml";
-        hash = "sha256-wE6xWjtrDMVkKkOXk8KVFySRqG2jTBdkA3UvrGG6/XI=";
       };
     in
     {
@@ -258,7 +127,7 @@ in
       package = serverWrapper;
 
       # https://exa.y2k.diy/garden/jvm-args/
-      jvmOpts = "-Dlog4j.configurationFile=${log4ShellMitigator} -Xms8G -Xmx8G -XX:+UseZGC -XX:+UseCompactObjectHeaders --illegal-access=warn --enable-native-access=ALL-UNNAMED --add-opens java.base/java.lang=ALL-UNNAMED --add-opens java.base/java.util=ALL-UNNAMED";
+      jvmOpts = "-Xms8G -Xmx8G -XX:+UseZGC -XX:+UseCompactObjectHeaders --enable-native-access=ALL-UNNAMED";
 
       declarative = true;
       whitelist = {
@@ -291,42 +160,83 @@ in
         white-list = true;
         allow-cheats = true;
         allow-flight = true;
+        sync-chunk-writes = false;
       };
     };
 
   systemd.services.minecraft-server.preStart =
     let
-      plugins = [
+      mods = [
         (pkgs.fetchurl {
-          name = "ViaVersion.jar";
-          url = "https://cdn.modrinth.com/data/P1OZGk5p/versions/ZH8459B6/ViaVersion-5.11.0.jar";
-          hash = "sha256-idt2yOPmdCOPXu4rt6npor7roHYLvRuGSUd46KWlL3A=";
+          name = "FabricProxy-Lite.jar";
+          url = "https://cdn.modrinth.com/data/8dI2tmqs/versions/CsEpiziv/FabricProxy-Lite-2.12.0.jar";
+          hash = "sha256-3KDQVoWvqiXVVDcq0RjZC2sn+F3tk+bbC4XYIqopNCo=";
         })
         (pkgs.fetchurl {
-          name = "LP.jar";
-          url = "https://download.luckperms.net/1652/bukkit/loader/LuckPerms-Bukkit-5.5.65.jar";
-          hash = "sha256-i4QtnZXD88BW5HEhTRVsDT1wSkbL3RoEqbxHKB1UuKM=";
+          name = "ModernerBeta.jar";
+          url = "https://cdn.modrinth.com/data/xkrdwmh2/versions/J3Nn73Eo/moderner-beta-fabric-5.0.0-alpha.2%2B26.2.jar";
+          hash = "sha256-7Ef6F1/jrTQaxL7p/Ghv/t0N/dYPGIo1xg7hdY7g1uw=";
         })
         (pkgs.fetchurl {
-          name = "PlayerSleep.jar";
-          url = "https://cdn.modrinth.com/data/HoTh6hJr/versions/IsATHK8a/OnePlayerSleepX-1.0.0.jar";
-          hash = "sha256-XqgHw1Nj7301mpZu34l/Bx9vGKz/XHiI/B6+QyqYwF0=";
+          name = "FerriteCore.jar";
+          url = "https://cdn.modrinth.com/data/uXXizFIs/versions/d5ddUdiB/ferritecore-9.0.0-fabric.jar";
+          hash = "sha256-ITlmxy7ZZ6zHOSvrKKhm+6MB/1a5l2wueAHC233mvyI=";
         })
         (pkgs.fetchurl {
-          name = "WorldEdit-6.1.9.jar";
-          url = "https://cdn.modrinth.com/data/1u6JkXh5/versions/JezAXbj7/worldedit-bukkit-6.1.9.jar";
-          hash = "sha256-WnuI9vdbSgtu/UeuA+nCaiA27NEisDpFymNd3jhtYYY=";
+          name = "Lithium.jar";
+          url = "https://cdn.modrinth.com/data/gvQqBUqZ/versions/f7vZ0VWU/lithium-fabric-0.25.3%2Bmc26.2.jar";
+          hash = "sha256-/d6S4jjoB1+JrX9wHyo9WFSviLqaZ2VxhKRAexBKxWM=";
+        })
+        (pkgs.fetchurl {
+          name = "ModernFix.jar";
+          url = "https://cdn.modrinth.com/data/TjSm1wrD/versions/TUWH6NZu/modernfix-5.27.19-build.1.jar";
+          hash = "sha256-+dC4muUeRDZGbe1IxF/sNSizzKBXmcspg3zwroGgip0=";
+        })
+        (pkgs.fetchurl {
+          name = "Lithium.jar";
+          url = "https://cdn.modrinth.com/data/fQEb0iXm/versions/5WeL0Nkz/krypton-0.3.1.jar";
+          hash = "sha256-XqiQFWGXPSnlHnUUadUtkhAPNIq0YeEYb2cBLpNCDEg=";
+        })
+        (pkgs.fetchurl {
+          name = "C2ME.jar";
+          url = "https://cdn.modrinth.com/data/VSNURh3q/versions/HBLtzvqv/c2me-fabric-mc26.2-0.4.2-alpha.0.35.jar";
+          hash = "sha256-RRu5ox8AUGkQSUZExmnWY9gJsYdQswKTkMnK6OfYL2k=";
+        })
+        (pkgs.fetchurl {
+          name = "Clumps.jar";
+          url = "https://cdn.modrinth.com/data/Wnxd13zP/versions/dEMopoOJ/Clumps-fabric-26.2-26.2.1.jar";
+          hash = "sha256-3JVEGQq/tlo8ndxdrRUjyd/FpzI0T1KNkIuVCJQ5jow=";
+        })
+        (pkgs.fetchurl {
+          name = "ScalableLux.jar";
+          url = "https://cdn.modrinth.com/data/Ps1zyz6x/versions/EKLUURiy/ScalableLux-fabric-0.3.0-alpha.0.3-all.jar";
+          hash = "sha256-jXbPJ1idzI4Ww0ugcJqe4hNM/NYLkIYvjL0gTqm2x8g=";
+        })
+        (pkgs.fetchurl {
+          name = "Carpet.jar";
+          url = "https://cdn.modrinth.com/data/TQTTVgYE/versions/bGrLxJ8v/fabric-carpet-26.2%2Bv260616.jar";
+          hash = "sha256-9q2pEq9lyRU21LDYCt8mzEOCUyUt2vJZ8sZheuRxMRw=";
+        })
+        (pkgs.fetchurl {
+          name = "Async.jar";
+          url = "https://cdn.modrinth.com/data/vEC2jm6I/versions/T6OSY8vJ/async-fabric-0.2.4%2Balpha-26.2.jar";
+          hash = "sha256-jwxhQlXTFddzcQjhSeuIVIxxBjuJmpfqvKDv/NtaZyk=";
+        })
+        (pkgs.fetchurl {
+          name = "Paper-API.jar";
+          url = "https://cdn.modrinth.com/data/P7dR8mSH/versions/3gT0I5vt/fabric-api-0.156.0%2B26.2.jar";
+          hash = "sha256-jeGNn2qKKlshIO+ei/+3nMm3WYnAwCLDnJ38G8Oimpk=";
         })
       ];
     in
     ''
-      mkdir -p ${config.services.minecraft-server.dataDir}/plugins
+      mkdir -p ${config.services.minecraft-server.dataDir}/mods
 
-      find ${config.services.minecraft-server.dataDir}/plugins/ -type l -delete
+      find ${config.services.minecraft-server.dataDir}/mods/ -type l -delete
 
       ${lib.concatMapStringsSep "\n" (
-        plugin: "ln -sf ${plugin} ${config.services.minecraft-server.dataDir}/plugins/${plugin.name}"
-      ) plugins}
+        mod: "ln -svf ${mod} ${config.services.minecraft-server.dataDir}/mods/${mod.name}"
+      ) mods}
     '';
 
   users.users.velocity = {
@@ -337,87 +247,6 @@ in
   };
   users.groups.velocity = { };
 
-  #users.users.viaproxy = {
-  #  isSystemUser = true;
-  #  group = "viaproxy";
-  #  home = "/var/lib/viaproxy";
-  #  createHome = true;
-  #};
-  #users.groups.viaproxy = { };
-
-  #systemd.services.viaproxy =
-  #  let
-  #    vpRoot = config.users.users.viaproxy.home;
-
-  #    inherit (pkgs) lib fetchurl formats;
-
-  #    yamlFormat = formats.yaml { };
-
-  #    vpJar = fetchurl {
-  #      name = "ViaProxy.jar";
-  #      url = "https://github.com/ViaVersion/ViaProxy/releases/download/v3.4.12/ViaProxy-3.4.12.jar";
-  #      hash = "sha256-Ms6a2HGusDKGgjwp2iYuvXWZKGTnhX2yg/EDUlx/wMs=";
-  #    };
-
-  #    files = {
-  #      "viaproxy.yml" = yamlFormat.generate "viaproxy.yml" {
-  #        bind-address = "127.0.0.1:25566";
-  #        target-address = "127.0.0.1:25567";
-  #        target-version = 5;
-  #        connection-timeout = 8000;
-  #        proxy-online-mode = false;
-  #        auth-method = "NONE";
-  #        minecraft-account-index = 0;
-  #        betacraft-auth = false;
-  #        backend-proxy-url = "";
-  #        backend-haproxy = false;
-  #        frontend-haproxy = false;
-  #        chat-signing = false;
-  #        compression-threshold = 256;
-  #        allow-beta-pinging = false;
-  #        ignore-protocol-translation-errors = false;
-  #        suppress-client-protocol-errors = false;
-  #        allow-legacy-client-passthrough = false;
-  #        bungeecord-player-info-passthrough = true;
-  #        rewrite-handshake-packet = true;
-  #        rewrite-transfer-packets = true;
-  #        custom-motd = "";
-  #        custom-favicon-path = "";
-  #        resource-pack-url = "";
-  #        wildcard-domain-handling = "NONE";
-  #        simple-voice-chat-support = false;
-  #        fix-fabric-particle-api = true;
-  #        fake-accept-resource-packs = false;
-  #        skip-config-state-packet-queue = false;
-  #        log-ips = false;
-  #        log-client-status-requests = false;
-  #      };
-  #    };
-  #  in
-  #  {
-  #    description = "viaproxy";
-  #    after = [ "network.target" ];
-  #    wantedBy = [ "multi-user.target" ];
-
-  #    preStart = lib.concatStringsSep "\n" (
-  #      lib.mapAttrsToList (relPath: src: ''
-  #        mkdir -p "${vpRoot}/${dirOf relPath}"
-  #        cp -vf ${src} "${vpRoot}/${relPath}"
-  #        chmod 644 "${vpRoot}/${relPath}"
-  #      '') files
-  #    );
-
-  #    serviceConfig = {
-  #      Type = "simple";
-  #      User = "viaproxy";
-  #      Group = "viaproxy";
-  #      StateDirectory = "viaproxy";
-  #      WorkingDirectory = vpRoot;
-  #      ExecStart = "${pkgs.jdk25_headless}/bin/java -Xms512M -Xmx1024M -jar ${vpJar} config viaproxy.yml";
-  #      Restart = "always";
-  #      RestartSec = "10s";
-  #    };
-  #  };
   systemd.sockets.velocity = {
     bindsTo = [ "velocity.service" ];
     socketConfig = {
@@ -457,7 +286,7 @@ in
 
           forwarding-secret-file = "swagballs.secret";
           kick-existing-players = false;
-          player-info-forwarding-mode = "legacy";
+          player-info-forwarding-mode = "modern";
           ping-passthrough = "all";
 
           servers = {
@@ -632,7 +461,11 @@ in
       ];
       wantedBy = [ "multi-user.target" ];
 
-      preStart = lib.concatStringsSep "\n" (
+      preStart = ''
+        echo "${velocity-secret}" > "${velocityRoot}/forwarding.secret"
+
+      ''
+      + lib.concatStringsSep "\n" (
         lib.mapAttrsToList (relPath: src: ''
           mkdir -p "${velocityRoot}/${dirOf relPath}"
           cp -vf ${src} "${velocityRoot}/${relPath}"
