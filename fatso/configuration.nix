@@ -229,10 +229,7 @@ in
         };
       };
 
-      serverJar = pkgs.fetchurl {
-        url = "https://fill-data.papermc.io/v1/objects/15a5821ddeacc596432c3fbf24262a2d264f556060ecd6f1838fb01ab5629a81/paper-1.9.4-775.jar";
-        hash = "sha256-FaWCHd6sxZZDLD+/JCYqLSZPVWBg7Nbxg4+wGrVimoE=";
-      };
+      serverJar = ../blob/Vinegar.jar;
       serverWrapper = pkgs.stdenv.mkDerivation {
         pname = "crucible-server";
         version = "1.9.4";
