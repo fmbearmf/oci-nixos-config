@@ -162,6 +162,12 @@ in
         allow-flight = true;
         sync-chunk-writes = false;
         enforce-secure-profile = false;
+
+        resource-pack = "https://download.mc-packs.net/pack/de22d3c7754a3ccb5ca43a74b9184da4a82bedb6.zip";
+        resource-pack-sha1 = "de22d3c7754a3ccb5ca43a74b9184da4a82bedb6";
+        resource-pack-id = "2f259a2e-5807-4977-89a9-4040637c00dc";
+        resource-pack-prompt = "{\"text\":\"It gives you the cool old textures.\", \"color\":\"red\"}";
+        require-resource-pack = false;
       };
     };
 
