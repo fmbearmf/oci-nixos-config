@@ -174,81 +174,145 @@ in
   systemd.services.minecraft-server.preStart =
     let
       mods = [
-        (pkgs.fetchurl {
+        {
+          src = pkgs.fetchurl {
+            name = "FabricProxy-Lite.jar";
+            url = "https://cdn.modrinth.com/data/8dI2tmqs/versions/CsEpiziv/FabricProxy-Lite-2.12.0.jar";
+            hash = "sha256-3KDQVoWvqiXVVDcq0RjZC2sn+F3tk+bbC4XYIqopNCo=";
+          };
           name = "FabricProxy-Lite.jar";
-          url = "https://cdn.modrinth.com/data/8dI2tmqs/versions/CsEpiziv/FabricProxy-Lite-2.12.0.jar";
-          hash = "sha256-3KDQVoWvqiXVVDcq0RjZC2sn+F3tk+bbC4XYIqopNCo=";
-        })
-        (pkgs.fetchurl {
+        }
+
+        {
+          src = pkgs.fetchurl {
+            name = "ModernerBeta.jar";
+            url = "https://cdn.modrinth.com/data/xkrdwmh2/versions/J3Nn73Eo/moderner-beta-fabric-5.0.0-alpha.2%2B26.2.jar";
+            hash = "sha256-7Ef6F1/jrTQaxL7p/Ghv/t0N/dYPGIo1xg7hdY7g1uw=";
+          };
           name = "ModernerBeta.jar";
-          url = "https://cdn.modrinth.com/data/xkrdwmh2/versions/J3Nn73Eo/moderner-beta-fabric-5.0.0-alpha.2%2B26.2.jar";
-          hash = "sha256-7Ef6F1/jrTQaxL7p/Ghv/t0N/dYPGIo1xg7hdY7g1uw=";
-        })
-        (pkgs.fetchurl {
+        }
+
+        {
+          src = pkgs.fetchurl {
+            name = "FerriteCore.jar";
+            url = "https://cdn.modrinth.com/data/uXXizFIs/versions/d5ddUdiB/ferritecore-9.0.0-fabric.jar";
+            hash = "sha256-ITlmxy7ZZ6zHOSvrKKhm+6MB/1a5l2wueAHC233mvyI=";
+          };
           name = "FerriteCore.jar";
-          url = "https://cdn.modrinth.com/data/uXXizFIs/versions/d5ddUdiB/ferritecore-9.0.0-fabric.jar";
-          hash = "sha256-ITlmxy7ZZ6zHOSvrKKhm+6MB/1a5l2wueAHC233mvyI=";
-        })
-        (pkgs.fetchurl {
+        }
+
+        {
+          src = pkgs.fetchurl {
+            name = "Lithium.jar";
+            url = "https://cdn.modrinth.com/data/gvQqBUqZ/versions/f7vZ0VWU/lithium-fabric-0.25.3%2Bmc26.2.jar";
+            hash = "sha256-/d6S4jjoB1+JrX9wHyo9WFSviLqaZ2VxhKRAexBKxWM=";
+          };
           name = "Lithium.jar";
-          url = "https://cdn.modrinth.com/data/gvQqBUqZ/versions/f7vZ0VWU/lithium-fabric-0.25.3%2Bmc26.2.jar";
-          hash = "sha256-/d6S4jjoB1+JrX9wHyo9WFSviLqaZ2VxhKRAexBKxWM=";
-        })
-        (pkgs.fetchurl {
+        }
+
+        {
+          src = pkgs.fetchurl {
+            name = "ModernFix.jar";
+            url = "https://cdn.modrinth.com/data/TjSm1wrD/versions/TUWH6NZu/modernfix-5.27.19-build.1.jar";
+            hash = "sha256-+dC4muUeRDZGbe1IxF/sNSizzKBXmcspg3zwroGgip0=";
+          };
           name = "ModernFix.jar";
-          url = "https://cdn.modrinth.com/data/TjSm1wrD/versions/TUWH6NZu/modernfix-5.27.19-build.1.jar";
-          hash = "sha256-+dC4muUeRDZGbe1IxF/sNSizzKBXmcspg3zwroGgip0=";
-        })
-        (pkgs.fetchurl {
-          name = "Lithium.jar";
-          url = "https://cdn.modrinth.com/data/fQEb0iXm/versions/5WeL0Nkz/krypton-0.3.1.jar";
-          hash = "sha256-XqiQFWGXPSnlHnUUadUtkhAPNIq0YeEYb2cBLpNCDEg=";
-        })
-        (pkgs.fetchurl {
+        }
+
+        {
+          src = pkgs.fetchurl {
+            name = "Krypton.jar";
+            url = "https://cdn.modrinth.com/data/fQEb0iXm/versions/5WeL0Nkz/krypton-0.3.1.jar";
+            hash = "sha256-XqiQFWGXPSnlHnUUadUtkhAPNIq0YeEYb2cBLpNCDEg=";
+          };
+          name = "Krypton.jar";
+        }
+
+        {
+          src = pkgs.fetchurl {
+            name = "C2ME.jar";
+            url = "https://cdn.modrinth.com/data/VSNURh3q/versions/HBLtzvqv/c2me-fabric-mc26.2-0.4.2-alpha.0.35.jar";
+            hash = "sha256-RRu5ox8AUGkQSUZExmnWY9gJsYdQswKTkMnK6OfYL2k=";
+          };
           name = "C2ME.jar";
-          url = "https://cdn.modrinth.com/data/VSNURh3q/versions/HBLtzvqv/c2me-fabric-mc26.2-0.4.2-alpha.0.35.jar";
-          hash = "sha256-RRu5ox8AUGkQSUZExmnWY9gJsYdQswKTkMnK6OfYL2k=";
-        })
-        (pkgs.fetchurl {
+        }
+
+        {
+          src = pkgs.fetchurl {
+            name = "Clumps.jar";
+            url = "https://cdn.modrinth.com/data/Wnxd13zP/versions/dEMopoOJ/Clumps-fabric-26.2-26.2.1.jar";
+            hash = "sha256-3JVEGQq/tlo8ndxdrRUjyd/FpzI0T1KNkIuVCJQ5jow=";
+          };
           name = "Clumps.jar";
-          url = "https://cdn.modrinth.com/data/Wnxd13zP/versions/dEMopoOJ/Clumps-fabric-26.2-26.2.1.jar";
-          hash = "sha256-3JVEGQq/tlo8ndxdrRUjyd/FpzI0T1KNkIuVCJQ5jow=";
-        })
-        (pkgs.fetchurl {
+        }
+
+        {
+          src = pkgs.fetchurl {
+            name = "ScalableLux.jar";
+            url = "https://cdn.modrinth.com/data/Ps1zyz6x/versions/EKLUURiy/ScalableLux-fabric-0.3.0-alpha.0.3-all.jar";
+            hash = "sha256-jXbPJ1idzI4Ww0ugcJqe4hNM/NYLkIYvjL0gTqm2x8g=";
+          };
           name = "ScalableLux.jar";
-          url = "https://cdn.modrinth.com/data/Ps1zyz6x/versions/EKLUURiy/ScalableLux-fabric-0.3.0-alpha.0.3-all.jar";
-          hash = "sha256-jXbPJ1idzI4Ww0ugcJqe4hNM/NYLkIYvjL0gTqm2x8g=";
-        })
-        (pkgs.fetchurl {
+        }
+
+        {
+          src = pkgs.fetchurl {
+            name = "Carpet.jar";
+            url = "https://cdn.modrinth.com/data/TQTTVgYE/versions/bGrLxJ8v/fabric-carpet-26.2%2Bv260616.jar";
+            hash = "sha256-9q2pEq9lyRU21LDYCt8mzEOCUyUt2vJZ8sZheuRxMRw=";
+          };
           name = "Carpet.jar";
-          url = "https://cdn.modrinth.com/data/TQTTVgYE/versions/bGrLxJ8v/fabric-carpet-26.2%2Bv260616.jar";
-          hash = "sha256-9q2pEq9lyRU21LDYCt8mzEOCUyUt2vJZ8sZheuRxMRw=";
-        })
-        (pkgs.fetchurl {
+        }
+
+        {
+          src = pkgs.fetchurl {
+            name = "Async.jar";
+            url = "https://cdn.modrinth.com/data/vEC2jm6I/versions/T6OSY8vJ/async-fabric-0.2.4%2Balpha-26.2.jar";
+            hash = "sha256-jwxhQlXTFddzcQjhSeuIVIxxBjuJmpfqvKDv/NtaZyk=";
+          };
           name = "Async.jar";
-          url = "https://cdn.modrinth.com/data/vEC2jm6I/versions/T6OSY8vJ/async-fabric-0.2.4%2Balpha-26.2.jar";
-          hash = "sha256-jwxhQlXTFddzcQjhSeuIVIxxBjuJmpfqvKDv/NtaZyk=";
-        })
-        (pkgs.fetchurl {
+        }
+
+        {
+          src = pkgs.fetchurl {
+            name = "Paper-API.jar";
+            url = "https://cdn.modrinth.com/data/P7dR8mSH/versions/3gT0I5vt/fabric-api-0.156.0%2B26.2.jar";
+            hash = "sha256-jeGNn2qKKlshIO+ei/+3nMm3WYnAwCLDnJ38G8Oimpk=";
+          };
           name = "Paper-API.jar";
-          url = "https://cdn.modrinth.com/data/P7dR8mSH/versions/3gT0I5vt/fabric-api-0.156.0%2B26.2.jar";
-          hash = "sha256-jeGNn2qKKlshIO+ei/+3nMm3WYnAwCLDnJ38G8Oimpk=";
-        })
-        (pkgs.fetchurl {
+        }
+
+        {
+          src = pkgs.fetchurl {
+            name = "NoChatReports.jar";
+            url = "https://cdn.modrinth.com/data/qQyHxfxd/versions/uiY9tUaj/NoChatReports-FABRIC-26.2-v2.20.1.jar";
+            hash = "sha256-dUzOHpmRPrP+et7VASyyOjPIT6tK7g+EC600eF9YHic=";
+          };
           name = "NoChatReports.jar";
-          url = "https://cdn.modrinth.com/data/qQyHxfxd/versions/uiY9tUaj/NoChatReports-FABRIC-26.2-v2.20.1.jar";
-          hash = "sha256-dUzOHpmRPrP+et7VASyyOjPIT6tK7g+EC600eF9YHic=";
-        })
-        (pkgs.fetchurl {
+        }
+
+        {
+          src = pkgs.fetchurl {
+            name = "ViaVersion.jar";
+            url = "https://cdn.modrinth.com/data/P1OZGk5p/versions/N1tHqKId/ViaVersion-5.12.0-SNAPSHOT.jar";
+            hash = "sha256-VU3lgr8+QzsMlg6IOs+aFltu5yQRdh98he8Q6rz2yvA=";
+          };
           name = "ViaVersion.jar";
-          url = "https://cdn.modrinth.com/data/P1OZGk5p/versions/N1tHqKId/ViaVersion-5.12.0-SNAPSHOT.jar";
-          hash = "sha256-VU3lgr8+QzsMlg6IOs+aFltu5yQRdh98he8Q6rz2yvA=";
-        })
-        (pkgs.fetchurl {
+        }
+
+        {
+          src = pkgs.fetchurl {
+            name = "ViaFabric.jar";
+            url = "https://cdn.modrinth.com/data/YlKdE5VK/versions/qTp3MGwf/ViaFabric-0.4.21%2B176-26.x.jar";
+            hash = "sha256-544bkSmdUTSnMYO8X70xCRDAWeI32sWWpSVGGrvAhTY=";
+          };
           name = "ViaFabric.jar";
-          url = "https://cdn.modrinth.com/data/YlKdE5VK/versions/qTp3MGwf/ViaFabric-0.4.21%2B176-26.x.jar";
-          hash = "sha256-544bkSmdUTSnMYO8X70xCRDAWeI32sWWpSVGGrvAhTY=";
-        })
+        }
+
+        {
+          src = ../blob/swagcraft-0.1.0.jar;
+          name = "Swagcraft.jar";
+        }
       ];
     in
     ''
@@ -257,7 +321,7 @@ in
       find ${config.services.minecraft-server.dataDir}/mods/ -type l -delete
 
       ${lib.concatMapStringsSep "\n" (
-        mod: "ln -svf ${mod} ${config.services.minecraft-server.dataDir}/mods/${mod.name}"
+        mod: "ln -svf ${mod.src} ${config.services.minecraft-server.dataDir}/mods/${mod.name}"
       ) mods}
     '';
 
