@@ -239,6 +239,16 @@ in
           url = "https://cdn.modrinth.com/data/qQyHxfxd/versions/uiY9tUaj/NoChatReports-FABRIC-26.2-v2.20.1.jar";
           hash = "sha256-dUzOHpmRPrP+et7VASyyOjPIT6tK7g+EC600eF9YHic=";
         })
+        (pkgs.fetchurl {
+          name = "ViaVersion.jar";
+          url = "https://cdn.modrinth.com/data/P1OZGk5p/versions/N1tHqKId/ViaVersion-5.12.0-SNAPSHOT.jar";
+          hash = "sha256-VU3lgr8+QzsMlg6IOs+aFltu5yQRdh98he8Q6rz2yvA=";
+        })
+        (pkgs.fetchurl {
+          name = "ViaFabric.jar";
+          url = "https://cdn.modrinth.com/data/YlKdE5VK/versions/qTp3MGwf/ViaFabric-0.4.21%2B176-26.x.jar";
+          hash = "sha256-544bkSmdUTSnMYO8X70xCRDAWeI32sWWpSVGGrvAhTY=";
+        })
       ];
     in
     ''
