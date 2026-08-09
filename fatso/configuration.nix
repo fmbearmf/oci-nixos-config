@@ -145,6 +145,8 @@ in
         TalkTuahGamer = "83c6da84-4e67-42e0-9748-6fde6d5f74e1";
         # xertun
         Xertundra = "724af479-5b42-40fa-afc2-9817b9a79506";
+        # hexxii
+        Hexxii = "37672df8-ab41-469b-8d24-ae7981e5e04c";
         # incspa bedrock
         ".Shrek12346" = "00000000-0000-0000-0009-01f0e45556f7";
         # oscar bedrock
