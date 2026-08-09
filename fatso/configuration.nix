@@ -316,6 +316,15 @@ in
         }
 
         {
+          src = pkgs.fetchurl {
+            name = "ImmersiveOptimization.jar";
+            url = "https://cdn.modrinth.com/data/vNZgQmjg/versions/ULXQkJab/immersive_optimization-fabric-26.2-0.2.0.jar";
+            hash = "sha256-wt5YlUzA0gLdIr1NzWGY9fjTDY5cIjvLxj7W5udLvIE=";
+          };
+          name = "ImmersiveOptimization.jar";
+        }
+
+        {
           src = ../blob/swagcraft-0.1.3.jar;
           name = "Swagcraft.jar";
         }
