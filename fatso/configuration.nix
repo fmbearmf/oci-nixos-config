@@ -423,8 +423,8 @@ in
 
         "plugins/Reconnect.jar" = fetchurl {
           name = "Reconnect.jar";
-          url = "https://cdn.modrinth.com/data/Ri89j7v5/versions/jQyUh7jF/VelocityReconnect-1.1.0.jar";
-          hash = "sha256-rkNcXt4dwdJb9UMS3FwtAQ8bm2hp1QwfRQguSfQ4ITo=";
+          url = "https://github.com/fa1thl3ss/ProxyReconnect/releases/download/velocity/proxyreconnect-1.0.jar";
+          hash = "sha256-xWtIrBrb4SPhwojWlQ4WINtdlJgE3NjuP8CH8l8NtVs=";
         };
 
         "plugins/LP.jar" = fetchurl {
