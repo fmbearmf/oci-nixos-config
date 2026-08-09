@@ -383,10 +383,8 @@ in
 
           servers = {
             survival = "127.0.0.1:25566";
-            build = "127.0.0.1:25567";
             try = [
               "survival"
-              "build"
             ];
           };
 
