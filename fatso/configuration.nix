@@ -147,6 +147,8 @@ in
         Xertundra = "724af479-5b42-40fa-afc2-9817b9a79506";
         # hexxii
         Hexxii = "37672df8-ab41-469b-8d24-ae7981e5e04c";
+        # roob
+        roobs_circus = "0963788f-437a-40bb-b470-00ad8634165f";
         # incspa bedrock
         ".Shrek12346" = "00000000-0000-0000-0009-01f0e45556f7";
         # oscar bedrock
