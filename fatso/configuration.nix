@@ -334,7 +334,7 @@ in
         }
 
         {
-          src = ../blob/swagcraft-0.1.6.jar;
+          src = ../blob/swagcraft-0.2.0.jar;
           name = "Swagcraft.jar";
         }
       ];
