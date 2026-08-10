@@ -149,6 +149,10 @@ in
         Hexxii = "37672df8-ab41-469b-8d24-ae7981e5e04c";
         # roob
         roobs_circus = "0963788f-437a-40bb-b470-00ad8634165f";
+        # ivy
+        ivysleepy = "ac45e19d-c47c-4518-9641-090e7e6402ee";
+        # soviet onion
+        TheSovietOnion_ = "baafab83-297d-4ebe-a2cb-7c6a30754d76";
         # incspa bedrock
         ".Shrek12346" = "00000000-0000-0000-0009-01f0e45556f7";
         # oscar bedrock
