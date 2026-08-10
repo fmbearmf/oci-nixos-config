@@ -325,6 +325,15 @@ in
         }
 
         {
+          src = pkgs.fetchurl {
+            name = "Image2Map.jar";
+            url = "https://cdn.modrinth.com/data/13RpG7dA/versions/RKJFfwTN/image2map-0.14.0%2B26.2.jar";
+            hash = "sha256-bLK8mCB7UqC+uCv6g53RsaYrrqYd5oGh2HW5ne4fjwE=";
+          };
+          name = "Image2Map.jar";
+        }
+
+        {
           src = ../blob/swagcraft-0.1.5.jar;
           name = "Swagcraft.jar";
         }
