@@ -338,6 +338,15 @@ in
         }
 
         {
+          src = pkgs.fetchurl {
+            name = "Spark.jar";
+            url = "https://cdn.modrinth.com/data/l6YH9Als/versions/iYFOl6lQ/spark-1.10.173-fabric.jar";
+            hash = "sha256-B27SKI2yoFym6AYWFeGjHRkSzxsQZl5PCaF5TV25lDM=";
+          };
+          name = "Spark.jar";
+        }
+
+        {
           src = ../blob/swagcraft-0.2.0.jar;
           name = "Swagcraft.jar";
         }
