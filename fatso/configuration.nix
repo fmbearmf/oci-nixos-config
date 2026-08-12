@@ -366,6 +366,15 @@ in
         }
 
         {
+          src = pkgs.fetchurl {
+            name = "ShulkerBox.jar";
+            url = "https://cdn.modrinth.com/data/PZAaSx6B/versions/gwthW8Gh/shulkerbox-fabric-2.0.5%2B26.2.jar";
+            hash = "sha256-nh1db9Dsl6EiLB+5sinArtsxu4hwUdYhcodMC+8IpeA=";
+          };
+          name = "AdvShulkerBox.jar";
+        }
+
+        {
           src = ../blob/swagcraft-0.2.3.jar;
           name = "Swagcraft.jar";
         }
