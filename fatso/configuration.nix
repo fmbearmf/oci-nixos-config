@@ -346,6 +346,25 @@ in
           name = "Spark.jar";
         }
 
+        # dependency
+        {
+          src = pkgs.fetchurl {
+            name = "Balm.jar";
+            url = "https://cdn.modrinth.com/data/MBAkmtvl/versions/ln6vafmE/balm-fabric-26.2-26.2.0.5.jar";
+            hash = "sha256-jOPq9F3+Zxlt2Hnm8hJAN0+3edJSivJXW9UkClUl66I=";
+          };
+          name = "Balm.jar";
+        }
+
+        {
+          src = pkgs.fetchurl {
+            name = "NetherPortalFix.jar";
+            url = "https://cdn.modrinth.com/data/nPZr02ET/versions/GQpccFqg/netherportalfix-fabric-26.2-26.2.0.1.jar";
+            hash = "sha256-QRldtUNx8MQ8lesMlr8DQlxhwtSt9q6avTe7+8Ez4bs=";
+          };
+          name = "NetherPortalFix.jar";
+        }
+
         {
           src = ../blob/swagcraft-0.2.3.jar;
           name = "Swagcraft.jar";
