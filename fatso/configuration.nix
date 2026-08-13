@@ -153,6 +153,8 @@ in
         ivysleepy = "ac45e19d-c47c-4518-9641-090e7e6402ee";
         # soviet onion
         TheSovietOnion_ = "baafab83-297d-4ebe-a2cb-7c6a30754d76";
+        # dillon
+        GodOfBeans21 = "650201a4-08c4-4d02-a32f-3adf050d1ac0";
         # incspa bedrock
         ".Shrek12346" = "00000000-0000-0000-0009-01f0e45556f7";
         # oscar bedrock
