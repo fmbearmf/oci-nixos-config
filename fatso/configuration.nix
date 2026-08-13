@@ -368,8 +368,8 @@ in
         {
           src = pkgs.fetchurl {
             name = "ShulkerBox.jar";
-            url = "https://cdn.modrinth.com/data/PZAaSx6B/versions/gwthW8Gh/shulkerbox-fabric-2.0.5%2B26.2.jar";
-            hash = "sha256-nh1db9Dsl6EiLB+5sinArtsxu4hwUdYhcodMC+8IpeA=";
+            url = "https://cdn.modrinth.com/data/e8mI328p/versions/xCwACdpT/quickrightclick-26.2.0-1.9.jar";
+            hash = "sha256-h+dzZZGVMr04oAQjXFjhIgu8uuaA2KPSftLOLdvXgxs=";
           };
           name = "AdvShulkerBox.jar";
         }
