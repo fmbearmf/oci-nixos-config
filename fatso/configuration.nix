@@ -375,6 +375,15 @@ in
         }
 
         {
+          src = pkgs.fetchurl {
+            name = "Collective.jar";
+            url = "https://cdn.modrinth.com/data/e0M1UDsY/versions/M75JwjyS/collective-26.2.0-8.39.jar";
+            hash = "sha256-zgcEMjvAbTge0KpjAp/Nn3gokSDXDG6kqKbIz59O0mo=";
+          };
+          name = "Collective.jar";
+        }
+
+        {
           src = ../blob/swagcraft-0.2.3.jar;
           name = "Swagcraft.jar";
         }
