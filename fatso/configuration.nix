@@ -180,6 +180,8 @@ in
         resource-pack-id = "2f259a2e-5807-4977-89a9-4040637c00dc";
         resource-pack-prompt = "{\"text\":\"It gives you the cool old textures.\", \"color\":\"red\"}";
         require-resource-pack = false;
+
+        spawn-protection = 0;
       };
     };
 
