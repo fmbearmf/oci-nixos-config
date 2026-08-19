@@ -508,13 +508,13 @@ in
         "plugins/Geyser-Velocity.jar" = fetchurl {
           name = "Geyser-Velocity.jar";
           url = "https://download.geysermc.org/v2/projects/geyser/versions/latest/builds/latest/downloads/velocity";
-          hash = "sha256-XYvTgxk1+KWAVuZObuvCnNINtDzLsk6UAF1FwV+1Fig=";
+          hash = "sha256-c2wasqW6bdyNZxju77AXwtwmepOOcUGZXr7Mk2mXJj0=";
         };
 
         "plugins/Floodgate-Velocity.jar" = fetchurl {
           name = "Floodgate-Geyser.jar";
           url = "https://download.geysermc.org/v2/projects/floodgate/versions/latest/builds/latest/downloads/velocity";
-          hash = "sha256-UkdExcPeZ99LhK3IC6u/XZ8AQSwaWT90qK5ubd6SwG8=";
+          hash = "sha256-9YZ615uQ04q8xydVpoVCj7z0I7UsmDCjn/7VID3mk2o=";
         };
 
         "plugins/Geyser-Velocity/config.yml" = yamlFormat.generate "geyser-config.yml" {
