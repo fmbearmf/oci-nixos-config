@@ -45,8 +45,14 @@ in
   nixpkgs.config.allowUnfree = true;
 
   # Use the systemd-boot EFI boot loader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
+  boot.loader.grub = {
+    enable = true;
+    efiSupport = true;
+    efiInstallAsRemovable = true;
+    device = "nodev";
+  };
+  boot.loader.efi.canTouchEfiVariables = false;
+  boot.loader.efi.efiSysMountPoint = "/boot/efi";
 
   networking.hostName = "fatso"; # Define your hostname.
   # Pick only one of the below networking options.

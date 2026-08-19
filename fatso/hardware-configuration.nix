@@ -23,44 +23,16 @@
   #services.scx.scheduler = "scx_lavd";
 
   fileSystems."/" = {
-    device = "/dev/disk/by-uuid/ebec7f46-1aff-4e35-b544-88d99ad912dc";
-    fsType = "btrfs";
-    options = [
-      "subvol=@root"
-      "compress-force=zstd:2"
-    ];
+    device = "/dev/disk/by-uuid/14e1da94-af7d-45aa-afb3-c461ce525516";
+    fsType = "ext4";
   };
 
-  fileSystems."/boot" = {
-    device = "/dev/disk/by-uuid/19ED-EF44";
+  fileSystems."/boot/efi" = {
+    device = "/dev/disk/by-uuid/FDDC-278A";
     fsType = "vfat";
     options = [
       "fmask=0022"
       "dmask=0022"
-    ];
-  };
-
-  fileSystems."/home" = {
-    device = "/dev/disk/by-uuid/ebec7f46-1aff-4e35-b544-88d99ad912dc";
-    fsType = "btrfs";
-    options = [ "subvol=@home" ];
-  };
-
-  fileSystems."/nix" = {
-    device = "/dev/disk/by-uuid/ebec7f46-1aff-4e35-b544-88d99ad912dc";
-    fsType = "btrfs";
-    options = [
-      "subvol=@nix"
-      "compress-force=zstd:2"
-    ];
-  };
-
-  fileSystems."/mnt/containers" = {
-    device = "/dev/disk/by-uuid/812143ff-5c07-4141-b443-168c1ac1b65b";
-    fsType = "btrfs";
-    options = [
-      "subvol=@containers"
-      "compress-force=lzo"
     ];
   };
 
