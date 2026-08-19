@@ -745,7 +745,7 @@ in
     maxretry = 5;
     ignoreIP = [
       "172.16.0.0/12"
-      "192.168.0.0/12"
+      "192.168.5.54/32"
     ];
     bantime = "24h";
     jails.sshd.settings = {
@@ -761,7 +761,7 @@ in
   security.acme.defaults.email = "melchi@garfias.org";
 
   services.mediawiki = {
-    enable = true;
+    enable = false;
     name = "Xertuncord Cinematic Universe";
     nginx = {
       hostName = wikiHost;
@@ -798,11 +798,11 @@ in
   };
 
   services.gembox = {
-    enable = true;
+    enable = false;
   };
 
   services.nginx = {
-    enable = true;
+    enable = false;
 
     virtualHosts."${wikiHost}" = {
       enableACME = true;
@@ -825,7 +825,7 @@ in
   };
 
   mailserver = {
-    enable = true;
+    enable = false;
     fqdn = "backend.bear.oops.wtf";
     domains = [ "bear.oops.wtf" ];
 
@@ -841,7 +841,7 @@ in
   };
 
   services.postfix = {
-    enable = true;
+    enable = false;
     #domain = "bear.oops.wtf";
     #origin = "bear.oops.wtf";
     #hostname = "backend.bear.oops.wtf";
@@ -867,7 +867,7 @@ in
   };
 
   services.roundcube = {
-    enable = true;
+    enable = false;
     hostName = "backend.bear.oops.wtf";
     extraConfig = ''
       $config['smtp_host'] = "tls://${config.mailserver.fqdn}";
@@ -885,7 +885,7 @@ in
   '';
 
   services.dovecot2 = {
-    enable = true;
+    enable = false;
     settings.protocols = {
       imap = true;
     };
@@ -916,7 +916,7 @@ in
       	fi
 
       	#otherwise auth
-      	${tailscale}/bin/tailscale up --auth-key tskey-auth-kbKqVNEMJf11CNTRL-XcqaNcxBaDMzvoTGPqhTCMbjK6HdK9tL --advertise-routes=192.168.0.0/16,169.254.169.254/32 --accept-dns=false
+      	${tailscale}/bin/tailscale up --auth-key tskey-auth-kZv79Wc6H621CNTRL-zzTFJET4ny4mwzKsWi7Hz4SyDwCbhTnb --advertise-routes=192.168.0.0/16,169.254.169.254/32 --accept-dns=false
     '';
   };
 
@@ -926,22 +926,11 @@ in
     allowedTCPPorts = [
       22
       25565
-      24454
-      34456
-      80
-      443
-      25
-      587
-      465
-      993
+      config.services.tailscale.port
     ];
     allowedUDPPorts = [
       config.services.tailscale.port
-      24454
       19132
-      34456
-      80
-      443
     ];
     trustedInterfaces = [ "tailscale0" ];
   };
