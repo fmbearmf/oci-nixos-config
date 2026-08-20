@@ -161,6 +161,10 @@ in
         TheSovietOnion_ = "baafab83-297d-4ebe-a2cb-7c6a30754d76";
         # dillon
         GodOfBeans21 = "650201a4-08c4-4d02-a32f-3adf050d1ac0";
+        # damis
+        Evildamis = "0e6ed1bc-cbd3-43b1-9d07-5712ec5cad9a";
+        # electric israeli
+        Ozzy4201 = "b1c5da93-f265-482c-9ba4-7fed98c9aa3c";
         # incspa bedrock
         ".Shrek12346" = "00000000-0000-0000-0009-01f0e45556f7";
         # oscar bedrock
