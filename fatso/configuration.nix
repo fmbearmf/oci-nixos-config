@@ -165,6 +165,8 @@ in
         Evildamis = "0e6ed1bc-cbd3-43b1-9d07-5712ec5cad9a";
         # electric israeli
         Ozzy4201 = "b1c5da93-f265-482c-9ba4-7fed98c9aa3c";
+        # anna
+        j_nowaczek = "9bb6d928-6631-4157-b057-a4e5437d6b26";
         # incspa bedrock
         ".Shrek12346" = "00000000-0000-0000-0009-01f0e45556f7";
         # oscar bedrock
