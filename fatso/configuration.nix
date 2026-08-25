@@ -711,6 +711,21 @@ in
     |_______________________|
   '';
 
+  security.sudo.extraRules = [
+    {
+      groups = [ "wheel" ];
+
+      runAs = "velocity, minecraft";
+
+      commands = [
+        {
+          command = "ALL";
+          options = [ "NOPASSWD" ];
+        }
+      ];
+    }
+  ];
+
   # programs.firefox.enable = true;
 
   # List packages installed in system profile. To search, run:
