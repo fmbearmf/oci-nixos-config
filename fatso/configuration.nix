@@ -520,7 +520,7 @@ in
         "plugins/Geyser-Velocity.jar" = fetchurl {
           name = "Geyser-Velocity.jar";
           url = "https://download.geysermc.org/v2/projects/geyser/versions/latest/builds/latest/downloads/velocity";
-          hash = "sha256-c2wasqW6bdyNZxju77AXwtwmepOOcUGZXr7Mk2mXJj0=";
+          hash = "sha256-iy5KYOibJU0nLcJN0FLTBS9q/CxFn5B/3Seg132rGKA=";
         };
 
         "plugins/Floodgate-Velocity.jar" = fetchurl {
