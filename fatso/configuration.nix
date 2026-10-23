@@ -128,7 +128,7 @@ in
       };
     in
     {
-      enable = true;
+      enable = false;
       eula = true;
       package = serverWrapper;
 
@@ -633,7 +633,9 @@ in
         "network.target"
         "velocity.socket"
       ];
-      wantedBy = [ "multi-user.target" ];
+      wantedBy = [
+        #  "multi-user.target"
+      ];
 
       preStart = ''
         echo "${velocity-secret}" > "${velocityRoot}/swagballs.secret"
